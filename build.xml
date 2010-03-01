@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="P-PEX" default="build">
+	<target name="clean">
+        <delete dir="${basedir}/build"/>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/unittest"/>
+        <mkdir dir="${basedir}/build/unittest/coverage"/>
+		<mkdir dir="${basedir}/build/unittest/coverage/source"/>
+    </target>
+
+    <target name="phpunit" depends="prepare">
+        <exec dir="${basedir}"
+        executable="phpunit"
+        failonerror="true">
+            <arg line="--configuration ${basedir}/phpunit.xml"/>
+        </exec>
+    </target>
+
+	<target name="build" depends="phpunit"></target>
+</project>
