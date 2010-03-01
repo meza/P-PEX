@@ -17,7 +17,6 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__).'/../../src/Http/Http.php';
-require_once dirname(__FILE__).'/../../src/Http/Curl.php';
 
 /**
  * Test class for Http.
@@ -54,6 +53,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
             'setSSLVerifyPeer',
             'setReturnTransfer',
             'call',
+            'setDefaults',
             'setMethod',
             'setHeaders'
         ),array(),'');
@@ -113,14 +113,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
     public function testRequest($url, $data, $method, $expected)
     {
         $this->curlMock->expects($this->once())
-                ->method('setSSLVerifyHost')
-                ->with($this->equalTo(false));
-        $this->curlMock->expects($this->once())
-                ->method('setSSLVerifyPeer')
-                ->with($this->equalTo(false));
-        $this->curlMock->expects($this->once())
-                ->method('setReturnTransfer')
-                ->with($this->equalTo(true));
+                ->method('setDefaults');
 
         $this->curlMock->expects($this->once())
                 ->method('call')
