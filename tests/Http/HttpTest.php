@@ -10,7 +10,7 @@
  * @package  HTTP
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
- * @version  SVN: $Id$
+ * @version  GIT: $Id$
  * @link     http://www.meza.hu
  */
 

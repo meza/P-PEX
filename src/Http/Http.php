@@ -18,7 +18,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  SVN: $Id$
+ * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
