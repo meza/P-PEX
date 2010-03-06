@@ -55,24 +55,6 @@ class Curl
 
 
     /**
-     * Set's the default options
-     *
-     * @return void
-     */
-    public function setDefaults()
-    {
-        $this->followLocation(true);
-        $this->returnHeaders(false);
-        $this->setCookieStore('cookies.txt');
-        $this->setReturnTransfer(true);
-        $this->setSSLVerifyHost(false);
-        $this->setSSLVerifyPeer(false);
-        $this->verbose(false);
-
-    }//end setDefaults()
-
-
-    /**
      * Sets cUrl's verbosity to $flag
      *
      * @param bool $flag true to be verbose, false to not

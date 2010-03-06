@@ -58,7 +58,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
                                                  'call',
                                                  'setDefaults',
                                                  'setMethod',
-                                                 'setHeaders'
+                                                 'setHeaders',
+                                                 'setCookieStore'
                                                 ),array(),'');
         $this->object = new Http($this->curlMock);
 
@@ -179,6 +180,26 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
     }//end testAddHeader()
 
+
+    public function testSetCookieStoreWithNoParam()
+    {
+        $expected = 'cookies.txt';
+        $this->curlMock->expects($this->once())
+                ->method('setCookieStore')
+                ->with($this->equalTo($expected));
+
+        $this->object->setCookieStore();
+    }
+
+    public function testSetCookieStore()
+    {
+        $expected = 'cookiesTest.txt';
+        $this->curlMock->expects($this->once())
+                ->method('setCookieStore')
+                ->with($this->equalTo($expected));
+
+        $this->object->setCookieStore($expected);
+    }
 
 }//end class
 

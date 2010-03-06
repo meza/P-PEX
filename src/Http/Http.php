@@ -48,6 +48,10 @@ class Http
      */
     private $_headers = array();
 
+    /**
+     * @var string The filename of the cookieStore (if set)
+     */
+    private $cookieStore=null;
 
     /**
      * Csontructs the object
@@ -59,6 +63,14 @@ class Http
     public function __construct(Curl $curl)
     {
         $this->_curl = $curl;
+
+        //we set a couple of default VALUEs
+
+        $this->_curl->setReturnTransfer(true);
+        $this->followLocation(false);
+        $this->verifySSL(false);
+        $this->returnHeaders(false);
+
 
     }//end __construct()
 
@@ -117,6 +129,65 @@ class Http
     }//end resetHeaders()
 
 
+    /**
+     * Sets the cookie store of the curl
+     *
+     * @param string $cookieFile The filename to use as a cookie store
+     *
+     * @return void
+     */
+    public function setCookieStore($cookieFile='cookies.txt')
+    {
+        $this->cookieStore = $cookieFile;
+        $this->_curl->setCookieStore($this->cookieStore);
+        
+    }//end setCookieStore()
+
+
+    /**
+     * Sets SSL verification policy
+     *
+     * @param bool $flag True to verify ssl certs, false to not
+     *
+     * @return void
+     */
+    public function verifySSL($flag=false)
+    {
+        $this->_curl->setSSLVerifyHost($flag);
+        $this->_curl->setSSLVerifyPeer($flag);
+
+    }//end verifySSL()
+
+
+    /**
+     * Sets wether the request should follow redirects
+     *
+     * @param bool $flag True to follow, false to not
+     *
+     * @return void
+     */
+    public function followLocation($flag=true)
+    {
+        $this->_curl->followLocation($flag);
+
+    }//end followLocation()
+
+
+    /**
+     * If set to true, the response headers will be the part of the response
+     * string
+     *
+     * @param bool $flag True to return headers, false to not
+     *
+     * @return void
+     */
+    public function returnHeaders($flag=false)
+    {
+        $this->_curl->returnHeaders($flag);
+
+    }//end returnHeaders()
+
+    
     /**
      * Makes a http call
      *
