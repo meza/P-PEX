@@ -61,13 +61,13 @@ class Curl
      */
     public function setDefaults()
     {
-            $this->followLocation(true);
-            $this->returnHeaders(false);
-            $this->setCookieStore('cookies.txt');
-            $this->setReturnTransfer(true);
-            $this->setSSLVerifyHost(false);
-            $this->setSSLVerifyPeer(false);
-            $this->verbose(false);
+        $this->followLocation(true);
+        $this->returnHeaders(false);
+        $this->setCookieStore('cookies.txt');
+        $this->setReturnTransfer(true);
+        $this->setSSLVerifyHost(false);
+        $this->setSSLVerifyPeer(false);
+        $this->verbose(false);
 
     }//end setDefaults()
 
@@ -81,7 +81,7 @@ class Curl
      */
     public function verbose($flag=false)
     {
-            curl_setopt($this->_ch, CURLOPT_VERBOSE, $flag);
+        curl_setopt($this->_ch, CURLOPT_VERBOSE, $flag);
 
     }//end verbose()
 
@@ -95,7 +95,7 @@ class Curl
      */
     public function followLocation($flag=true)
     {
-            curl_setopt($this->_ch, CURLOPT_FOLLOWLOCATION, $flag);
+        curl_setopt($this->_ch, CURLOPT_FOLLOWLOCATION, $flag);
 
     }//end followLocation()
 
@@ -131,7 +131,7 @@ class Curl
      */
     public function setReferrer($value=null)
     {
-            curl_setopt($this->_ch, CURLOPT_REFERER, $value);
+        curl_setopt($this->_ch, CURLOPT_REFERER, $value);
 
     }//end setReferrer()
 
@@ -175,7 +175,7 @@ class Curl
      */
     public function returnHeaders($flag=false)
     {
-            curl_setopt($this->_ch, CURLOPT_HEADER, (int) $flag);
+        curl_setopt($this->_ch, CURLOPT_HEADER, (int) $flag);
 
     }//end returnHeaders()
 
@@ -193,8 +193,8 @@ class Curl
      */
     public function setAuth($user, $pass, $type=CURLAUTH_ANY)
     {
-            curl_setopt($this->_ch, CURLOPT_HTTPAUTH, $type);
-            curl_setopt($this->_ch, CURLOPT_USERPWD, $user.':'.$pass);
+        curl_setopt($this->_ch, CURLOPT_HTTPAUTH, $type);
+        curl_setopt($this->_ch, CURLOPT_USERPWD, $user.':'.$pass);
 
     }//end setAuth()
 
@@ -387,7 +387,8 @@ class Curl
             throw new Exception($errstr, $errno);
         }
 
-        return $retval;
+        $info = $this->getInfo();
+        return array($info['http_code'] => $retval);
 
     }//end _execute()
 

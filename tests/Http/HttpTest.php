@@ -32,6 +32,7 @@ require_once dirname(__FILE__).'/../../src/Http/Http.php';
  */
 class HttpTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @var Http
      */
@@ -45,18 +46,20 @@ class HttpTest extends PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     *
+     * @return void
      */
     protected function setUp()
     {
         $this->curlMock = $this->getMock('Curl',array(
-            'setSSLVerifyHost',
-            'setSSLVerifyPeer',
-            'setReturnTransfer',
-            'call',
-            'setDefaults',
-            'setMethod',
-            'setHeaders'
-        ),array(),'');
+                                                 'setSSLVerifyHost',
+                                                 'setSSLVerifyPeer',
+                                                 'setReturnTransfer',
+                                                 'call',
+                                                 'setDefaults',
+                                                 'setMethod',
+                                                 'setHeaders'
+                                                ),array(),'');
         $this->object = new Http($this->curlMock);
 
     }//end setUp()
@@ -112,9 +115,6 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     public function testRequest($url, $data, $method, $expected)
     {
-        $this->curlMock->expects($this->once())
-                ->method('setDefaults');
-
         $this->curlMock->expects($this->once())
                 ->method('call')
                 ->with(
@@ -174,10 +174,12 @@ class HttpTest extends PHPUnit_Framework_TestCase
         $this->curlMock->expects($this->once())
                 ->method('setHeaders')
                 ->with($this->equalTo($expected));
-        
+
         $this->object->request('', '');
 
-    }
+    }//end testAddHeader()
 
-}
+
+}//end class
+
 ?>

@@ -128,7 +128,6 @@ class Http
      */
     public function request($url, $data, $method=self::POST)
     {
-        $this->_curl->setDefaults();
         $this->_curl->setHeaders($this->_headers);
         $response = $this->_curl->call($url, $data, (bool) $method);
         $this->resetHeaders();
