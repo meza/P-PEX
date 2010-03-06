@@ -38,14 +38,14 @@ class URLFactory
 {
 
     /**
-     * Holds the url, where the login should go
+     * Login type
      */
-    const LOGONURL = 'exchweb/bin/auth/owaauth.dll';
+    const LOGIN = 'Login';
 
     /**
      * The Inbox's name
      */
-    const INBOX    = 'Inbox';
+    const INBOX = 'Inbox';
 
     /**
      * @var string The hostname to use in building the urls
@@ -56,11 +56,69 @@ class URLFactory
      * @var string The username to use in the urls
      */
     private $_username;
-    
+
+
+    /**
+     * Creates the URLFactory object, and requires data
+     *
+     * @param string $hostname The hostname of the exchange server
+     * @param string $username The username
+     *
+     * @return URLFactory
+     */
     public function __construct($hostname, $username)
     {
-        
+        $this->_hostname = $hostname;
+        $this->_username = $username;
+
     }//end __construct()
+
+
+    /**
+     * Returns the requested url type.
+     *
+     * @param string $type The type of url requested
+     *
+     * @return string
+     *
+     * @throws Exception when an unknown type is requested
+     */
+    public function getUrlFor($type)
+    {
+        switch ($type) {
+        case self::INBOX:
+            return $this->_getUrlForInbox();
+        case self::LOGIN:
+            return $this->_getUrlForLogin();
+        default:
+            throw new Exception('Not known url type: '.$type);
+        }
+
+    }//end getUrlFor()
+
+
+    /**
+     * Creates the inbox url scheme
+     *
+     * @return string
+     */
+    private function _getUrlForInbox()
+    {
+        return $this->_hostname.'/Exchange/'.$this->_username.'/Inbox';
+
+    }//end _getUrlForInbox()
+
+
+    /**
+     * Creates the login url scheme
+     *
+     * @return string
+     */
+    private function _getUrlForLogin()
+    {
+        return $this->_hostname.'/exchweb/bin/auth/owaauth.dll';
+
+    }//end _getUrlForLogin()
 
 
 }//end class

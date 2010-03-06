@@ -8,8 +8,6 @@
  *
  * @category File
  * @package  Test
- *
- *
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
@@ -25,7 +23,7 @@
 
 
 require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../../src/Request/URLFactory.php';
+require_once dirname(__FILE__).'/../../src/Request/URLFactory.php';
 
 /**
  * The URLFactoryTest class is the unittest class for the URLFactory class
@@ -96,6 +94,54 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
         new URLFactory($this->testHost);
 
     }//end testNewWithoutTheLastArguments()
+
+
+    /**
+     * We want to be sure, that our factory only handles known types
+     *
+     * @expectedException Exception
+     *
+     * @return void
+     */
+    public function testGetUrlSchemeForUnknownType()
+    {
+        $this->object->getUrlFor('NotKnownTypeString');
+
+    }//end testGetUrlSchemeForUnknownType()
+
+
+    /**
+     * We want our factory to be able to handle the inbox url.
+     * The exchange server's inbox url scheme is made up as it follows:
+     * <server_url>/Exchange/<username>/Inbox
+     *
+     * So we expect our code to return this scheme, when it is required
+     */
+    public function testInboxUrlScheme()
+    {
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/Inbox';
+        $actual   = $this->object->getUrlFor(URLFactory::INBOX);
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testInboxUrlScheme()
+
+
+    /**
+     * We want to be able to request a login url too. This is made up as follows
+     * <server_url>/exchweb/bin/auth/owaauth.dll
+     *
+     * @return void
+     */
+     public function testLoginUrlScheme()
+     {
+         $expected = $this->testHost.'/exchweb/bin/auth/owaauth.dll';
+         $actual   = $this->object->getUrlFor(URLFactory::LOGIN);
+
+         $this->assertEquals($expected, $actual);
+         
+     }//end testLoginUrlScheme()
+
 
 }//end class
 
