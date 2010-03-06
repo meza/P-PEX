@@ -156,12 +156,10 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $this->object->call('somedomain');
     }
 
-
-    public function testSetDefaults()
+    public function testSetVerbose()
     {
-        $this->object->setDefaults();
+        $this->object->verbose(false);
     }
-
 
     /**
      * @expectedException Exception
