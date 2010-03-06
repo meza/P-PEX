@@ -6,6 +6,7 @@
 
     <target name="prepare" depends="clean">
         <mkdir dir="${basedir}/build/logs"/>
+		<mkdir dir="${basedir}/build/doc"/>
         <mkdir dir="${basedir}/build/unittest"/>
         <mkdir dir="${basedir}/build/unittest/coverage"/>
 		<mkdir dir="${basedir}/build/unittest/coverage/source"/>
@@ -19,5 +20,72 @@
         </exec>
     </target>
 
+	<target name="phpcs" depends="prepare">
+		<exec dir="${basedir}"
+		executable="phpcs"
+		failonerror="false">
+			<arg line="--standard=PHPCS --extensions=php ${basedir}/src ${basedir}/tests"/>
+		</exec>
+	</target>
+
+	<target name="phpcs-ci" depends="prepare">
+		<exec dir="${basedir}"
+		executable="phpcs"
+		output="${basedir}/build/logs/checkstyle.xml"
+		failonerror="false">
+			<arg line="--report=checkstyle --standard=PHPCS --extensions=php ${basedir}/src ${basedir}/tests"/>
+		</exec>
+	</target>
+
+	<target name="phploc" depends="prepare">
+		<exec dir="${basedir}"
+			executable="phploc"
+			failonerror="false">
+				<arg line="src"/>
+		</exec>
+	</target>
+
+	<target name="pdepend" depends="prepare, phpunit">
+        <exec dir="${basedir}/src"
+	executable="pdepend"
+        failonerror="false">
+            <arg line="--jdepend-xml=${basedir}/build/logs/jdepend.xml --coverage-report=${basedir}/build/unittest/coverage/clover.xml --jdepend-chart=${basedir}/build/logs/dpec.svg --overview-pyramid=${basedir}/build/logs/pir.svg ."/>
+        </exec>
+    </target>
+
+    <target name="phpmd" depends="prepare">
+        <exec dir="${basedir}/src"
+        executable="phpmd"
+        failonerror="false">
+            <arg line=". xml codesize
+              --reportfile ${basedir}/build/logs/pmd.xml"/>
+        </exec>
+    </target>
+
+    <target name="phpcpd" depends="prepare">
+        <exec
+    	    executable="phpcpd">
+        	<arg line="--min-tokens=20 --log-pmd ${basedir}/build/logs/pmd-cpd.xml ${basedir}/src"/>
+        </exec>
+    </target>
+
+    <target name="document" depends="doxygen"/>
+
+    <target name="phpdoc">
+		<exec dir="${basedir}"
+		executable="phpdoc"
+		failonerror="false">
+			<arg line="-t ${basedir}/build/doc/ -o HTML:default:default -d ${basedir}/"/>
+		</exec>
+    </target>
+
+    <target name="doxygen">
+	<exec dir="${basedir}"
+		executable="doxygen"
+		failonerror="false"/>
+    </target>
+
 	<target name="build" depends="phpunit"></target>
+
+	<target name="ci-build" depends="phploc, pdepend, phpmd, phpcpd, phpunit, document, phpcs-ci"/>
 </project>
