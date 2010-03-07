@@ -35,7 +35,8 @@ require_once dirname(__FILE__).'/../../src/ExchangeStore/ContentClass.php';
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContentClassTest extends PHPUnit_Framework_TestCase {
+class ContentClassTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      * Data provider for a test. Returns all constants with their expected
@@ -48,8 +49,8 @@ class ContentClassTest extends PHPUnit_Framework_TestCase {
         return array(
 
             array(
-                ContentClass::APPOINTMENT,
-                'urn:content-classes:appointment'
+                    ContentClass::APPOINTMENT,
+                    'urn:content-classes:appointment'
             ),
             array(
                 ContentClass::CALENDARFOLDER,
