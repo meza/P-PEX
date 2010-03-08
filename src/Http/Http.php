@@ -35,23 +35,23 @@
  */
 class Http
 {
-    const POST = 1;
-    const GET  = 0;
 
     /**
-     * @var Curl object
+     * @var CurlBuilder
      */
-    private $_curl;
-
-    /**
-     * @var array the headers
-     */
-    private $_headers = array();
+    private $_curlBuilder;
 
     /**
      * @var string The filename of the cookieStore (if set)
      */
-    private $cookieStore=null;
+    private $_cookieStore=null;
+
+
+    private $_SSLVerifyHost=false;
+
+    private $_SSLVerifyPeer=false;
+
+    private $_followLocation=true;
 
     /**
      * Csontructs the object
@@ -60,75 +60,11 @@ class Http
      *
      * @return Http
      */
-    public function __construct(Curl $curl)
+    public function __construct(CurlBuilder $curlBuilder)
     {
-        $this->_curl = $curl;
-
-        //we set a couple of default VALUEs
-
-        $this->_curl->setReturnTransfer(true);
-        $this->followLocation(false);
-        $this->verifySSL(false);
-        $this->returnHeaders(false);
-
+        $this->_curlBuilder = $curlBuilder;
 
     }//end __construct()
-
-
-    /**
-     * Returns the internal Curlobject
-	 *
-	 * @deprecated
-     *
-     * @return Curl
-     */
-    public function returnCurl()
-    {
-        return $this->_curl;
-
-    }//end returnCurl()
-
-
-    /**
-     * set's the http method
-     *
-     * @param string $method The http method to use besides GET/POST
-     *
-     * @return void
-     */
-    public function setMethod($method)
-    {
-        $this->_curl->setMethod($method);
-
-    }//end setMethod()
-
-
-    /**
-     * Add a header to the next request
-     * The set headers are reset after the request
-     *
-     * @param string $key   The header's key
-     * @param string $value The header's value
-     *
-     * @return void
-     */
-    public function addHeader($key, $value)
-    {
-        $this->_headers[] = $key.':'.(string) $value;
-
-    }//end addHeader()
-
-
-    /**
-     * Resets the headers
-     *
-     * @return void
-     */
-    public function resetHeaders()
-    {
-        $this->_headers = array();
-
-    }//end resetHeaders()
 
 
     /**
@@ -140,9 +76,8 @@ class Http
      */
     public function setCookieStore($cookieFile='cookies.txt')
     {
-        $this->cookieStore = $cookieFile;
-        $this->_curl->setCookieStore($this->cookieStore);
-        
+        $this->_cookieStore = $cookieFile;
+
     }//end setCookieStore()
 
 
@@ -155,8 +90,8 @@ class Http
      */
     public function verifySSL($flag=false)
     {
-        $this->_curl->setSSLVerifyHost($flag);
-        $this->_curl->setSSLVerifyPeer($flag);
+        $this->_SSLVerifyHost = $flag;
+        $this->_SSLVerifyPeer = $flag;
 
     }//end verifySSL()
 
@@ -170,44 +105,35 @@ class Http
      */
     public function followLocation($flag=true)
     {
-        $this->_curl->followLocation($flag);
+        $this->_followLocation = $flag;
 
     }//end followLocation()
 
 
     /**
-     * If set to true, the response headers will be the part of the response
-     * string
-     *
-     * @param bool $flag True to return headers, false to not
-     *
-     * @return void
-     */
-    public function returnHeaders($flag=false)
-    {
-        $this->_curl->returnHeaders($flag);
-
-    }//end returnHeaders()
-
-    
-    /**
      * Makes a http call
      *
-     * @param string $url    The url tp call
-     * @param array  $data   The data to send
-     * @param int    $method Http::POST or Http::GET
+     * @param HttpParams $params The HttpParams object to use
      *
      * @return array of return parameters
      */
-    public function request($url, $data, $method=self::POST)
+    public function request(HttpParams $httpParams)
     {
-        $this->_curl->setHeaders($this->_headers);
-        $response = $this->_curl->call($url, $data, (bool) $method);
-        $this->resetHeaders();
+        $curl = $this->_curlBuilder->createCurl(
+            $httpParams,
+            array(
+                'cookieStore'    => $this->_cookieStore,
+                'followLocation' => $this->_followLocation,
+                'SSLVerifyHost'  => $this->_SSLVerifyHost,
+                'SSLVerifyPeer'  => $this->_SSLVerifyPeer,
+                'verbose'        => false,
+                'returnTransfer' => true,
+            )
+        );
+        $response = $curl->execute();
         return $response;
 
     }//end request()
-
 
 }//end class
 

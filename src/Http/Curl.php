@@ -41,6 +41,15 @@ class Curl
      */
     private $_ch;
 
+    /**
+     * @var bool true if the request is a post
+     */
+    private $_isPost = false;
+
+    /**
+     * @var mixed The request content
+     */
+    private $_data = null;
 
     /**
      * Constructs the object
@@ -130,7 +139,7 @@ class Curl
      *
      * @throws Exception if GET/POST is used
      */
-    public function setMethod($method)
+    public function setCustomMethod($method)
     {
         $standardMethods = array(
                             'GET',
@@ -144,7 +153,7 @@ class Curl
                 curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         }
 
-    }//end setMethod()
+    }//end setCustomMethod()
 
 
     /**
@@ -280,6 +289,7 @@ class Curl
      */
     public function setPost($flag=true)
     {
+        $this->_isPost = $flag;
         curl_setopt($this->_ch, CURLOPT_POST, (int) $flag);
 
     }//end setPost()
@@ -322,37 +332,20 @@ class Curl
 
     }//end setPostFields()
 
-
     /**
-     * Executes a Curl call
+     * Set's the request content
      *
-     * @param string $url  The url to call to (optional)
-     * @param mixed  $data The data to be sent by the request (optional)
-     * @param bool   $post The call is POST or not (optional)
+     * @param mixed $data
      *
-     * @return string The return string
+     * @return void
      */
-    public function call($url=null, $data='', $post=false)
+    public function setData($data)
     {
-        if (null !== $url) {
-            $this->setUrl($url);
-        }
+        $this->_data = $data;
+        
+    }//end setData()
 
-        $url = curl_getinfo($this->_ch, CURLINFO_EFFECTIVE_URL);
-        if (true === (bool) $post) {
-            $this->setPost(1);
-            $this->setPostFields($data);
-        } else {
-            if (false === empty($data)) {
-                $this->setUrl($url.'?'.$this->_formatData($data));
-            }
-        }
-
-        return $this->_execute();
-
-    }//end call()
-
-
+    
     /**
      * Executes the call
      *
@@ -360,8 +353,19 @@ class Curl
      *
      * @throws Exception on error
      */
-    private function _execute()
+    public function execute()
     {
+
+        $url = curl_getinfo($this->_ch, CURLINFO_EFFECTIVE_URL);
+        if (true === $this->_isPost) {
+            $this->setPost(1);
+            $this->setPostFields($this->_data);
+        } else {
+            if (false === empty($this->_data)) {
+                $this->setUrl($url.'?'.$this->_formatData($this->_data));
+            }
+        }
+
         $retval = curl_exec($this->_ch);
         $errno  = curl_errno($this->_ch);
         if ((int) 0 < $errno) {
