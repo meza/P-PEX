@@ -77,6 +77,8 @@ class Http
 
     /**
      * Returns the internal Curlobject
+	 *
+	 * @deprecated
      *
      * @return Curl
      */
