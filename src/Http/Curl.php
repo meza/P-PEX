@@ -22,6 +22,9 @@
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
+require_once dirname(__FILE__).'/Exceptions/InvalidCookieStoreException.php';
+require_once dirname(__FILE__).'/Exceptions/InvalidCustomHttpMethodException.php';
+
 /**
  * The Curl class is responsible for Http requests
  *
@@ -72,12 +75,12 @@ class Curl
      *
      * @return void
      *
-     * @throws Exception if the cookiefile is not writable
+     * @throws InvalidCookieStoreException if the cookiefile is not writable
      */
     public function setCookieStore($filename)
     {
         if (false === is_writable(dirname($filename))) {
-            throw new Exception('Cookie store\'s directory is not writable');
+            throw new InvalidCookieStoreException();
         }
 
         curl_setopt($this->_ch, CURLOPT_COOKIEJAR, $filename);
@@ -105,9 +108,7 @@ class Curl
                             'POST',
                            );
         if (true === in_array(strtoupper($method), $standardMethods)) {
-                throw new Exception(
-                    $method.' is a standard method, don\'t use as custom'
-                );
+                throw new InvalidCustomHttpMethodException($method);
         } else {
                 curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         }
@@ -122,7 +123,7 @@ class Curl
      *
      * @return void
      */
-    private function _formatData($data)
+    public function formatData($data)
     {
         if (true === is_array($data)) {
             $data = http_build_query($data);
@@ -147,7 +148,7 @@ class Curl
         curl_setopt(
             $this->_ch,
             CURLOPT_POSTFIELDS,
-            $this->_formatData($data)
+            $this->formatData($data)
         );
 
     }//end setPostFields()
@@ -168,7 +169,7 @@ class Curl
             $this->setPostFields($this->_data);
         } else {
             if (false === empty($this->_data)) {
-                $this->setUrl($url.'?'.$this->_formatData($this->_data));
+                $this->setUrl($url.'?'.$this->formatData($this->_data));
             }
         }
 

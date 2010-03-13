@@ -79,6 +79,104 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * We want to ensure, that unwrutable path could not be set
+     *
+     * @expectedException InvalidCookieStoreException
+     *
+     * @return void
+     */
+    public function testSetCookieStore()
+    {
+        $this->object->setCookieStore('/cookies.txt');
+
+    }//end testSetCookieStore()
+
+
+    /**
+     * Feeds the test with the standard http methods
+     *
+     * @return array of arguments
+     */
+    public function setCustomMethodTestProvider()
+    {
+        return array(
+                'get method'  => array('get'),
+                'post method' => array('pOsT'),
+               );
+
+    }//end setCustomMethodTestProvider()
+
+
+    /**
+     * We need to ensure, that the setCustomMethod doesn't allow the standard
+     * get/post methods
+     *
+     * @param string $method The http method to set
+     * 
+     * @dataProvider setCustomMethodTestProvider()
+     * @expectedException InvalidCustomHttpMethodException
+     * 
+     * @return void
+     */
+    public function testSetCustomMethod($method)
+    {
+        $this->object->setCustomMethod($method);
+
+    }//end testSetCustomMethod()
+
+
+    /**
+     * The data provider for the formatData test
+     *
+     * @return array of arguments
+     */
+    public function formatDataTestProvider()
+    {
+        return array(
+                'standard array'  => array(
+                                      array(
+                                       'var1' => 'val1',
+                                       'var2' => 'val2',
+                                       'var3' => 'val3',
+                                      ),
+                                      'var1=val1&var2=val2&var3=val3',
+                                     ),
+                'standard object' => array(
+                             (object) array(
+                                       'var1' => 'val1',
+                                       'var2' => 'val2',
+                                       'var3' => 'val3',
+                                      ),
+                                      'var1=val1&var2=val2&var3=val3',
+                                     ),
+                'null'            => array(
+                                      null,
+                                      '',
+                                     ),
+               );
+
+    }//end formatDataTestProvider()
+
+
+    /**
+     * Test that the formatData method creates the desired value
+     *
+     * @param mixed  $data Could be an array or an object
+     * @param string $expected  The expected (query) string
+     *
+     * @dataProvider formatDataTestProvider()
+     *
+     * @return void;
+     */
+    public function testFormatData($data, $expected)
+    {
+        $actual = $this->object->formatData($data);
+        $this->assertEquals($expected, $actual);
+
+    }//end testFormatData()
+
+
+    /**
      * Tests the getInfo method
      *
      * @return void
@@ -113,6 +211,12 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
 
     }//end testSetUrl()
+
+
+    /**
+     * Methods below this line are only for validating, that none of the
+     * curl calls below throw an exception
+     */
 
 
 }//end class
