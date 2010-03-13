@@ -8,7 +8,7 @@
  *
  * @category File
  * @package  Http
- * @author   meza
+ * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
  *                       Version 3, 29 June 2007
@@ -16,8 +16,8 @@
  * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
- * * 
- * @version  SVN: $Id$
+ * 
+ * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
