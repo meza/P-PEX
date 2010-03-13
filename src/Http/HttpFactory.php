@@ -18,7 +18,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: e97a355221e6754a2376824270b27b5813cf3df3 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -64,6 +64,11 @@ class HttpFactory
     public function createHttp()
     {
         $http = new Http($this->_curlBuilder);
+
+        $http->followLocation(true);
+        $http->verifySSL(false);
+        $http->setCookieStore('cookies.txt');
+
         return $http;
 
     }//end createHttp()
