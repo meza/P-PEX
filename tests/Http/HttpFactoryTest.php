@@ -96,6 +96,42 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
     }//end testCreateHttp()
 
 
+    /**
+     * We'd like to ensure, that the correct initializer methods are called,
+     * regardless to the order. The values are the keypoint.
+     *
+     * @return void
+     */
+    public function testSettingsInit()
+    {
+        $http = $this->object->createHttp();
+        
+        $this->assertAttributeEquals(
+                'cookies.txt',
+                '_cookieStore',
+                $http,
+                'setCookieStore was not called with cookies.txt argument');
+
+        $this->assertAttributeEquals(
+                false,
+                '_SSLVerifyHost',
+                $http,
+                'verifySSL was not called with false');
+
+        $this->assertAttributeEquals(
+                false,
+                '_SSLVerifyPeer',
+                $http,
+                'verifySSL was not called with false');
+
+        $this->assertAttributeEquals(
+                true,
+                '_followLocation',
+                $http,
+                'followLocation was not called with true');
+    }//end testSettingsInit()
+
+
 }//end class
 
 ?>

@@ -46,12 +46,21 @@ class Http
      */
     private $_cookieStore=null;
 
-
+    /**
+     * @var bool True to verify ssl host
+     */
     private $_SSLVerifyHost=false;
 
+    /**
+     * @var bool true to verify ssl peer
+     */
     private $_SSLVerifyPeer=false;
 
+    /**
+     * @var bool true to follow redirects
+     */
     private $_followLocation=true;
+
 
     /**
      * Csontructs the object
