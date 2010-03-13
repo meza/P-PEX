@@ -39,9 +39,10 @@ class HttpTest extends PHPUnit_Framework_TestCase
     protected $object;
 
     /**
-     * @var Curl mock
+     * @var CurlBuilder mock
      */
-    protected $curlMock;
+    protected $curlBuilderMock;
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -51,155 +52,100 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlMock = $this->getMock('Curl',array(
-                                                 'setSSLVerifyHost',
-                                                 'setSSLVerifyPeer',
-                                                 'setReturnTransfer',
-                                                 'call',
-                                                 'setDefaults',
-                                                 'setMethod',
-                                                 'setHeaders',
-                                                 'setCookieStore'
-                                                ),array(),'');
-        $this->object = new Http($this->curlMock);
+        $this->curlBuilderMock = $this->getMock('CurlBuilder');
+        $this->object = new Http($this->curlBuilderMock);
 
     }//end setUp()
 
 
     /**
      * Test the creation of the object wihtout the Curl object
+     *
      * @expectedException Exception
+     *
+     * @return viod
      */
     public function testConstructorWithoutDependencies()
     {
-        new Http();
+        $http = new Http();
 
-    }
-
-
-    public function requestProvider()
-    {
-        return array(
-                array(
-                        'www.a.com',
-                        array(
-                                'var1' => 'val1',
-                                'var2' => 'val2',
-                                'var3' => 'val3'
-                        ),
-                        Http::GET,
-                        'no such domain'
-                ),
-                array(
-                        'www.a.com',
-                        array(
-                                'var1' => 'val1',
-                                'var2' => 'val2',
-                                'var3' => 'val3'
-                        ),
-                        Http::POST,
-                        'no such domain'
-                )
-        );
-    }
+    }//end testConstructorWithoutDependencies()
 
 
     /**
+     * Tests the setCookieStore behaviour
      *
-     * @dataProvider requestProvider()
-     * @covers Http::request
-     *
-     * @param <type> $url
-     * @param <type> $data
-     * @param <type> $method
-     * @param <type> $expected
+     * @return void
      */
-    public function testRequest($url, $data, $method, $expected)
-    {
-        $this->curlMock->expects($this->once())
-                ->method('call')
-                ->with(
-                $this->equalTo($url),
-                $this->equalTo($data),
-                $this->equalTo((bool) $method)
-                )
-                ->will($this->returnValue($expected));
-
-        $actual = $this->object->request($url, $data, $method);
-        $this->assertEquals($expected, $actual);
-    }
-
-
-    public function methodProvider()
-    {
-        return array(
-            array('put'),
-            array('delete'),
-            array('update'),
-            array('search')
-        );
-    }
-
-    /**
-     * @dataProvider methodProvider()
-     */
-    public function testSetMethod($method)
-    {
-        $this->curlMock->expects($this->once())
-                ->method('setMethod')
-                ->with($method)
-                ->will($this->returnValue(null));
-        $this->object->setMethod($method);
-    }
-
-    public function testReturnCurl()
-    {
-        $actual = $this->object->returnCurl();
-        $this->assertEquals($this->curlMock, $actual);
-    }
-
-    public function testAddHeader()
-    {
-        $headers = array(
-            'key1'=>'val1',
-            'key2'=>'val2'
-        );
-
-        $expected = array();
-        foreach($headers as $key=>$value)
-        {
-            $this->object->addHeader($key, $value);
-            $expected[]=$key.':'.(string) $value;
-        }
-
-        $this->curlMock->expects($this->once())
-                ->method('setHeaders')
-                ->with($this->equalTo($expected));
-
-        $this->object->request('', '');
-
-    }//end testAddHeader()
-
-
-    public function testSetCookieStoreWithNoParam()
-    {
-        $expected = 'cookies.txt';
-        $this->curlMock->expects($this->once())
-                ->method('setCookieStore')
-                ->with($this->equalTo($expected));
-
-        $this->object->setCookieStore();
-    }
-
     public function testSetCookieStore()
     {
-        $expected = 'cookiesTest.txt';
-        $this->curlMock->expects($this->once())
-                ->method('setCookieStore')
-                ->with($this->equalTo($expected));
+        $this->object->setCookieStore();
+        $this->assertAttributeEquals(
+            'cookies.txt',
+            '_cookieStore',
+            $this->object,
+            'The cookie store was not initialized properly'
+        );
 
+        $expected = 'other.txt';
         $this->object->setCookieStore($expected);
-    }
+        $this->assertAttributeEquals(
+            $expected,
+            '_cookieStore',
+            $this->object,
+            'The cookie store was not changed to '.$expected
+        );
+
+    }//end testSetCookieStore()
+
+
+    /**
+     * Data provider for the testVerifySSL method
+     *
+     * @return <type>
+     */
+    public function verifySSLTestProvider()
+    {
+        return array(
+                'emptyArg' => array(null),
+                'forFalse' => array(false),
+                'forTrue'  => array(true),
+               );
+
+    }//end verifySSLTestProvider()
+
+
+    /**
+     * Testing verifySSL behaviour
+     *
+     * @param mixed $expected bool for arguments, null for empty call
+     *
+     * @dataProvider verifySSLTestProvider()
+     *
+     * @return void
+     */
+    public function testVerifySSL($expected)
+    {
+        if (null === $expected) {
+            $this->object->verifySSL();
+            $expected = false;
+        } else {
+            $this->object->verifySSL($expected);
+        }
+
+        $this->assertAttributeEquals(
+            $expected,
+            '_SSLVerifyHost',
+            $this->object
+        );
+        $this->assertAttributeEquals(
+            $expected,
+            '_SSLVerifyPeer',
+            $this->object
+        );
+
+    }//end testVerifySSL()
+
 
 }//end class
 
