@@ -51,6 +51,7 @@ class Curl
      */
     private $_data = null;
 
+
     /**
      * Constructs the object
      *
@@ -61,6 +62,127 @@ class Curl
         $this->_ch = curl_init();
 
     }//end __construct()
+
+
+    /**
+     * Sets the file to use as a cookiejar.
+     * The filename specified must be writable by the php's user.
+     *
+     * @param string $filename The filename to use
+     *
+     * @return void
+     *
+     * @throws Exception if the cookiefile is not writable
+     */
+    public function setCookieStore($filename)
+    {
+        if (false === is_writable(dirname($filename))) {
+            throw new Exception('Cookie store\'s directory is not writable');
+        }
+
+        curl_setopt($this->_ch, CURLOPT_COOKIEJAR, $filename);
+        curl_setopt($this->_ch, CURLOPT_COOKIEFILE, $filename);
+
+    }//end setCookieStore()
+
+
+    /**
+     * Set's a custom method to use for the request.
+     * The base GET/POST should be set to define the behaviour of the custom
+     * call.
+     *
+     * @param string $method The http method to use. The argument is converted
+     * to uppercase!
+     *
+     * @return void
+     *
+     * @throws Exception if GET/POST is used
+     */
+    public function setCustomMethod($method)
+    {
+        $standardMethods = array(
+                            'GET',
+                            'POST',
+                           );
+        if (true === in_array(strtoupper($method), $standardMethods)) {
+                throw new Exception(
+                    $method.' is a standard method, don\'t use as custom'
+                );
+        } else {
+                curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
+        }
+
+    }//end setCustomMethod()
+
+
+    /**
+     * Formats the given value to a query string
+     *
+     * @param mixed $data String, object, array -> query string
+     *
+     * @return void
+     */
+    private function _formatData($data)
+    {
+        if (true === is_array($data)) {
+            $data = http_build_query($data);
+        } else if (true === is_object($data)) {
+            $data = http_build_query(get_object_vars($data));
+        }
+
+        return $data;
+
+    }//end _formatData()
+
+
+    /**
+     * Sets the post fields parameter
+     *
+     * @param mixed $data Either a query string, or an array.
+     *
+     * @return void
+     */
+    public function setPostFields($data)
+    {
+        curl_setopt(
+            $this->_ch,
+            CURLOPT_POSTFIELDS,
+            $this->_formatData($data)
+        );
+
+    }//end setPostFields()
+
+
+    /**
+     * Executes the call
+     *
+     * @return string result
+     *
+     * @throws Exception on error
+     */
+    public function execute()
+    {
+        $url = curl_getinfo($this->_ch, CURLINFO_EFFECTIVE_URL);
+        if (true === $this->_isPost) {
+            $this->setPost(1);
+            $this->setPostFields($this->_data);
+        } else {
+            if (false === empty($this->_data)) {
+                $this->setUrl($url.'?'.$this->_formatData($this->_data));
+            }
+        }
+
+        $retval = curl_exec($this->_ch);
+        $errno  = curl_errno($this->_ch);
+        if ((int) 0 < $errno) {
+            $errstr = curl_error($this->_ch);
+            throw new Exception($errstr, $errno);
+        }
+
+        $info = $this->getInfo();
+        return array($info['http_code'] => $retval);
+
+    }//end execute()
 
 
     /**
@@ -92,28 +214,6 @@ class Curl
 
 
     /**
-     * Sets the file to use as a cookiejar.
-     * The filename specified must be writable by the php's user.
-     *
-     * @param string $filename The filename to use
-     *
-     * @return void
-     *
-     * @throws Exception if the cookiefile is not writable
-     */
-    public function setCookieStore($filename)
-    {
-        if (false === is_writable(dirname($filename))) {
-            throw new Exception('Cookie store\'s directory is not writable');
-        }
-
-        curl_setopt($this->_ch, CURLOPT_COOKIEJAR, $filename);
-        curl_setopt($this->_ch, CURLOPT_COOKIEFILE, $filename);
-
-    }//end setCookieStore()
-
-
-    /**
      * Set the referrer of the request;
      *
      * @param string $value The referrer url to use
@@ -125,35 +225,6 @@ class Curl
         curl_setopt($this->_ch, CURLOPT_REFERER, $value);
 
     }//end setReferrer()
-
-
-    /**
-     * Set's a custom method to use for the request.
-     * The base GET/POST should be set to define the behaviour of the custom
-     * call.
-     *
-     * @param string $method The http method to use. The argument is converted
-     * to uppercase!
-     *
-     * @return void
-     *
-     * @throws Exception if GET/POST is used
-     */
-    public function setCustomMethod($method)
-    {
-        $standardMethods = array(
-                            'GET',
-                            'POST',
-                           );
-        if (true === in_array(strtoupper($method), $standardMethods)) {
-                throw new Exception(
-                    $method.' is a standard method, don\'t use as custom'
-                );
-        } else {
-                curl_setopt($this->_ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
-        }
-
-    }//end setCustomMethod()
 
 
     /**
@@ -296,87 +367,17 @@ class Curl
 
 
     /**
-     * Formats the given value to a query string
-     * 
-     * @param mixed $data String, object, array -> query string
-     * 
-     * @return void
-     */
-    private function _formatData($data)
-    {
-        if (true === is_array($data)) {
-            $data = http_build_query($data);
-        } else if (true === is_object($data)) {
-            $data = http_build_query(get_object_vars($data));
-        }
-
-        return $data;
-
-    }//end _formatData()
-
-
-    /**
-     * Sets the post fields parameter
-     *
-     * @param mixed $data Either a query string, or an array.
-     *
-     * @return void
-     */
-    public function setPostFields($data)
-    {
-        curl_setopt(
-            $this->_ch,
-            CURLOPT_POSTFIELDS,
-            $this->_formatData($data)
-        );
-
-    }//end setPostFields()
-
-    /**
      * Set's the request content
      *
-     * @param mixed $data
+     * @param mixed $data The data
      *
      * @return void
      */
     public function setData($data)
     {
         $this->_data = $data;
-        
+
     }//end setData()
-
-    
-    /**
-     * Executes the call
-     *
-     * @return string result
-     *
-     * @throws Exception on error
-     */
-    public function execute()
-    {
-
-        $url = curl_getinfo($this->_ch, CURLINFO_EFFECTIVE_URL);
-        if (true === $this->_isPost) {
-            $this->setPost(1);
-            $this->setPostFields($this->_data);
-        } else {
-            if (false === empty($this->_data)) {
-                $this->setUrl($url.'?'.$this->_formatData($this->_data));
-            }
-        }
-
-        $retval = curl_exec($this->_ch);
-        $errno  = curl_errno($this->_ch);
-        if ((int) 0 < $errno) {
-            $errstr = curl_error($this->_ch);
-            throw new Exception($errstr, $errno);
-        }
-
-        $info = $this->getInfo();
-        return array($info['http_code'] => $retval);
-
-    }//end _execute()
 
 
 }//end class
