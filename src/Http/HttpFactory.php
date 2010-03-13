@@ -39,7 +39,7 @@ class HttpFactory
     /**
      * @var CurlBuilder The CurlBuilder instance to use
      */
-    private $_currlBuilder;
+    private $_curlBuilder;
 
 
     /**
