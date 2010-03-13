@@ -40,6 +40,7 @@ require_once dirname(__FILE__).'/../../src/Http/Curl.php';
  */
 class CurlTest extends PHPUnit_Framework_TestCase
 {
+
     /**
      * @var Curl
      */
@@ -50,25 +51,38 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     protected $ch;
 
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     *
+     * @return void
      */
     protected function setUp()
     {
         $this->object = new Curl;
-        $this->ch = $this->readAttribute($this->object, '_ch');
-    }
+        $this->ch     = $this->readAttribute($this->object, '_ch');
+
+    }//end setUp()
 
 
     /**
      * Tests that the internal pointer is inited
+     *
+     * @return void
      */
     public function testConstruct()
     {
         $this->assertTrue(is_resource($this->ch));
-    }
 
+    }//end testConstruct()
+
+
+    /**
+     * Tests the getInfo method
+     *
+     * @return void
+     */
     public function testGetInfo()
     {
         $expected = 'somedomain';
@@ -80,10 +94,15 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $actual = $this->object->getInfo();
         $this->assertEquals($expected, $actual['url']);
 
-    }
+    }//end testGetInfo()
+
 
     /**
+     * Tests the url setter
+     *
      * @depends testGetInfo
+     *
+     * @return void
      */
     public function testSetUrl()
     {
@@ -93,126 +112,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $actual = $this->object->getInfo(CURLINFO_EFFECTIVE_URL);
         $this->assertEquals($expected, $actual);
 
-    }
-
-    
-
-    public function testSetSSLVerifyPeer()
-    {
-        $this->object->setSSLVerifyPeer();
-    }
-
-    public function testSetSSLVerifyHost()
-    {
-        $this->object->setSSLVerifyHost();
-    }
-
-    public function testSetReturnTransfer()
-    {
-        $this->object->setReturnTransfer();
-    }
-
-    public function testSetPost()
-    {
-        $this->object->setPost();
-    }
-
-    public function testSetPostFields()
-    {
-        $this->object->setPostFields('');
-        $this->object->setPostFields(array('a'=>'b'));
-        $this->object->setPostFields((object) array('a'=>'b'));
-    }
-
-    public function testCallGet()
-    {
-        $this->object->setReturnTransfer(true);
-        $this->object->call('www.meza.hu');
-    }
-
-    public function testCallGetUrl()
-    {
-        $expected = 'meza.hu?a=b&c=d';
-        $this->object->setReturnTransfer(true);
-        $this->object->call('meza.hu',(object) array(
-            'a'=>'b',
-            'c'=>'d'
-        ));
-        $actual = $this->object->getInfo();
-        $this->assertEquals('http://'.$expected, $actual['url']);
-    }
-
-    public function testCallPost()
-    {
-        $this->object->setReturnTransfer(true);
-        $this->object->call('www.meza.hu','',true);
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testForMalformedUrl()
-    {
-        $this->object->call('somedomain');
-    }
-
-    public function testSetVerbose()
-    {
-        $this->object->verbose(false);
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testSetCookieStoreError()
-    {
-        $this->object->setCookieStore('/root/nonexisting/cookies.txt');
-    }
+    }//end testSetUrl()
 
 
-    public function testSetReferrer()
-    {
-        $this->object->setReferrer('value');
-    }
+}//end class
 
-    /**
-     * @expectedException Exception
-     */
-    public function testSetMethodWithGet()
-    {
-        $this->object->setMethod('get');
-    }
-
-
-    /**
-     * @expectedException Exception
-     */
-    public function testSetMethodWithPost()
-    {
-        $this->object->setMethod('post');
-    }
-
-    public function testSetMethodWith()
-    {
-        $this->object->setMethod('SEARCH');
-    }
-
-    public function testSetAuth()
-    {
-        $this->object->setAuth('user', 'pass');
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testSetHeadersWithInvalidArg()
-    {
-        $this->object->setHeaders('Header-Name: header content');
-    }
-
-    public function testSetHeaders()
-    {
-        $this->object->setHeaders(array('Header-Name: header content'));
-    }
-}
 ?>
