@@ -43,6 +43,16 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     protected $curlBuilderMock;
 
+    /**
+     * @var Curl mock
+     */
+    protected $curlMock;
+
+    /**
+     * @var HttpParams mock
+     */
+    protected $httpParamsMock;
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -52,7 +62,10 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlBuilderMock = $this->getMock('CurlBuilder');
+        $this->curlBuilderMock = $this->getMock(
+            'CurlBuilder',
+            array('createCurl')
+        );
         $this->object = new Http($this->curlBuilderMock);
 
     }//end setUp()
@@ -102,7 +115,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
     /**
      * Data provider for the testVerifySSL method
      *
-     * @return <type>
+     * @return array of argument arrays
      */
     public function verifySSLTestProvider()
     {
@@ -145,6 +158,100 @@ class HttpTest extends PHPUnit_Framework_TestCase
         );
 
     }//end testVerifySSL()
+
+
+    /**
+     * Data provider for the testFollowLocation method
+     *
+     * @return array of argument arrays
+     */
+    public function followLocationTestProvider()
+    {
+        return array(
+                'emptyArg' => array(null),
+                'forFalse' => array(false),
+                'forTrue'  => array(true),
+               );
+
+    }//end followLocationTestProvider()
+
+
+    /**
+     * Testing followLocation behaviour
+     *
+     * @param mixed $expected bool for arguments, null for empty call
+     *
+     * @dataProvider followLocationTestProvider()
+     *
+     * @return void
+     */
+    public function testFollowLocation($expected)
+    {
+        if (null === $expected) {
+            $this->object->followLocation();
+            $expected = true;
+        } else {
+            $this->object->followLocation($expected);
+        }
+
+        $this->assertAttributeEquals(
+            $expected,
+            '_followLocation',
+            $this->object
+        );
+
+    }//end testFollowLocation()
+
+
+    /**
+     * Test request behaviour
+     *
+     * @return void
+     */
+    public function testRequest()
+    {
+        $expected = 'successful curl test call';
+
+        $this->httpParamsMock = $this->getMock('HttpParams');
+        $this->curlMock       = $this->getMock('Curl', array('execute'));
+
+        $this->curlBuilderMock->expects(
+            $this->once()
+        )->method('createCurl')->with(
+            $this->equalTo($this->httpParamsMock),
+            $this->equalTo(
+                array(
+                 'cookieStore'    => $this->readAttribute(
+                     $this->object,
+                     '_cookieStore'
+                 ),
+                 'followLocation' => $this->readAttribute(
+                     $this->object,
+                     '_followLocation'
+                 ),
+                 'SSLVerifyHost'  => $this->readAttribute(
+                     $this->object,
+                     '_SSLVerifyHost'
+                 ),
+                 'SSLVerifyPeer'  => $this->readAttribute(
+                     $this->object,
+                     '_SSLVerifyPeer'
+                 ),
+                 'verbose'        => false,
+                 'returnTransfer' => true,
+                )
+            )
+        )->will($this->returnValue($this->curlMock));
+
+        $this->curlMock->expects(
+            $this->once()
+        )->method('execute')->will($this->returnValue($expected));
+
+        $actual = $this->object->request($this->httpParamsMock);
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testRequest()
 
 
 }//end class
