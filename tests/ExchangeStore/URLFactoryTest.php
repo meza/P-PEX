@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  * *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 536105c0e1bb4508a5ee82e93b7298937304b676 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -73,6 +73,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      * dependencies
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -88,6 +89,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      * dependencies
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -100,6 +102,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
     /**
      * We want to be sure, that our factory only handles known types
+     *
+     * @test
      *
      * @return void
      */
@@ -120,6 +124,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      *
      * So we expect our code to return this scheme, when it is required
      *
+     * @test
+     *
      * @return void
      */
     public function testInboxUrlScheme()
@@ -137,6 +143,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      * We want to be able to request a login url too. This is made up as follows
      * <server_url>/exchweb/bin/auth/owaauth.dll
      *
+     * @test
+     *
      * @return void
      */
     public function testLoginUrlScheme()
@@ -152,6 +160,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      /**
       * We want to be able to request a referrer url
       *
+      * @test
+      *
       * @return void;
       */
     public function testReferrerUrlScheme()
@@ -165,6 +175,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
      /**
       * We need the user root
+      *
+      * @test
       *
       * @return void
       */

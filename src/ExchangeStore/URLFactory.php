@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  * * 
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 30a598a1536ef6d6e620a2491a756ee01270e392 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -94,7 +94,7 @@ class URLFactory
         case self::REFERRER:
             return $this->_hostname.'/exchweb/bin/auth/owalogon.asp';
         case self::USERROOT:
-            return  $this->_hostname.'/exchange/'.$this->_username.'/';
+            return $this->_hostname.'/exchange/'.$this->_username.'/';
         default:
             return $type;
         }
