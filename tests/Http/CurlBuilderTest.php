@@ -23,6 +23,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__).'/../../src/Http/CurlBuilder.php';
+require_once dirname(__FILE__).'/../../src/Http/Curl.php';
 
 /**
  * The CurlBuilderTest class is the unittest class for the CurlBuilder class
@@ -62,12 +63,9 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        if (in_array('URLFactory',get_declared_classes())) {
-            $this->fail('URLFactory already defined');
-        }
         $this->urlFactoryMock = $this->getMock(
             'URLFactory',
-            array('getUrlFor')
+            array('getUrlFor'),array(),'',false,false,false
         );
         $this->object         = new CurlBuilder($this->urlFactoryMock);
 
