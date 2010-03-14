@@ -8,8 +8,6 @@
  *
  * @category File
  * @package  Request
- *
- * 
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE

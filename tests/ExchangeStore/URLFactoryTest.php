@@ -61,9 +61,11 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->object = new URLFactory($this->testHost, $this->testUsername);
-    }
+
+    }//end setUp()
 
 
     /**
@@ -76,7 +78,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testNewWithoutAnyArguments()
     {
-        new URLFactory();
+        $urlFactory = new URLFactory();
 
     }//end testNewWithoutAnyArguments()
 
@@ -91,7 +93,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testNewWithoutTheLastArguments()
     {
-        new URLFactory($this->testHost);
+        $urlfactory = new URLFactory($this->testHost);
 
     }//end testNewWithoutTheLastArguments()
 
@@ -117,6 +119,8 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      * <server_url>/Exchange/<username>/Inbox
      *
      * So we expect our code to return this scheme, when it is required
+     *
+     * @return void
      */
     public function testInboxUrlScheme()
     {
@@ -135,14 +139,42 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-     public function testLoginUrlScheme()
-     {
+    public function testLoginUrlScheme()
+    {
          $expected = $this->testHost.'/exchweb/bin/auth/owaauth.dll';
          $actual   = $this->object->getUrlFor(URLFactory::LOGIN);
 
          $this->assertEquals($expected, $actual);
-         
-     }//end testLoginUrlScheme()
+
+    }//end testLoginUrlScheme()
+
+
+     /**
+      * We want to be able to request a referrer url
+      *
+      * @return void;
+      */
+    public function testReferrerUrlScheme()
+    {
+         $expected = $this->testHost.'/exchweb/bin/auth/owalogon.asp';
+         $actual   = $this->object->getUrlFor(URLFactory::REFERRER);
+         $this->assertEquals($expected, $actual);
+
+    }//end testReferrerUrlScheme()
+
+
+     /**
+      * We need the user root
+      *
+      * @return void
+      */
+    public function testUserRootUrlScheme()
+    {
+         $expected = $this->testHost.'/exchange/'.$this->testUsername.'/';
+         $actual   = $this->object->getUrlFor(URLFactory::USERROOT);
+         $this->assertEquals($expected, $actual);
+
+    }//end testUserRootUrlScheme()
 
 
 }//end class
