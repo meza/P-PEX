@@ -24,7 +24,7 @@
 require_once dirname(__FILE__).'/../../Http/HttpParams.php';
 
 /**
- * The LoginHttpParams class is responsible for ...
+ * The LoginHttpParams class is the http param preset for a login call
  *
  * PHP Version: 5
  *
