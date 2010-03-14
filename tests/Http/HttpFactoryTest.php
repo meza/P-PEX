@@ -17,13 +17,12 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 084679f8b1f4e90277b20194aa6f575a349733fe $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
 require_once 'PHPUnit/Framework.php';
 
-require_once dirname(__FILE__).'/../../src/Http/Http.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpFactory.php';
 
 /**
@@ -60,8 +59,10 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlBuilderMock = $this->getMock('CurlBUilder');
-
+        if (in_array('CurlBuilder',get_declared_classes())) {
+            $this->fail('CurlBuilder already defined');
+        }
+        $this->curlBuilderMock = $this->getMock('CurlBuilder');
         $this->object = new HttpFactory($this->curlBuilderMock);
 
     }//end setUp()

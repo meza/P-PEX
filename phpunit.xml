@@ -5,12 +5,14 @@
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
-	stopOnFailure="false"
-	>
+	stopOnFailure="false">
     <filter>
         <whitelist>
             <directory suffix=".php">src/</directory>
         </whitelist>
+        <blacklist>
+            <file>src/PexSpike.php</file>
+        </blacklist>
     </filter>
     <logging>
         <log 
@@ -30,9 +32,5 @@
             target="build/unittest/logfile.xml"
             logIncompleteSkipped="false"/>
     </logging>
-
-    <testsuite name="unittests">
-            <directory suffix="Test.php">tests</directory>
-    </testsuite>
 
 </phpunit>

@@ -62,6 +62,9 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        if (in_array('CurlBuilder',get_declared_classes())) {
+            $this->fail('CurlBuilder already defined');
+        }
         $this->curlBuilderMock = $this->getMock(
             'CurlBuilder',
             array('createCurl')

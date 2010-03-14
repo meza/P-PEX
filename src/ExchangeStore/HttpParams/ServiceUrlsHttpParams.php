@@ -20,7 +20,9 @@
  * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
+
 require_once dirname(__FILE__).'/../../Http/HttpParams.php';
+
 /**
  * The ServiceUrlsHttpParams class is responsible for ...
  *

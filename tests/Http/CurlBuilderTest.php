@@ -62,6 +62,9 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        if (in_array('URLFactory',get_declared_classes())) {
+            $this->fail('URLFactory already defined');
+        }
         $this->urlFactoryMock = $this->getMock(
             'URLFactory',
             array('getUrlFor')
