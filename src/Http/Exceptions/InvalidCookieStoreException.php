@@ -34,7 +34,12 @@
  */
 class InvalidCookieStoreException extends Exception
 {
+
+    /**
+     * @var string exception message
+     */
     protected $message = "The given cookie store is not writable";
+
 }//end class
 
 ?>

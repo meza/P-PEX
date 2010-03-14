@@ -22,7 +22,7 @@
  */
 
 /**
- * The NoUrlSetException class is responsible for ...
+ * The NoUrlSetException happens, when no url was set for the request
  *
  * PHP Version: 5
  *
@@ -34,7 +34,12 @@
  */
 class NoUrlSetException extends Exception
 {
+
+    /**
+     * @var string exception message
+     */
     protected $message = "No URL set for the request.";
+
 }//end class
 
 ?>
