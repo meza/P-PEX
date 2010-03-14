@@ -10,7 +10,7 @@
  * @package  HTTP
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
- * @version  GIT: $Id: f0f724a91a18d324f84d00134f9917781af8486f $
+ * @version  GIT: $Id$
  * @link     http://www.meza.hu
  */
 

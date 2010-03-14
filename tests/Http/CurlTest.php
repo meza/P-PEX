@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id: a7ef29dacbe12348f22e1cde731909296448f779 $
+ * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
 require_once 'PHPUnit/Framework.php';
