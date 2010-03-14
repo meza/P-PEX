@@ -26,7 +26,7 @@ require_once dirname(__FILE__).'/Exceptions/InvalidCookieStoreException.php';
 require_once dirname(__FILE__).'/Exceptions/InvalidCustomHttpMethodException.php';
 
 /**
- * The Curl class is responsible for Http requests
+ * The Curl class is responsible for servig Http requests
  *
  * PHP Version: 5
  *
@@ -99,7 +99,7 @@ class Curl
      *
      * @return void
      *
-     * @throws Exception if GET/POST is used
+     * @throws InvalidCustomHttpMethodException if GET/POST is used
      */
     public function setCustomMethod($method)
     {
