@@ -10,7 +10,7 @@
  * @package  HTTP
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
- * @version  GIT: $Id$
+ * @version  GIT: $Id: f0f724a91a18d324f84d00134f9917781af8486f $
  * @link     http://www.meza.hu
  */
 
@@ -64,7 +64,12 @@ class HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->curlBuilderMock = $this->getMock(
             'CurlBuilder',
-            array('createCurl'),array(),'',false,false,false
+            array('createCurl'),
+            array(),
+            '',
+            false,
+            false,
+            false
         );
         $this->object = new Http($this->curlBuilderMock);
 
@@ -75,6 +80,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
      * Test the creation of the object wihtout the Curl object
      *
      * @expectedException Exception
+     * @test
      *
      * @return viod
      */
@@ -87,6 +93,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests the setCookieStore behaviour
+     *
+     * @test
      *
      * @return void
      */
@@ -134,6 +142,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
      * @param mixed $expected bool for arguments, null for empty call
      *
      * @dataProvider verifySSLTestProvider()
+     * @test
      *
      * @return void
      */
@@ -182,6 +191,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
      * @param mixed $expected bool for arguments, null for empty call
      *
      * @dataProvider followLocationTestProvider()
+     * @test
      *
      * @return void
      */
@@ -205,6 +215,8 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test request behaviour
+     *
+     * @test
      *
      * @return void
      */
