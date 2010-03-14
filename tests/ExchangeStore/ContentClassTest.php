@@ -149,6 +149,7 @@ class ContentClassTest extends PHPUnit_Framework_TestCase
      * Verifies that all constants are correct
      *
      * @dataProvider provider()
+     * @test
      *
      * @return void
      */
