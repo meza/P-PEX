@@ -24,7 +24,7 @@
 require_once dirname(__FILE__).'/../../Http/HttpParams.php';
 
 /**
- * The ServiceUrlsHttpParams class is responsible for ...
+ * The ServiceUrlsHttpParams class is the http preset for the url retrieval
  *
  * PHP Version: 5
  *
