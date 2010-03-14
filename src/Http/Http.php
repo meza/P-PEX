@@ -37,26 +37,35 @@ class Http
 {
 
     /**
-     * @var CurlBuilder
+     * @var CurlBuilder The curl builder dependency
      */
     private $_curlBuilder;
 
     /**
      * @var string The filename of the cookieStore (if set)
      */
-    private $_cookieStore=null;
+    private $_cookieStore = null;
 
+    /**
+     * @var bool True to verify ssl host
+     */
+    private $_SSLVerifyHost = false;
 
-    private $_SSLVerifyHost=false;
+    /**
+     * @var bool true to verify ssl peer
+     */
+    private $_SSLVerifyPeer = false;
 
-    private $_SSLVerifyPeer=false;
+    /**
+     * @var bool true to follow redirects
+     */
+    private $_followLocation = true;
 
-    private $_followLocation=true;
 
     /**
      * Csontructs the object
      *
-     * @param Curl $curl The curl object to use
+     * @param CurlBuilder $curlBuilder The curlBuilder object to use
      *
      * @return Http
      */
@@ -113,27 +122,28 @@ class Http
     /**
      * Makes a http call
      *
-     * @param HttpParams $params The HttpParams object to use
+     * @param HttpParams $httpParams The HttpParams object to use
      *
      * @return array of return parameters
      */
     public function request(HttpParams $httpParams)
     {
-        $curl = $this->_curlBuilder->createCurl(
+        $curl     = $this->_curlBuilder->createCurl(
             $httpParams,
             array(
-                'cookieStore'    => $this->_cookieStore,
-                'followLocation' => $this->_followLocation,
-                'SSLVerifyHost'  => $this->_SSLVerifyHost,
-                'SSLVerifyPeer'  => $this->_SSLVerifyPeer,
-                'verbose'        => false,
-                'returnTransfer' => true,
+             'cookieStore'    => $this->_cookieStore,
+             'followLocation' => $this->_followLocation,
+             'SSLVerifyHost'  => $this->_SSLVerifyHost,
+             'SSLVerifyPeer'  => $this->_SSLVerifyPeer,
+             'verbose'        => false,
+             'returnTransfer' => true,
             )
         );
         $response = $curl->execute();
         return $response;
 
     }//end request()
+
 
 }//end class
 

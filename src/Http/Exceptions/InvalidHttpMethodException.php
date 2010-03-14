@@ -22,7 +22,8 @@
  */
 
 /**
- * The InvalidHttpMethodException class is responsible for ...
+ * The InvalidHttpMethodException happens when an INvalid standard Http method
+ * was encountered
  *
  * PHP Version: 5
  *
@@ -34,7 +35,12 @@
  */
 class InvalidHttpMethodException extends Exception
 {
-    protected $message = "Invalid HTTP method.";
+
+    /**
+     * @var string exception message
+     */
+    protected $message = 'Invalid HTTP method.';
+
 }//end class
 
 ?>

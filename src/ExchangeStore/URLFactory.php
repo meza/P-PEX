@@ -8,8 +8,6 @@
  *
  * @category File
  * @package  Request
- *
- * 
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
@@ -40,12 +38,17 @@ class URLFactory
     /**
      * Login type
      */
-    const LOGIN = 'Login';
+    const LOGIN = 'login';
 
     /**
-     * The Inbox's name
+     * Referrer type
      */
-    const INBOX = 'Inbox';
+    const REFERRER = 'referrer';
+
+    /**
+     * User root type
+     */
+    const USERROOT = 'userroot';
 
     /**
      * @var string The hostname to use in building the urls
@@ -86,27 +89,17 @@ class URLFactory
     public function getUrlFor($type)
     {
         switch ($type) {
-        case self::INBOX:
-            return $this->_getUrlForInbox();
         case self::LOGIN:
             return $this->_getUrlForLogin();
+        case self::REFERRER:
+            return $this->_hostname.'/exchweb/bin/auth/owalogon.asp';
+        case self::USERROOT:
+            return $this->_hostname.'/exchange/'.$this->_username.'/';
         default:
-            throw new Exception('Not known url type: '.$type);
+            return $type;
         }
 
     }//end getUrlFor()
-
-
-    /**
-     * Creates the inbox url scheme
-     *
-     * @return string
-     */
-    private function _getUrlForInbox()
-    {
-        return $this->_hostname.'/Exchange/'.$this->_username.'/Inbox';
-
-    }//end _getUrlForInbox()
 
 
     /**

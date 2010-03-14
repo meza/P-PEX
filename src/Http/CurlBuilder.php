@@ -8,8 +8,6 @@
  *
  * @category File
  * @package  Http
- *
- * 
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
@@ -22,11 +20,8 @@
  * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
-require_once dirname(__FILE__).'/Curl.php';
 require_once dirname(__FILE__).'/Exceptions/InvalidHttpMethodException.php';
 require_once dirname(__FILE__).'/Exceptions/NoUrlSetException.php';
-
 /**
  * The CurlBuilder class is responsible for building specific curl instances
  *
@@ -34,12 +29,32 @@ require_once dirname(__FILE__).'/Exceptions/NoUrlSetException.php';
  *
  * @category Class
  * @package  Http
- * @author   meza
+ * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
 class CurlBuilder
 {
+
+    /**
+     * @var URLFactory instance 
+     */
+    private $_urlFactory;
+
+
+    /**
+     * Constructs the object
+     *
+     * @param URLFactory $urlFactory The urlfactory to use
+     *
+     * @return CurlBuilder
+     */
+    public function __construct(URLFactory $urlFactory)
+    {
+        $this->_urlFactory = $urlFactory;
+
+    }//end __construct()
+
 
     /**
      * Creates a curl instance from the given arguments
@@ -52,10 +67,33 @@ class CurlBuilder
     public function createCurl(HttpParams $httpParams, array $config=array())
     {
         $curl = new Curl();
+        $curl = $this->prepareCurl($curl, $httpParams, $config);
+
+        return $curl;
+
+    }//end createCurl()
+
+
+    /**
+     * Sets the default data on a Curl instance
+     *
+     * @param Curl       $curl       The Curl object to use
+     * @param HttpParams $httpParams The HttpParams to use
+     * @param array      $config     The extra config to use
+     *
+     * @return Curl prepared
+     *
+     * @throws NoUrlSetException when no url was set
+     */
+    public function prepareCurl(
+        Curl $curl,
+        HttpParams $httpParams,
+        array $config=array()
+    ) {
         $curl->setReturnTransfer(true);
         $curl->verbose(false);
         $curl->returnHeaders(false);
-        
+
         $this->_applyConfig($curl, $config);
 
         $headers   = $this->_parseHeaders($httpParams->headers);
@@ -72,33 +110,52 @@ class CurlBuilder
         }
 
         if (null !== $httpParams->referrer) {
-            $curl->setReferrer($httpParams->referrer);
+            $curl->setReferrer($this->_urlFactory->getUrlFor($httpParams->referrer));
         }
 
         if (null === $httpParams->url) {
             throw new NoUrlSetException();
         }
 
-        $curl->setUrl($httpParams->url);
+        $curl->setUrl($this->_urlFactory->getUrlFor($httpParams->url));
 
         if (null !== $httpParams->customMethod) {
             $curl->setCustomMethod(strtoupper($httpParams->customMethod));
         }
 
-        if (
-                (null !== $httpParams->httpUsername)
-                && (null !== $httpParams->httpPassword)
-        ) {
+        if (true === $this->_hasCredentials($httpParams)) {
             $curl->setAuth(
-                    $httpParams->httpUsername,
-                    $httpParams->httpPassword,
-                    CURLAUTH_BASIC
+                $httpParams->httpUsername,
+                $httpParams->httpPassword,
+                CURLAUTH_BASIC
             );
         }
 
         return $curl;
 
-    }//end createCurl()
+    }//end prepareCurl()
+
+
+    /**
+     * Checks if credentials are set or not
+     *
+     * @param HttpParams $httpParams The HttpParams to use
+     *
+     * @return bool
+     */
+    private function _hasCredentials(HttpParams $httpParams)
+    {
+        if (null === $httpParams->httpUsername) {
+            return false;
+        }
+
+        if (null === $httpParams->httpPassword) {
+            return false;
+        }
+
+        return true;
+
+    }//end _hasCredentials()
 
 
     /**
@@ -116,7 +173,7 @@ class CurlBuilder
         }
 
         if (true === isset($config['followLocation'])) {
-            $curl->followLocation($config['follwLocation']);
+            $curl->followLocation($config['followLocation']);
         }
 
         if (true === isset($config['SSLVerifyHost'])) {
@@ -132,7 +189,7 @@ class CurlBuilder
         }
 
         if (true === isset($config['returnTransfer'])) {
-            $curl->verbose($config['returnTransfer']);
+            $curl->setReturnTransfer($config['returnTransfer']);
         }
 
     }//end _applyConfig()
@@ -150,14 +207,13 @@ class CurlBuilder
     private function _parseHttpMethod($method)
     {
         $validMethods = array(
-            'GET',
-            'POST',
-        );
+                         'GET',
+                         'POST',
+                        );
 
         $method = strtoupper($method);
 
-        if (false === in_array($method, $validMethods))
-        {
+        if (false === in_array($method, $validMethods)) {
             throw new InvalidHttpMethodException();
         }
 
@@ -176,19 +232,17 @@ class CurlBuilder
      * 
      * @return array of parsed headers
      */
-    private function _parseHeaders(array $headers)
+    private function _parseHeaders(array $headers=array())
     {
         $retval = array();
-        foreach ($headers as $key=>$value)
-        {
+        foreach ($headers as $key => $value) {
             if (true === is_numeric($key)) {
                 $retval[] = $value;
-            } elseif (true === is_string($key)) {
+            } else if (true === is_string($key)) {
                 $retval[] = $key.': '.$value;
             }
-
         }
-        
+
         return $retval;
 
     }//end _parseHeaders()

@@ -1,8 +1,8 @@
 <?php
 /**
- * NoUrlSetException.php
+ * InvalidCookieStoreException.php
  *
- * Holds the NoUrlSetException class
+ * Holds the InvalidCookieStoreException class
  *
  * PHP Version: 5
  *
@@ -22,7 +22,7 @@
  */
 
 /**
- * The NoUrlSetException happens, when no url was set for the request
+ * The InvalidCookieStoreException fires, when an invalid cookie store was found
  *
  * PHP Version: 5
  *
@@ -32,13 +32,13 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class NoUrlSetException extends Exception
+class InvalidCookieStoreException extends Exception
 {
 
     /**
      * @var string exception message
      */
-    protected $message = "No URL set for the request.";
+    protected $message = "The given cookie store is not writable";
 
 }//end class
 

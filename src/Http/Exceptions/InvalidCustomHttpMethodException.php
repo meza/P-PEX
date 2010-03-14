@@ -1,8 +1,8 @@
 <?php
 /**
- * NoUrlSetException.php
+ * InvalidCustomHttpMethodException.php
  *
- * Holds the NoUrlSetException class
+ * Holds the InvalidCustomHttpMethodException class
  *
  * PHP Version: 5
  *
@@ -22,7 +22,8 @@
  */
 
 /**
- * The NoUrlSetException happens, when no url was set for the request
+ * The InvalidCustomHttpMethodException happens when a custom method was set
+ * with a standard http method
  *
  * PHP Version: 5
  *
@@ -32,13 +33,23 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class NoUrlSetException extends Exception
+class InvalidCustomHttpMethodException extends Exception
 {
 
+
     /**
-     * @var string exception message
+     * Creates the Exception by setting the message
+     *
+     * @param string $method The called http method
+     *
+     * @return InvalidCustomHttpMethodException
      */
-    protected $message = "No URL set for the request.";
+    public function  __construct($method)
+    {
+        $this->message = $method.' is a standard method, don\'t use as custom';
+
+    }//end __construct()
+
 
 }//end class
 
