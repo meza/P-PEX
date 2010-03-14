@@ -10,9 +10,6 @@
         <whitelist>
             <directory suffix=".php">src/</directory>
         </whitelist>
-        <blacklist>
-            <file>src/PexSpike.php</file>
-        </blacklist>
     </filter>
     <logging>
         <log 
