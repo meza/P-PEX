@@ -287,7 +287,10 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     public function testExecute()
     {
-        $expected = array(0 => 'this should be the returned message');
+        $expected = array(
+                     'code' => 0,
+                     'data' => 'this should be the returned message',
+                    );
         $this->object->setReturnTransfer(true);
         $this->object->setUrl(
             'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt'
@@ -306,7 +309,10 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     public function testExecute2()
     {
-        $expected = array(0 => 'this should be the returned message');
+        $expected = array(
+                     'code' => 0,
+                     'data' => 'this should be the returned message',
+                    );
         $this->object->setPost(true);
         $this->object->setReturnTransfer(true);
         $this->object->setUrl(
