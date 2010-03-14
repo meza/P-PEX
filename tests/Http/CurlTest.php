@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: a7ef29dacbe12348f22e1cde731909296448f779 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 require_once 'PHPUnit/Framework.php';
@@ -69,6 +69,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
     /**
      * Tests that the internal pointer is inited
      *
+     * @test
+     *
      * @return void
      */
     public function testConstruct()
@@ -82,6 +84,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * We want to ensure, that unwrutable path could not be set
      *
      * @expectedException InvalidCookieStoreException
+     * @test
      *
      * @return void
      */
@@ -115,6 +118,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * 
      * @dataProvider setCustomMethodTestProvider()
      * @expectedException InvalidCustomHttpMethodException
+     * @test
      * 
      * @return void
      */
@@ -169,6 +173,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * @param string $expected The expected (query) string
      *
      * @dataProvider formatDataTestProvider()
+     * @test
      *
      * @return void;
      */
@@ -182,6 +187,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * Tests the getInfo method
+     *
+     * @test
      *
      * @return void
      */
@@ -203,6 +210,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * Tests the url setter
      *
      * @depends testGetInfo
+     * @test
      *
      * @return void
      */
@@ -219,6 +227,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * We need to test that the setData really set's the data
+     * @test
      *
      * @return false
      */
@@ -236,6 +245,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * We need to ensure, that the setAuth can't be called without params
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -250,6 +260,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * We need to ensure, that the setAuth can't be called without pass
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -264,6 +275,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * We need to ensure, that the setHeaders can't be called with a non-array
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -282,6 +294,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test execute with a normal get
+     *
+     * @test
      *
      * @return void
      */
@@ -305,6 +319,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
     /**
      * Test execute with a normal post
      *
+     * @test
+     *
      * @return void
      */
     public function testExecute2()
@@ -327,6 +343,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test execute with a normal get with data
+     *
+     * @test
      *
      * @return void
      *
@@ -358,6 +376,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * We need to cover the following methods
+     *
+     * @test
      *
      * @return void
      */
