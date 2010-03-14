@@ -153,6 +153,10 @@ class CurlTest extends PHPUnit_Framework_TestCase
                                       null,
                                       '',
                                      ),
+                'int 0'           => array(
+                                      (int) 0,
+                                      (string) 0,
+                                     ),
                );
 
     }//end formatDataTestProvider()
@@ -161,8 +165,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
     /**
      * Test that the formatData method creates the desired value
      *
-     * @param mixed  $data Could be an array or an object
-     * @param string $expected  The expected (query) string
+     * @param mixed  $data     Could be an array or an object
+     * @param string $expected The expected (query) string
      *
      * @dataProvider formatDataTestProvider()
      *
@@ -171,7 +175,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
     public function testFormatData($data, $expected)
     {
         $actual = $this->object->formatData($data);
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
 
     }//end testFormatData()
 
@@ -214,9 +218,177 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * We need to test that the setData really set's the data
+     *
+     * @return false
+     */
+    public function testSetData()
+    {
+        $expected = 'this is the data';
+        $this->object->setData($expected);
+
+        $this->assertAttributeEquals($expected, '_data', $this->object);
+
+    }//end testSetData()
+
+
+    /**
+     * We need to ensure, that the setAuth can't be called without params
+     *
+     * @expectedException Exception
+     *
+     * @return void
+     */
+    public function testSetAuthWithoutParams()
+    {
+        $this->object->setAuth();
+
+    }//end testSetAuthWithoutParams()
+
+
+    /**
+     * We need to ensure, that the setAuth can't be called without pass
+     *
+     * @expectedException Exception
+     *
+     * @return void
+     */
+    public function testSetAuthWithoutPass()
+    {
+        $this->object->setAuth('username');
+
+    }//end testSetAuthWithoutPass()
+
+
+    /**
+     * We need to ensure, that the setHeaders can't be called with a non-array
+     *
+     * @expectedException Exception
+     *
+     * @return void
+     */
+    public function testSetHeadersWithNonArray()
+    {
+        $this->object->setHeaders('username');
+
+    }//end testSetHeadersWithNonArray()
+
+
+    /**
      * Methods below this line are only for validating, that none of the
      * curl calls below throw an exception
      */
+
+
+    /**
+     * Test execute with a normal get
+     *
+     * @return void
+     */
+    public function testExecute()
+    {
+        $expected = array(0 => 'this should be the returned message');
+        $this->object->setReturnTransfer(true);
+        $this->object->setUrl(
+            'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt'
+        );
+
+        $actual = $this->object->execute();
+        $this->assertSame($expected, $actual);
+
+    }//end testExecute()
+
+
+    /**
+     * Test execute with a normal post
+     *
+     * @return void
+     */
+    public function testExecute2()
+    {
+        $expected = array(0 => 'this should be the returned message');
+        $this->object->setPost(true);
+        $this->object->setReturnTransfer(true);
+        $this->object->setUrl(
+            'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt'
+        );
+
+        $actual = $this->object->execute();
+        $this->assertSame($expected, $actual);
+
+    }//end testExecute2()
+
+
+    /**
+     * Test execute with a normal get with data
+     *
+     * @return void
+     *
+     * @throws Exception if an unwanted exception is thrown
+     */
+    public function testExecute3()
+    {
+        $path = dirname(__FILE__).'/_files/curlExecuteTest.txt';
+        $file = 'file://'.$path;
+        $data = 'somedata';
+        $this->object->setData($data);
+        $this->object->setReturnTransfer(true);
+        $this->object->setUrl(
+            $file
+        );
+        try {
+            $actual = $this->object->execute();
+            $this->fail('No url not found exception was raised');
+        } catch (Exception $e) {
+            if ($e->getMessage() === 'Couldn\'t open file '.$path.'?'.$data) {
+                return;
+            }
+
+            throw $e;
+        }
+
+    }//end testExecute3()
+
+
+    /**
+     * We need to cover the following methods
+     *
+     * @return void
+     */
+    public function testCoverUntestableMethods()
+    {
+        $this->object->verbose();
+        $this->object->verbose(true);
+        $this->object->verbose(false);
+
+        $this->object->followLocation();
+        $this->object->followLocation(false);
+        $this->object->followLocation(true);
+
+        $this->object->setReferrer('http://www.google.com');
+        $this->object->setReferrer();
+
+        $this->object->returnHeaders();
+        $this->object->returnHeaders(true);
+        $this->object->returnHeaders(false);
+
+        $this->object->setSSLVerifyPeer();
+        $this->object->setSSLVerifyPeer(true);
+        $this->object->setSSLVerifyPeer(false);
+
+        $this->object->setSSLVerifyHost();
+        $this->object->setSSLVerifyHost(true);
+        $this->object->setSSLVerifyHost(false);
+
+        $this->object->setHeaders(array());
+
+        $this->object->setAuth('username', 'password', CURLAUTH_BASIC);
+
+        $this->object->setCustomMethod('SEARCH');
+
+        $this->object->setCookieStore('cookies.txt');
+
+    }//end testCoverUntestableMethods()
 
 
 }//end class

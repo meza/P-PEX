@@ -131,27 +131,9 @@ class Curl
             $data = http_build_query(get_object_vars($data));
         }
 
-        return $data;
+        return (string) $data;
 
-    }//end _formatData()
-
-
-    /**
-     * Sets the post fields parameter
-     *
-     * @param mixed $data Either a query string, or an array.
-     *
-     * @return void
-     */
-    public function setPostFields($data)
-    {
-        curl_setopt(
-            $this->_ch,
-            CURLOPT_POSTFIELDS,
-            $this->formatData($data)
-        );
-
-    }//end setPostFields()
+    }//end formatData()
 
 
     /**
@@ -184,6 +166,24 @@ class Curl
         return array($info['http_code'] => $retval);
 
     }//end execute()
+
+
+    /**
+     * Sets the post fields parameter
+     *
+     * @param mixed $data Either a query string, or an array.
+     *
+     * @return void
+     */
+    public function setPostFields($data)
+    {
+        curl_setopt(
+            $this->_ch,
+            CURLOPT_POSTFIELDS,
+            $this->formatData($data)
+        );
+
+    }//end setPostFields()
 
 
     /**
