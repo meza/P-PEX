@@ -23,7 +23,7 @@
 
 
 require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../src/Request/URLFactory.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/URLFactory.php';
 
 /**
  * The URLFactoryTest class is the unittest class for the URLFactory class
@@ -99,13 +99,14 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * We want to be sure, that our factory only handles known types
      *
-     * @expectedException Exception
-     *
      * @return void
      */
     public function testGetUrlSchemeForUnknownType()
     {
-        $this->object->getUrlFor('NotKnownTypeString');
+        $expected = 'NotKnownTypeString';
+        $actual   = $this->object->getUrlFor($expected);
+
+        $this->assertEquals($expected, $actual);
 
     }//end testGetUrlSchemeForUnknownType()
 
@@ -119,6 +120,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testInboxUrlScheme()
     {
+        $this->markTestIncomplete('Not yet cool');
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/Inbox';
         $actual   = $this->object->getUrlFor(URLFactory::INBOX);
 

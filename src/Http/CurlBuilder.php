@@ -40,6 +40,26 @@ require_once dirname(__FILE__).'/Exceptions/NoUrlSetException.php';
  */
 class CurlBuilder
 {
+    
+    /**
+     * @var URLFactory instance 
+     */
+    private $_urlFactory;
+
+
+    /**
+     * Constructs the object
+     *
+     * @param URLFactory $urlFactory The urlfactory to use
+     *
+     * @return CurlBuilder
+     */
+    public function __construct(URLFactory $urlFactory)
+    {
+        $this->_urlFactory = $urlFactory;
+
+    }//end __construct()
+
 
     /**
      * Creates a curl instance from the given arguments
@@ -72,14 +92,14 @@ class CurlBuilder
         }
 
         if (null !== $httpParams->referrer) {
-            $curl->setReferrer($httpParams->referrer);
+            $curl->setReferrer($this->_urlFactory->getUrlFor($httpParams->referrer));
         }
 
         if (null === $httpParams->url) {
             throw new NoUrlSetException();
         }
 
-        $curl->setUrl($httpParams->url);
+        $curl->setUrl($this->_urlFactory->getUrlFor($httpParams->url));
 
         if (null !== $httpParams->customMethod) {
             $curl->setCustomMethod(strtoupper($httpParams->customMethod));
