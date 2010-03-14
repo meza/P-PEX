@@ -74,7 +74,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException Exception
      * @test
-     *
+     * 
      * @return void
      */
     public function testNewWithoutAnyArguments()
