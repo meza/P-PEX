@@ -37,13 +37,13 @@ class ServiceUrlsHttpParams extends HttpParams
     public $url     = URLFactory::USERROOT;
     public $headers = array(
             'Content-Type' => 'text/xml',
-            'Depth'        => 1,
+            'Depth'        => 0,
             'Translate'    => 'f',
         );
 
     public $httpMethod = 'post';
 
-    public $customMethod = 'search';
+    public $customMethod = 'propfind';
 
     /**
      * Creates a login param object
@@ -52,16 +52,16 @@ class ServiceUrlsHttpParams extends HttpParams
      */
     public function __construct($username)
     {
-        $this->data         = <<<END
-        <?xml version="1.0"?>
-        <D:searchrequest xmlns:D = "DAV:">
-           <D:sql>
-           SELECT "DAV:contentclass","DAV:displayname"
-           FROM SCOPE('hierarchical traversal of "/exchange/$username/"')
-           </D:sql>
-        </D:searchrequest>
+        $this->data = <<<END
+<?xml version="1.0"?>
+<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:httpmail:">
+        <D:prop><e:inbox/></D:prop>
+        <D:prop><e:calendar/></D:prop>
+        <D:prop><e:contacts/></D:prop>
+        <D:prop><e:tasks/></D:prop>
+        <D:prop><e:notes/></D:prop>
+</D:propfind>
 END;
-
 
     }//end __construct()
 
