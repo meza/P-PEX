@@ -84,7 +84,15 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      */
     private function _setUpHttpParamsFull()
     {
-        $httpParamsMock               = $this->getMock('HttpParams');
+        $httpParamsMock               = $this->getMock(
+            'HttpParams',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
         $httpParamsMock->headers      = array();
         $httpParamsMock->httpMethod   = 'post';
         $httpParamsMock->httpPassword = 'htPass';

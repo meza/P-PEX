@@ -224,7 +224,15 @@ class HttpTest extends PHPUnit_Framework_TestCase
     {
         $expected = 'successful curl test call';
 
-        $this->httpParamsMock = $this->getMock('HttpParams');
+        $this->httpParamsMock = $this->getMock(
+            'HttpParams',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
         $this->curlMock       = $this->getMock('Curl', array('execute'));
 
         $this->curlBuilderMock->expects(
