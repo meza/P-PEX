@@ -7,8 +7,8 @@
  * PHP Version: 5
  *
  * @category File
- * @package
- * @author   meza
+ * @package  ExchangeStore
+ * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
  *                       Version 3, 29 June 2007
@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  * * 
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 33798f41da837c584e50aec1f7bd79daf43293b2 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -29,28 +29,42 @@ require_once dirname(__FILE__).'/../../Http/HttpParams.php';
  * PHP Version: 5
  *
  * @category Class
- * @package  
- * @author   meza
+ * @package  ExchangeStore
+ * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
 class LoginHttpParams extends HttpParams
 {
-    public $url     = URLFactory::LOGIN;
-    public $headers = array(
-        'Content-Type' => 'application/x-www-form-urlencoded'
-    );
 
-    public $referrer   = URLFactory::REFERRER;
+    /**
+     * @var string The Login request needs the specific login url
+     */
+    public $url = URLFactory::LOGIN;
+
+    /**
+     * The default headers for the request
+     * @var array
+     */
+    public $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
+
+    /**
+     * @var string The referrer url type
+     */
+    public $referrer = URLFactory::REFERRER;
+
+    /**
+     * @var string The http method to use
+     */
     public $httpMethod = 'post';
 
 
     /**
      * Creates a login param object
      *
-     * @param string $username
-     * @param string $password
-     * @param string $server
+     * @param string $username The exchange username
+     * @param string $password The exchange password
+     * @param string $server   The exchange server url
      */
     public function __construct($username, $password, $server)
     {
@@ -61,7 +75,7 @@ class LoginHttpParams extends HttpParams
                                'username'    => $username,
                                'password'    => $password,
                                'trusted'     => '4',
-                               'flags'       => '4'
+                               'flags'       => '4',
                               );
 
     }//end __construct()
