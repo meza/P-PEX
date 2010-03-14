@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 10b0d2b12b0ee17ad8f891078c180bb1b87bcc62 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -71,6 +71,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      * dependency
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -83,6 +84,8 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
 
     /**
      * We want our method, to return a Http object
+     *
+     * @test
      *
      * @return void()
      */
@@ -98,6 +101,8 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * We'd like to ensure, that the correct initializer methods are called,
      * regardless to the order. The values are the keypoint.
+     *
+     * @test
      *
      * @return void
      */
