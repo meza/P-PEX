@@ -7,8 +7,8 @@
  * PHP Version: 5
  *
  * @category File
- * @package
- * @author   meza
+ * @package  ExchangeStore
+ * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
  *                       Version 3, 29 June 2007
@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  * * 
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 9e2a673a3e847b3121e0cc0fbf72b566870cfc3c $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -29,23 +29,38 @@ require_once dirname(__FILE__).'/../../Http/HttpParams.php';
  * PHP Version: 5
  *
  * @category Class
- * @package  
- * @author   meza
+ * @package  ExchangeStore
+ * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
 class ServiceUrlsHttpParams extends HttpParams
 {
-    public $url     = URLFactory::USERROOT;
-    public $headers = array(
-            'Content-Type' => 'text/xml',
-            'Depth'        => 0,
-            'Translate'    => 'f',
-        );
 
+    /**
+     * @var string The root url
+     */
+    public $url = URLFactory::USERROOT;
+
+    /**
+     * @var array The headers to use for the request
+     */
+    public $headers = array(
+                       'Content-Type' => 'text/xml',
+                       'Depth'        => 0,
+                       'Translate'    => 'f',
+                      );
+
+    /**
+     * @var string The http method to use
+     */
     public $httpMethod = 'post';
 
+    /**
+     * @var string The custom http method to use
+     */
     public $customMethod = 'propfind';
+
 
     /**
      * Creates a login param object
@@ -54,7 +69,7 @@ class ServiceUrlsHttpParams extends HttpParams
      */
     public function __construct()
     {
-        $this->data = <<<END
+        $this->data = '
 <?xml version="1.0"?>
 <D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:httpmail:">
         <D:prop><e:inbox/></D:prop>
@@ -63,9 +78,10 @@ class ServiceUrlsHttpParams extends HttpParams
         <D:prop><e:tasks/></D:prop>
         <D:prop><e:notes/></D:prop>
 </D:propfind>
-END;
+';
 
     }//end __construct()
+
 
 }//end class
 
