@@ -48,9 +48,9 @@ class ServiceUrlsHttpParams extends HttpParams
     /**
      * Creates a login param object
      *
-     * @param string $username
+     * @return ServiceUrlsHttpParams
      */
-    public function __construct($username)
+    public function __construct()
     {
         $this->data = <<<END
 <?xml version="1.0"?>
