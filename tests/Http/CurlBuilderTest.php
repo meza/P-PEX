@@ -17,7 +17,7 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  * *
- * @version  GIT: $Id$
+ * @version  GIT: $Id: 0bd46a9982bf806ef81107812d33ae05617b8096 $
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -65,7 +65,12 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
     {
         $this->urlFactoryMock = $this->getMock(
             'URLFactory',
-            array('getUrlFor'),array(),'',false,false,false
+            array('getUrlFor'),
+            array(),
+            '',
+            false,
+            false,
+            false
         );
         $this->object         = new CurlBuilder($this->urlFactoryMock);
 
@@ -99,6 +104,7 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      * Check that the object needs it's dependency
      *
      * @expectedException Exception
+     * @test
      *
      * @return void
      */
@@ -111,6 +117,8 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
 
     /**
      * cover createHttp. The real test is in testPrepareCurl
+     *
+     * @test
      *
      * @return void
      */
@@ -298,6 +306,8 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
     /**
      * Test the prepareCurl method
      *
+     * @test
+     *
      * @return void
      */
     public function testPrepareCurlWithMinimum()
@@ -319,6 +329,8 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test the prepareCurl method with all data
+     *
+     * @test
      *
      * @return void
      */
@@ -347,6 +359,8 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
     /**
      * Test the prepareCurl method without password
      *
+     * @test
+     *
      * @return void
      */
     public function testPrepareCurlWithoutPass()
@@ -364,6 +378,7 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      * Test the prepareCurl method with invalid method
      *
      * @expectedException InvalidHttpMethodException
+     * @test
      *
      * @return void
      */
@@ -381,6 +396,7 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      * Test the prepareCurl method with no url
      *
      * @expectedException NoUrlSetException
+     * @test
      *
      * @return void
      */
