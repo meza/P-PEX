@@ -118,28 +118,6 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * We want our factory to be able to handle the inbox url.
-     * The exchange server's inbox url scheme is made up as it follows:
-     * <server_url>/Exchange/<username>/Inbox
-     *
-     * So we expect our code to return this scheme, when it is required
-     *
-     * @test
-     *
-     * @return void
-     */
-    public function testInboxUrlScheme()
-    {
-        $this->markTestIncomplete('Not yet cool');
-        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/Inbox';
-        $actual   = $this->object->getUrlFor(URLFactory::INBOX);
-
-        $this->assertEquals($expected, $actual);
-
-    }//end testInboxUrlScheme()
-
-
-    /**
      * We want to be able to request a login url too. This is made up as follows
      * <server_url>/exchweb/bin/auth/owaauth.dll
      *
