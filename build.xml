@@ -12,19 +12,29 @@
 		<mkdir dir="${basedir}/build/unittest/coverage/source"/>
     </target>
 
+    <target name="ide" depends="phpcpd-ide, phpmd-ide, phpcs, phpunit-ide"/>
+
     <target name="phpunit" depends="prepare">
         <exec dir="${basedir}"
         executable="phpunit"
         failonerror="true">
-            <arg line="--configuration ${basedir}/phpunit.xml tests/"/>
+            <arg line="--configuration ${basedir}/phpunit.xml ."/>
         </exec>
     </target>
 
-	<target name="phpcs" depends="prepare">
+    <target name="phpunit-ide">
+        <exec dir="${basedir}"
+        executable="phpunit"
+        failonerror="true">
+            <arg line="--no-configuration --testdox ${basedir}"/>
+        </exec>
+    </target>
+
+	<target name="phpcs">
 		<exec dir="${basedir}"
 		executable="phpcs"
-		failonerror="false">
-			<arg line="--standard=PHPCS --extensions=php ${basedir}/src"/>
+		failonerror="true">
+			<arg line="--standard=PHPCS --extensions=php ${basedir}"/>
 		</exec>
 	</target>
 
@@ -45,27 +55,37 @@
 		</exec>
 	</target>
 
-	<target name="pdepend" depends="prepare, phpunit">
-        <exec dir="${basedir}/src"
-	executable="pdepend"
-        failonerror="false">
-            <arg line="--jdepend-xml=${basedir}/build/logs/jdepend.xml --coverage-report=${basedir}/build/unittest/coverage/clover.xml --jdepend-chart=${basedir}/build/logs/dpec.svg --overview-pyramid=${basedir}/build/logs/pir.svg ."/>
-        </exec>
-    </target>
-
     <target name="phpmd" depends="prepare">
-        <exec dir="${basedir}/src"
+        <exec dir="${basedir}"
         executable="phpmd"
         failonerror="false">
             <arg line=". xml codesize
               --reportfile ${basedir}/build/logs/pmd.xml"/>
         </exec>
     </target>
+    
+    <target name="phpmd-ide">
+        <exec dir="${basedir}"
+        executable="phpmd"
+        failifexecutionfails="true"
+        
+        failonerror="true">
+            <arg line=". text codesize"/>
+        </exec>
+    </target>
 
     <target name="phpcpd" depends="prepare">
         <exec
     	    executable="phpcpd">
-        	<arg line="--min-tokens=20 --log-pmd ${basedir}/build/logs/pmd-cpd.xml ${basedir}/src"/>
+        	<arg line="--min-tokens 20 --log-pmd ${basedir}/build/logs/pmd-cpd.xml ${basedir}/src"/>
+        </exec>
+    </target>
+    
+    <target name="phpcpd-ide">
+        <exec
+            failonerror="true"
+    	    executable="phpcpd">
+        	<arg line="--min-tokens 10 ${basedir}"/>
         </exec>
     </target>
 
@@ -87,5 +107,5 @@
 
 	<target name="build" depends="phpunit"></target>
 
-	<target name="ci-build" depends="phploc, pdepend, phpmd, phpcpd, phpunit, document, phpcs-ci"/>
+	<target name="ci-build" depends="phploc, phpmd, phpcpd, phpunit, document, phpcs-ci"/>
 </project>

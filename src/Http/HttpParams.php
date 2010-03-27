@@ -38,7 +38,8 @@ class HttpParams
     /**
      * @var string The user agent string the request claims itself
      */
-    public $userAgent = "Mozilla/5.0 (X11; U; Linux x86_64; hu-HU; rv:1.9.1.8) Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8";
+    public $userAgent = 'Mozilla/5.0 (X11; U; Linux x86_64; hu-HU; rv:1.9.1.8) 
+    Gecko/20100214 Ubuntu/9.10 (karmic) Firefox/3.5.8';
 
     /**
      * @var string The custom method to use

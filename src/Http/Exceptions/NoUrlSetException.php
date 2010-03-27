@@ -38,7 +38,7 @@ class NoUrlSetException extends Exception
     /**
      * @var string exception message
      */
-    protected $message = "No URL set for the request.";
+    protected $message = 'No URL set for the request.';
 
 }//end class
 

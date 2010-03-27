@@ -37,6 +37,8 @@ require_once dirname(__FILE__).'/../../src/Http/Curl.php';
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class CurlTest extends PHPUnit_Framework_TestCase
 {
@@ -51,6 +53,11 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     protected $ch;
 
+    /**
+     * @var string The url to the test file
+     */
+    private $_testFile;
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -60,8 +67,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Curl;
-        $this->ch     = $this->readAttribute($this->object, '_ch');
+        $this->object    = new Curl;
+        $this->ch        = $this->readAttribute($this->object, '_ch');
+        $this->_testFile = 'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt';
 
     }//end setUp()
 
@@ -227,6 +235,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * We need to test that the setData really set's the data
+     * 
      * @test
      *
      * @return false
@@ -293,6 +302,25 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Prepares and calls an execute
+     *
+     * @param Curl   $object The object to use
+     * @param string $url    The url to call
+     * @param vool   $isPost Flag
+     *
+     * @return string response
+     */
+    private function _runExecute(Curl $object, $url, $isPost=false)
+    {
+        $object->setPost($isPost);
+        $object->setReferrer(true);
+        $object->setUrl($url);
+        return $object->execute();
+
+    }//end _runExecute()
+
+
+    /**
      * Test execute with a normal get
      *
      * @test
@@ -305,12 +333,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
                      'code' => 0,
                      'data' => 'this should be the returned message',
                     );
-        $this->object->setReturnTransfer(true);
-        $this->object->setUrl(
-            'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt'
-        );
-
-        $actual = $this->object->execute();
+        $actual   = $this->_runExecute($this->object, $this->_testFile, false);
         $this->assertSame($expected, $actual);
 
     }//end testExecute()
@@ -329,13 +352,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
                      'code' => 0,
                      'data' => 'this should be the returned message',
                     );
-        $this->object->setPost(true);
-        $this->object->setReturnTransfer(true);
-        $this->object->setUrl(
-            'file://'.dirname(__FILE__).'/_files/curlExecuteTest.txt'
-        );
-
-        $actual = $this->object->execute();
+        $actual   = $this->_runExecute($this->object, $this->_testFile, true);
         $this->assertSame($expected, $actual);
 
     }//end testExecute2()
@@ -356,12 +373,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
         $file = 'file://'.$path;
         $data = 'somedata';
         $this->object->setData($data);
-        $this->object->setReturnTransfer(true);
-        $this->object->setUrl(
-            $file
-        );
         try {
-            $actual = $this->object->execute();
+            $this->_runExecute($this->object, $file, false);
             $this->fail('No url not found exception was raised');
         } catch (Exception $e) {
             if ($e->getMessage() === 'Couldn\'t open file '.$path.'?'.$data) {

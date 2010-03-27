@@ -35,6 +35,8 @@ require_once dirname(__FILE__).'/../../src/Http/Curl.php';
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class CurlBuilderTest extends PHPUnit_Framework_TestCase
 {

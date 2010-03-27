@@ -49,12 +49,12 @@ class Http
     /**
      * @var bool True to verify ssl host
      */
-    private $_SSLVerifyHost = false;
+    private $_sslVerifyHost = false;
 
     /**
      * @var bool true to verify ssl peer
      */
-    private $_SSLVerifyPeer = false;
+    private $_sslVerifyPeer = false;
 
     /**
      * @var bool true to follow redirects
@@ -99,8 +99,8 @@ class Http
      */
     public function verifySSL($flag=false)
     {
-        $this->_SSLVerifyHost = $flag;
-        $this->_SSLVerifyPeer = $flag;
+        $this->_sslVerifyHost = $flag;
+        $this->_sslVerifyPeer = $flag;
 
     }//end verifySSL()
 
@@ -133,8 +133,8 @@ class Http
             array(
              'cookieStore'    => $this->_cookieStore,
              'followLocation' => $this->_followLocation,
-             'SSLVerifyHost'  => $this->_SSLVerifyHost,
-             'SSLVerifyPeer'  => $this->_SSLVerifyPeer,
+             'SSLVerifyHost'  => $this->_sslVerifyHost,
+             'SSLVerifyPeer'  => $this->_sslVerifyPeer,
              'verbose'        => false,
              'returnTransfer' => true,
             )

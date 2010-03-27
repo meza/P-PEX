@@ -59,8 +59,15 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlBuilderMock = $this->getMock('CurlBuilder',
-                array(),array(),'',false,false,false);
+        $this->curlBuilderMock = $this->getMock(
+            'CurlBuilder',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
         $this->object = new HttpFactory($this->curlBuilderMock);
 
     }//end setUp()
@@ -109,30 +116,35 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
     public function testSettingsInit()
     {
         $http = $this->object->createHttp();
-        
-        $this->assertAttributeEquals(
-                'cookies.txt',
-                '_cookieStore',
-                $http,
-                'setCookieStore was not called with cookies.txt argument');
 
         $this->assertAttributeEquals(
-                false,
-                '_SSLVerifyHost',
-                $http,
-                'verifySSL was not called with false');
+            'cookies.txt',
+            '_cookieStore',
+            $http,
+            'setCookieStore was not called with cookies.txt argument'
+        );
 
         $this->assertAttributeEquals(
-                false,
-                '_SSLVerifyPeer',
-                $http,
-                'verifySSL was not called with false');
+            false,
+            '_SSLVerifyHost',
+            $http,
+            'verifySSL was not called with false'
+        );
 
         $this->assertAttributeEquals(
-                true,
-                '_followLocation',
-                $http,
-                'followLocation was not called with true');
+            false,
+            '_SSLVerifyPeer',
+            $http,
+            'verifySSL was not called with false'
+        );
+
+        $this->assertAttributeEquals(
+            true,
+            '_followLocation',
+            $http,
+            'followLocation was not called with true'
+        );
+
     }//end testSettingsInit()
 
 
