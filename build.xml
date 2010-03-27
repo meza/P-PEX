@@ -33,7 +33,7 @@
 	<target name="phpcs">
 		<exec dir="${basedir}"
 		executable="phpcs"
-		failonerror="true">
+		failonerror="false">
 			<arg line="--standard=PHPCS --extensions=php ${basedir}"/>
 		</exec>
 	</target>

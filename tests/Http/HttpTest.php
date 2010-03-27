@@ -157,12 +157,12 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(
             $expected,
-            '_SSLVerifyHost',
+            '_sslVerifyHost',
             $this->object
         );
         $this->assertAttributeEquals(
             $expected,
-            '_SSLVerifyPeer',
+            '_sslVerifyPeer',
             $this->object
         );
 
@@ -251,11 +251,11 @@ class HttpTest extends PHPUnit_Framework_TestCase
                  ),
                  'SSLVerifyHost'  => $this->readAttribute(
                      $this->object,
-                     '_SSLVerifyHost'
+                     '_sslVerifyHost'
                  ),
                  'SSLVerifyPeer'  => $this->readAttribute(
                      $this->object,
-                     '_SSLVerifyPeer'
+                     '_sslVerifyPeer'
                  ),
                  'verbose'        => false,
                  'returnTransfer' => true,

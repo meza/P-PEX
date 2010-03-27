@@ -312,6 +312,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      */
     private function _runExecute(Curl $object, $url, $isPost=false)
     {
+        $object->setReturnTransfer(true);
         $object->setPost($isPost);
         $object->setReferrer(true);
         $object->setUrl($url);

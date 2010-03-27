@@ -126,14 +126,14 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertAttributeEquals(
             false,
-            '_SSLVerifyHost',
+            '_sslVerifyHost',
             $http,
             'verifySSL was not called with false'
         );
 
         $this->assertAttributeEquals(
             false,
-            '_SSLVerifyPeer',
+            '_sslVerifyPeer',
             $http,
             'verifySSL was not called with false'
         );
