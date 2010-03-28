@@ -41,7 +41,7 @@ class StoreUrlParserTest extends PHPUnit_Framework_TestCase
 
     private $_xmlString = '<?xml version="1.0"?>
  <a:multistatus xmlns:b="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"
- xmlns:d="urn:schemas:httpmail:" xmlns:c="xml:" xmlns:a="DAV:">
+ xmlns:d="urn:schemas:httpmail:" xmlns:a="DAV:">
   <a:response>
    <a:href>https://my.server.com/exchange/myusername/</a:href>
    <a:propstat>
