@@ -66,6 +66,12 @@ class StoreUrlParser implements Parser
      */
     public function parse($xmlString)
     {
+        /*
+            TODO This should be fixed. SimpleXML Error handling depends on the
+            environment.
+        */
+
+        libxml_use_internal_errors(true);
         $xml = new SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $root = $xml->xpath('//dav:href');
