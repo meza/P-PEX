@@ -5,3 +5,4 @@ nbproject
 /.doxylog
 /doxytags.tag
 build
+src/config/rokonai.ini
