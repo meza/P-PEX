@@ -29,6 +29,7 @@ require_once 'Http/CurlBuilder.php';
 require_once 'ExchangeStore/URLFactory.php';
 require_once 'ExchangeStore/HttpParams/LoginHttpParams.php';
 require_once 'ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
+require_once 'ExchangeStore/Parser/ParserFactory.php';
 
 
 class PexConnectionData
@@ -130,15 +131,14 @@ class PexService
     }
 }
 
-$df = new ConnectionDataFactory();
-$fs = new PexService($df->createConnectionData('rokonai'));
-$fs->login();
-sleep(3);
-$xml = $fs->getStoreUrls();
-$x = new SimpleXMLElement($xml['data']);
-//var_dump($x->xpath('//d:inbox'));
-
-var_dump($x->asXML());
+//$df = new ConnectionDataFactory();
+//$fs = new PexService($df->createConnectionData('rokonai'));
+//$fs->login();
+//sleep(3);
+//$xml = $fs->getStoreUrls();
+//$pf = new ParserFactory();
+//$p = $pf->createParser(ParserFactory::STORE_URLS);
+//var_dump($p->parse($xml['data']));
 
 ?>
 
