@@ -10,6 +10,7 @@
         <whitelist>
             <directory suffix=".php">src/</directory>
             <exclude>
+                <file>src/PexSpike.php</file>
                 <file>src/Http/HttpParams.php</file>
                 <directory>src/ExchangeStore/HttpParams</directory>
             </exclude>
