@@ -30,12 +30,6 @@ require_once dirname(__FILE__).'/ConnectionData.php';
  * @package  Pex
  *
  * @author   meza <meza@meza.hu>
- *
- * @property $uAgen             The user agent to use
- * @property $host   The server's host
- * @property $username The username
- * @property $exchange_password The password
- *
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
  *                       Version 3, 29 June 2007
