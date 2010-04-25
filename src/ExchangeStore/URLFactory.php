@@ -51,6 +51,11 @@ class URLFactory
     const USERROOT = 'userroot';
 
     /**
+     * Contact type
+     */
+    const CONTACT = 'contact';
+
+    /**
      * @var string The hostname to use in building the urls
      */
     private $_hostname;
@@ -60,19 +65,26 @@ class URLFactory
      */
     private $_username;
 
+    /**
+     * @var URLAccess instance
+     */
+    private $_urlAccess;
+
 
     /**
      * Creates the URLFactory object, and requires data
      *
-     * @param string $hostname The hostname of the exchange server
-     * @param string $username The username
+     * @param string    $hostname The  hostname of the exchange server
+     * @param string    $username The  username
+     * @param URLAccess $urlAccess The urlAccess
      *
      * @return URLFactory
      */
-    public function __construct($hostname, $username)
+    public function __construct($hostname, $username, $urlAccess)
     {
-        $this->_hostname = $hostname;
-        $this->_username = $username;
+        $this->_hostname  = $hostname;
+        $this->_username  = $username;
+        $this->_urlAccess = $urlAccess;
 
     }//end __construct()
 
@@ -80,13 +92,14 @@ class URLFactory
     /**
      * Returns the requested url type.
      *
-     * @param string $type The type of url requested
+     * @param string $type   The type of url requested
+     * @param mixed  $param1 Extra parameter
      *
      * @return string
      *
      * @throws Exception when an unknown type is requested
      */
-    public function getUrlFor($type)
+    public function getUrlFor($type, $param1=null)
     {
         switch ($type) {
         case self::LOGIN:
@@ -95,6 +108,8 @@ class URLFactory
             return $this->_hostname.'/exchweb/bin/auth/owalogon.asp';
         case self::USERROOT:
             return $this->_hostname.'/exchange/'.$this->_username.'/';
+        case self::CONTACT:
+            return $this->_getUrlForContact($param1);
         default:
             return $type;
         }
@@ -113,6 +128,15 @@ class URLFactory
 
     }//end _getUrlForLogin()
 
+
+    public function _getUrlForContact($contactName)
+    {
+
+        $contact = $this->_urlAccess->contacts;
+        $url = $this->_hostname.'/exchange/'.$this->_username.'/'.$contact.'/'.$contactName.'.eml';
+        var_dump($url);
+        return $url;
+    }
 
 }//end class
 

@@ -81,6 +81,11 @@ class HttpParams
      */
     public $url = null;
 
+    /**
+     * @var array of url params
+     */
+    public $urlParams = array();
+
 }//end class
 
 ?>

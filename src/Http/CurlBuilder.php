@@ -117,7 +117,14 @@ class CurlBuilder
             throw new NoUrlSetException();
         }
 
-        $curl->setUrl($this->_urlFactory->getUrlFor($httpParams->url));
+
+        $param_arr = array($httpParams->url);
+        foreach ($httpParams->urlParams as $key => $value) {
+            $param_arr[] = $value;
+        }
+        
+        $url = call_user_func_array(array($this->_urlFactory, 'getUrlFor'), $param_arr);
+        $curl->setUrl($url);
 
         if (null !== $httpParams->customMethod) {
             $curl->setCustomMethod(strtoupper($httpParams->customMethod));
