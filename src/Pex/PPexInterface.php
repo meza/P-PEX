@@ -62,11 +62,13 @@ interface PPexInterface
     /**
      * Performs a http call with the given params
      *
-     * @param HttpParams $params The httpParams object to use
+     * @param HttpParams $params   The httpParams object to use
+     * @param int        $tries    The number of request tries
+     * @param int        $maxTries The maximum amount of retries
      *
      * @return string result
      */
-    public function call(HttpParams $params);
+    public function call(HttpParams $params, $tries=0, $maxTries=1);
 
 
     /**
@@ -78,6 +80,14 @@ interface PPexInterface
      * @return ExchangeResponse
      */
     public function parse($resultString, Parser $parser);
+
+
+    /**
+     * Retrieve the list of custom store urls
+     *
+     * @return StoreUrlData
+     */
+    public function getStoreUrls();
 
 
 }//end interface
