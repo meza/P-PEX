@@ -31,8 +31,9 @@ require_once 'ExchangeStore/HttpParams/LoginHttpParams.php';
 require_once 'ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
 require_once 'ExchangeStore/Parser/ParserFactory.php';
 require_once 'Pex/ConnectionDataFactory.php';
+require_once 'Pex/PPexInterface.php';
 
-class PexService
+class PexService implements PPexInterface
 {
 
     /**
@@ -55,33 +56,44 @@ class PexService
      */
     public $httpFactory;
 
-    public function getHttp()
+    public function getHttp(HttpFactory $factory)
     {
-        return $this->httpFactory->createHttp();
+        return $factory->createHttp();
     }
 
     public function __construct(ConnectionData $data)
     {
-        $this->data = $data;
-        $this->urlFactory = new URLFactory($data->host, $data->username);
+        $this->data        = $data;
+        $this->urlFactory  = new URLFactory($data->host, $data->username);
         $this->curlBuilder = new CurlBuilder($this->urlFactory);
         $this->httpFactory = new HttpFactory($this->curlBuilder);
     }
-    public function getStoreUrls()
-    {
 
-        $params = new ServiceUrlsHttpParams();
-        return $this->getHttp()->request($params);
+    public function call(HttpParams $params)
+    {
+        return $this->getHttp($this->httpFactory)->request($params);
     }
 
-    function login()
+    public function parse($resultString, Parser $parser)
+    {
+        return $parser->parse($resultString);
+    }
+
+    public function login()
     {
         $params = new LoginHttpParams(
             $this->data->username,
             $this->data->password,
             $this->data->host
         );
-        $this->getHttp()->request($params);
+        $this->call($params);
+    }
+
+    public function getStoreUrls()
+    {
+
+        $params = new ServiceUrlsHttpParams();
+        return $this->call($params);
     }
 }
 
