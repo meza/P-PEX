@@ -22,6 +22,10 @@
  */
 
 require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidHttpMethodException.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCustomHttpMethodException.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/NoUrlSetException.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCookieStoreException.php';
 require_once dirname(__FILE__).'/../../src/Http/CurlBuilder.php';
 require_once dirname(__FILE__).'/../../src/Http/Curl.php';
 
@@ -103,6 +107,7 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
         $httpParamsMock->referrer     = 'referrer';
         $httpParamsMock->customMethod = 'search';
         $httpParamsMock->url          = 'urlurl';
+        $httpParamsMock->urlParams    = array();
         $httpParamsMock->userAgent    = 'testUA';
 
         return $httpParamsMock;

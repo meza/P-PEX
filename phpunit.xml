@@ -12,6 +12,7 @@
             <exclude>
                 <file>src/PexSpike.php</file>
                 <file>src/Http/HttpParams.php</file>
+                <directory suffix="Data.php">.</directory>
                 <directory>src/ExchangeStore/HttpParams</directory>
             </exclude>
         </whitelist>

@@ -20,8 +20,7 @@
  * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
-require_once dirname(__FILE__).'/Exceptions/InvalidHttpMethodException.php';
-require_once dirname(__FILE__).'/Exceptions/NoUrlSetException.php';
+
 /**
  * The CurlBuilder class is responsible for building specific curl instances
  *

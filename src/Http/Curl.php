@@ -22,9 +22,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
-require_once dirname(__FILE__).'/Exceptions/InvalidCookieStoreException.php';
-require_once dirname(__FILE__).'/Exceptions/InvalidCustomHttpMethodException.php';
-
 /**
  * The Curl class is responsible for servig Http requests
  *

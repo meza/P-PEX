@@ -21,8 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/../../Http/HttpParams.php';
-
 /**
  * The ServiceUrlsHttpParams class is the http preset for the url retrieval
  *

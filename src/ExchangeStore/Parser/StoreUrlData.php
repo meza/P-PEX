@@ -21,8 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/../ExchangeResponse.php';
-
 /**
  * The StoreUrlData is the valueobject holding the data
  * 

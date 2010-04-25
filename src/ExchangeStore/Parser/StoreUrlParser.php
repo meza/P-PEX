@@ -21,9 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/Parser.php';
-require_once dirname(__FILE__).'/StoreUrlData.php';
-
 /**
  * The StoreUrlParser is a Parser implementation, and is responsible for parsing
  * the custom store urls given by the server

@@ -21,19 +21,7 @@
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
-require_once 'Http/Curl.php';
-require_once 'Http/Http.php';
-require_once 'Http/HttpFactory.php';
-require_once 'Http/HttpParams.php';
-require_once 'Http/CurlBuilder.php';
-require_once 'ExchangeStore/URLAccess.php';
-require_once 'ExchangeStore/URLFactory.php';
-require_once 'ExchangeStore/HttpParams/LoginHttpParams.php';
-require_once 'ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
-require_once 'ExchangeStore/Parser/ParserFactory.php';
-require_once 'Pex/Exceptions/CouldNotLoginException.php';
-require_once 'Pex/ConnectionDataFactory.php';
-require_once 'Pex/PPexInterface.php';
+require_once 'PPexInterface.php';
 
 /**
  * The Pex class is the main class

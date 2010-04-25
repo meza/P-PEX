@@ -24,6 +24,7 @@
 
 require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/URLFactory.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/URLAccess.php';
 
 /**
  * The URLFactoryTest class is the unittest class for the URLFactory class
@@ -54,6 +55,10 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected $testHost = 'https://www.example-server.com';
 
+    /**
+     * @var URLAccess instance
+     */
+    protected $testURLAccess;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -63,7 +68,12 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new URLFactory($this->testHost, $this->testUsername);
+        $this->testURLAccess = new URLAccess();
+        $this->object        = new URLFactory(
+            $this->testHost,
+            $this->testUsername,
+            $this->testURLAccess
+        );
 
     }//end setUp()
 
@@ -165,6 +175,28 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
          $this->assertEquals($expected, $actual);
 
     }//end testUserRootUrlScheme()
+
+
+    /**
+     * We need an url for the contact
+     *
+     * @test
+     *
+     * @return void
+     */
+    public function testContactUrlScheme()
+    {
+        $this->testURLAccess->contacts = 'contacts';
+        $contactName = 'testName';
+        $expected = $this->testHost.'/exchange/'.$this->testUsername.'/'.
+                $this->testURLAccess->contacts.'/'.$contactName.'.eml';
+
+        $actual = $this->object->getUrlFor(URLFactory::CONTACT, $contactName);
+
+        $this->assertEquals($expected, $actual);
+
+
+    }//end testContactUrlScheme()
 
 
 }//end class

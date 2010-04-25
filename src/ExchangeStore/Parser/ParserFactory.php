@@ -21,8 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/Exceptions/NoSuchParserException.php';
-
 /**
  * The ParserFactory class is responsible for the generation of the Parser
  * implementations

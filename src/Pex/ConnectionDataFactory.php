@@ -21,8 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/ConnectionData.php';
-
 /**
  * The connection factory
  *
