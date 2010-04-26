@@ -26,6 +26,7 @@ require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidHttpMethodExce
 require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCustomHttpMethodException.php';
 require_once dirname(__FILE__).'/../../src/Http/Exceptions/NoUrlSetException.php';
 require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCookieStoreException.php';
+require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
 require_once dirname(__FILE__).'/../../src/Http/CurlBuilder.php';
 require_once dirname(__FILE__).'/../../src/Http/Curl.php';
 
@@ -90,15 +91,7 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
      */
     private function _setUpHttpParamsFull()
     {
-        $httpParamsMock               = $this->getMock(
-            'HttpParams',
-            array(),
-            array(),
-            '',
-            false,
-            false,
-            false
-        );
+        $httpParamsMock               = new HttpParams();
         $httpParamsMock->headers      = array();
         $httpParamsMock->httpMethod   = 'post';
         $httpParamsMock->httpPassword = 'htPass';
@@ -423,6 +416,31 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
         $this->object->prepareCurl($curlMock, $httpParams);
 
     }//end testPrepareCurlWithoutUrl()
+
+
+    /**
+     * Test the prepareCurl method with url params
+     *
+     * @test
+     *
+     * @return void
+     */
+    public function testPrepareCurlWithUrlParams()
+    {
+        $httpParams            = $this->_setUpHttpParamsFull();
+        $httpParams->url       = 'contact';
+        $param1                = 'param1';
+        $httpParams->urlParams = array($param1);
+        $this->urlFactoryMock->expects($this->at(1))->method('getUrlFor')->with(
+            $this->equalTo($httpParams->url),
+            $this->equalTo($param1)
+        )->will($this->returnValue('url1'));
+
+        $curlMock = $this->getMock('Curl');
+
+        $this->object->prepareCurl($curlMock, $httpParams);
+
+    }//end testPrepareCurlWithUrlParams()
 
 
 }//end class

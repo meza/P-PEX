@@ -121,7 +121,6 @@ class CurlBuilder
         foreach ($httpParams->urlParams as $key => $value) {
             $param_arr[] = $value;
         }
-        
         $url = call_user_func_array(array($this->_urlFactory, 'getUrlFor'), $param_arr);
         $curl->setUrl($url);
 
