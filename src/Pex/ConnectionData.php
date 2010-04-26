@@ -29,10 +29,10 @@
  *
  * @author   meza <meza@meza.hu>
  *
- * @property $uAgen             The user agent to use
- * @property $host   The server's host
- * @property $username The username
- * @property $exchange_password The password
+ * @property uAgent   The user agent to use
+ * @property host     The server's host
+ * @property username The username
+ * @property password The password
  *
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE

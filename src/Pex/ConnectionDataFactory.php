@@ -40,6 +40,25 @@
 class ConnectionDataFactory
 {
 
+    /**
+     * @var string The root of the config file search
+     */
+    private $_configRoot = null;
+
+
+    /**
+     * Constructs the object
+     *
+     * @param string $configRoot The root of the config
+     *
+     * @return ConnectionDataFactory
+     */
+    public function  __construct($configRoot='.')
+    {
+        $this->_configRoot = $configRoot;
+
+    }//end __construct()
+
 
     /**
      * Returns a connection data
@@ -61,18 +80,17 @@ class ConnectionDataFactory
             throw new NoSuchConfigFileException($file);
         }
 
-        $config = parse_ini_file($file, true);
-
-        if (null !== $section) {
-            if (false === isset($config[$section])) {
-                throw new NoSuchConfigSectionException($section);
-            }
-
-            $data = $config[$section];
+        if (null === $section) {
+            $section = $confName;
         }
 
-        $data = $config[$confName];
+        $config = parse_ini_file($file, true);
 
+        if (false === isset($config[$section])) {
+            throw new NoSuchConfigSectionException($section);
+        }
+
+        $data               = $config[$section];
         $connData           = new ConnectionData();
         $connData->host     = $data['server'];
         $connData->username = $data['username'];
@@ -92,7 +110,7 @@ class ConnectionDataFactory
      */
     private function _getConfigFileName($configName)
     {
-        return 'config/'.$configName.'.ini';
+        return $this->_configRoot.DIRECTORY_SEPARATOR.$configName.'.ini';
 
     }//end _getConfigFileName()
 
