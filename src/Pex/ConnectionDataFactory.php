@@ -55,7 +55,7 @@ class ConnectionDataFactory
      */
     public function  __construct($configRoot='.')
     {
-        $this->_configRoot = $configRoot;
+        $this->_configRoot = realpath($configRoot);
 
     }//end __construct()
 

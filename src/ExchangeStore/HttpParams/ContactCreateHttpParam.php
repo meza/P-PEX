@@ -45,7 +45,7 @@ class ContactCreateHttpParams extends HttpParams
      */
     public $headers = array(
                        'Content-Type' => 'text/xml',
-//                       'Depth'        => 0,
+                       'Depth'        => 0,
                        'Translate'    => 'f',
                       );
 
@@ -63,14 +63,15 @@ class ContactCreateHttpParams extends HttpParams
     /**
      * Creates a login param object
      *
+     * @param string $contact The name of the contact
+     *
      * @return ContactCreateHttpParams
      */
-    public function __construct($name)
+    public function __construct(Contact $contact)
     {
+        $name = $this->getFileAsName($contact);
 
-        $this->urlParams = array(
-            $this->prepareName($name),
-        );
+        $this->urlParams = array($this->_prepareName($name));
 
         $this->data = '<?xml version="1.0"?>
 <g:propertyupdate xmlns:g="DAV:" xmlns:c="urn:schemas:contacts:"
@@ -81,16 +82,13 @@ xmlns:cal="urn:schemas:calendar:" xmlns:mail="urn:shemas:httpmail:">
     <g:prop>
         <g:contentclass>urn:content-classes:person</g:contentclass>
         <e:outlookmessageclass>IPM.Contact</e:outlookmessageclass>
-        <c:givenName>JoLynn</c:givenName>
-        <c:middlename>Julie</c:middlename>
-        <c:sn>Dobney</c:sn>
-        <c:cn>JoLynn J. Dobney</c:cn>
-        <mail:subject>JoLynn Dobney</mail:subject>
-        <c:fileas>Dobney, JoLynn</c:fileas>
-        <c:initials>JJD</c:initials>
-        <c:nickname>Jo</c:nickname>
-        <c:personaltitle>Mrs.</c:personaltitle>
-        <c:namesuffix>MCSD</c:namesuffix>
+        <c:givenName>'.$contact->firstName.'</c:givenName>
+        <c:middlename>'.$contact->middleName.'</c:middlename>
+        <c:sn>'.$contact->lastName.'</c:sn>
+        <c:fileas>'.$name.'</c:fileas>
+        <c:nickname>'.$contact->nickName.'</c:nickname>
+        <mapi:email1addrtype>SMTP</mapi:email1addrtype>
+        <mapi:email1emailaddress>'.$contact->emailAddress.'</mapi:email1emailaddress>
     </g:prop>
 </g:set>
 </g:propertyupdate>
@@ -98,10 +96,39 @@ xmlns:cal="urn:schemas:calendar:" xmlns:mail="urn:shemas:httpmail:">
 
     }//end __construct()
 
-    private function prepareName($name)
+
+    /**
+     * Returns the file as format
+     *
+     * @param Contact $contact The contact data
+     *
+     * @return string
+     */
+    public function getFileAsName(Contact $contact)
     {
-        return $name;
-    }
+        $nameParts = array(
+                      $contact->lastName,
+                      $contact->middleName,
+                      $contact->firstName,
+                     );
+        return implode(' ', $nameParts);
+
+    }//end getFileAsName()
+
+
+    /**
+     * Prepares the name for the url.
+     * Performs an urlencode
+     *
+     * @param string $name The contact's name
+     *
+     * @return string
+     */
+    private function _prepareName($name)
+    {
+        return urlencode($name);
+
+    }//end _prepareName()
 
 
 }//end class
