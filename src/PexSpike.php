@@ -1,4 +1,24 @@
 <?php
+/**
+ * PexSpike.php
+ *
+ * The spike file
+ *
+ * PHP Version: 5
+ *
+ * @category File
+ * @package  Spike
+ *
+ * @author   meza <meza@meza.hu>
+ * @license  GPL3.0
+ *                    GNU GENERAL PUBLIC LICENSE
+ *                       Version 3, 29 June 2007
+ *
+ * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ * Everyone is permitted to copy and distribute verbatim copies
+ * of this license document, but changing it is not allowed.
+ * @link     http://www.assembla.com/spaces/p-pex
+ **/
 
 require_once 'Http/Curl.php';
 require_once 'Http/Http.php';
@@ -29,7 +49,7 @@ require_once 'Pex/Pex.php';
 require_once 'ExchangeStore/HttpParams/ContactCreateHttpParam.php';
 
 error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
-$df            = new ConnectionDataFactory('./config/');
+$df            = new ConnectionDataFactory(realpath('./config/'));
 $data          = $df->createConnectionData('rokonai');
 $urlAccess     = new URLAccess();
 $urlFactory    = new URLFactory($data->host, $data->username, $urlAccess);

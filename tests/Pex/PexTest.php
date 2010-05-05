@@ -22,14 +22,15 @@
  **/
 
 require_once 'PHPUnit/Framework.php';
-
 require_once dirname(__FILE__).'/../../src/Pex/Pex.php';
 require_once dirname(__FILE__).'/../../src/Pex/ConnectionData.php';
 require_once dirname(__FILE__).'/../../src/Pex/Exceptions/CouldNotLoginException.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpFactory.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/URLAccess.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/ExchangeResponse.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ParserFactory.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/StoreUrlData.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/LoginHttpParams.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
 
@@ -52,6 +53,26 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected $object;
 
+    /**
+     * @var ConnectionData instance
+     */
+    protected $connectionData;
+
+    /**
+     * @var URLAccess mock
+     */
+    protected $urlAccessMock;
+
+    /**
+     * @var HttpFactory mock
+     */
+    protected $httpFactoryMock;
+
+    /**
+     * @var ParserFactory mock
+     */
+    protected $parserFactoryMock;
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -61,60 +82,118 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Pex;
+        $this->connectionData    = new ConnectionData();
+        $this->urlAccessMock     = $this->getMock(
+            'URLAccess',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
+        $this->httpFactoryMock   = $this->getMock(
+            'HttpFactory',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
+        $this->parserFactoryMock = $this->getMock(
+            'ParserFactory',
+            array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
+
+        $this->object = new Pex(
+            $this->connectionData,
+            $this->urlAccessMock,
+            $this->httpFactoryMock,
+            $this->parserFactoryMock
+        );
 
     }//end setUp()
 
 
     /**
      * @todo Implement testGetHttp().
+     *
+     * @return void
      */
-    public function testGetHttp() {
+    public function testGetHttp()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-    }
+
+    }//end testGetHttp()
+
 
     /**
      * @todo Implement testCall().
+     *
+     * @return void
      */
-    public function testCall() {
+    public function testCall()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-    }
+
+    }//end testCall()
+
 
     /**
      * @todo Implement testParse().
+     *
+     * @return void
      */
-    public function testParse() {
+    public function testParse()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-    }
+
+    }//end testParse()
+
 
     /**
      * @todo Implement testLogin().
+     *
+     * @return void
      */
-    public function testLogin() {
+    public function testLogin()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-    }
+
+    }//end testLogin()
+
 
     /**
      * @todo Implement testGetStoreUrls().
+     *
+     * @return void
      */
-    public function testGetStoreUrls() {
+    public function testGetStoreUrls()
+    {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
             'This test has not been implemented yet.'
         );
-    }
+
+    }//end testGetStoreUrls()
 
 
 }//end class

@@ -36,4 +36,11 @@
             logIncompleteSkipped="false"/>
     </logging>
 
+    <testsuites>
+		<testsuite name="all">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+
+
 </phpunit>

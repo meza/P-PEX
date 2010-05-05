@@ -20,7 +20,6 @@ class ConnectionDataFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected $object;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -113,7 +112,7 @@ EOT;
      */
     public function testCreateConnectionDataWithConfigOnly()
     {
-        $expected = new ConnectionData();
+        $expected           = new ConnectionData();
         $expected->host     = 'http://your.demo.server';
         $expected->username = 'your_user';
         $expected->password = 'your_pass';

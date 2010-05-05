@@ -16,16 +16,13 @@
  * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
- * *
- * @version  GIT: $Id$
+ * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
 /**
  * The StoreUrlData is the valueobject holding the data
  * 
- * @TODO document
- *
  * PHP Version: 5
  *
  * @category Class

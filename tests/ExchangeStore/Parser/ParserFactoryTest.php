@@ -23,6 +23,8 @@
 
 
 require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/Parser.php';
+require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/Exceptions/NoSuchParserException.php';
 require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/ParserFactory.php';
 
 /**

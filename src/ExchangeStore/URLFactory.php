@@ -16,8 +16,7 @@
  * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
- * * 
- * @version  GIT: $Id$
+ * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -74,8 +73,8 @@ class URLFactory
     /**
      * Creates the URLFactory object, and requires data
      *
-     * @param string    $hostname The  hostname of the exchange server
-     * @param string    $username The  username
+     * @param string    $hostname  The  hostname of the exchange server
+     * @param string    $username  The  username
      * @param URLAccess $urlAccess The urlAccess
      *
      * @return URLFactory
@@ -129,13 +128,23 @@ class URLFactory
     }//end _getUrlForLogin()
 
 
-    public function _getUrlForContact($contactName)
+    /**
+     * Creates the url for a specified contact
+     *
+     * @param string $contactStorageName The store name of the contact
+     *
+     * @return string
+     */
+    private function _getUrlForContact($contactStorageName)
     {
 
         $contact = $this->_urlAccess->contacts;
-        $url = $this->_hostname.'/exchange/'.$this->_username.'/'.$contact.'/'.$contactName.'.eml';
+        $url     = $this->_hostname.'/exchange/';
+        $url    .= $this->_username.'/'.$contact.'/'.$contactStorageName.'.eml';
         return $url;
-    }
+
+    }//end _getUrlForContact()
+
 
 }//end class
 
