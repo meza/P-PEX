@@ -22,6 +22,7 @@
 
 require_once 'Http/Curl.php';
 require_once 'Http/Http.php';
+require_once 'Http/HttpResponse.php';
 require_once 'Http/HttpFactory.php';
 require_once 'Http/HttpParams.php';
 require_once 'Http/CurlBuilder.php';
@@ -68,6 +69,6 @@ $contact->nickName     = 'meza';
 $contact->organization = 'uStream Inc';
 
 $params = new ContactCreateHttpParams($contact);
-$x = $fs->call($params);
+$x      = $fs->call($params);
 var_dump($x);
 ?>

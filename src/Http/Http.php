@@ -123,11 +123,11 @@ class Http
      *
      * @param HttpParams $httpParams The HttpParams object to use
      *
-     * @return array of return parameters
+     * @return HttpResponse
      */
     public function request(HttpParams $httpParams)
     {
-        $curl     = $this->_curlBuilder->createCurl(
+        $curl = $this->_curlBuilder->createCurl(
             $httpParams,
             array(
              'cookieStore'    => $this->_cookieStore,
@@ -138,8 +138,12 @@ class Http
              'returnTransfer' => true,
             )
         );
-        $response = $curl->execute();
-        return $response;
+        $response           = $curl->execute();
+        $httpResponse       = new HttpResponse();
+        $httpResponse->code = $response['code'];
+        $httpResponse->data = $response['data'];
+
+        return $httpResponse;
 
     }//end request()
 

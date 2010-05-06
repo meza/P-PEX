@@ -25,10 +25,14 @@ require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__).'/../../src/Pex/Pex.php';
 require_once dirname(__FILE__).'/../../src/Pex/ConnectionData.php';
 require_once dirname(__FILE__).'/../../src/Pex/Exceptions/CouldNotLoginException.php';
+require_once dirname(__FILE__).'/../../src/Http/Http.php';
+require_once dirname(__FILE__).'/../../src/Http/HttpResponse.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpFactory.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/URLAccess.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/URLFactory.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/ExchangeResponse.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/Parser.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ParserFactory.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/StoreUrlData.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/LoginHttpParams.php';
@@ -73,6 +77,16 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected $parserFactoryMock;
 
+    /**
+     * @var Http mock
+     */
+    protected $httpMock;
+
+    /**
+     * @var Parser mock
+     */
+    protected $parserMock;
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -94,6 +108,16 @@ class PexTest extends PHPUnit_Framework_TestCase
         );
         $this->httpFactoryMock   = $this->getMock(
             'HttpFactory',
+            array('createHttp'),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
+
+        $this->parserFactoryMock = $this->getMock(
+            'ParserFactory',
             array(),
             array(),
             '',
@@ -101,9 +125,20 @@ class PexTest extends PHPUnit_Framework_TestCase
             false,
             false
         );
-        $this->parserFactoryMock = $this->getMock(
-            'ParserFactory',
+
+        $this->httpMock = $this->getMock(
+            'Http',
             array(),
+            array(),
+            '',
+            false,
+            false,
+            false
+        );
+
+        $this->parserMock = $this->getMock(
+            'Parser',
+            array('parse'),
             array(),
             '',
             false,
@@ -122,33 +157,157 @@ class PexTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Sets up the http factory
+     *
+     * @param MockObject $httpFactoryMock to set
+     * @param int        $index           to use
+     *
+     * @return httpFactory
+     */
+    private function _setUpHttpFactory(HttpFactory $httpFactoryMock, $index=0)
+    {
+        if ($index>=0) {
+            $httpFactoryMock->expects(
+                $this->at($index)
+            )->method('createHttp')->will($this->returnValue($this->httpMock));
+        } else {
+            $httpFactoryMock->expects(
+                $this->any()
+            )->method('createHttp')->will($this->returnValue($this->httpMock));
+        }
+       return $httpFactoryMock;
+
+    }//end _setUpHttpFactory()
+
+
+    /**
      * @todo Implement testGetHttp().
      *
      * @return void
      */
     public function testGetHttp()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+       $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+       $this->object->getHttp($httpFactory);
 
     }//end testGetHttp()
 
 
     /**
-     * @todo Implement testCall().
+     * Test a standard call
      *
      * @return void
      */
     public function testCall()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $params = new HttpParams();
+
+        $result = new HttpResponse();
+        $result->code = 200;
+        $result->data = 'result';
+
+        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+
+        $this->httpMock->expects($this->once())->method('request')->with(
+            $this->equalTo($params)
+        )->will($this->returnValue($result));
+
+        $actual = $this->object->call($params);
+
+        $this->assertEquals($result, $actual);
 
     }//end testCall()
+
+
+    /**
+     * Test a standard call when it can't log in
+     *
+     * @expectedException CouldNotLoginException
+     *
+     * @return void
+     */
+    public function testCallWithCantLogin()
+    {
+        $params = new HttpParams();
+
+        $result = new HttpResponse();
+        $result->code = 440;
+
+        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
+
+        $this->httpMock->expects($this->any())->method('request')
+        ->will($this->returnValue($result));
+
+        $this->object->call($params);
+
+    }//end testCallWithCantLogin()
+
+
+    /**
+     * Test a standard call with login required
+     *
+     * @return void
+     */
+    public function testCallWithLoginRequired()
+    {
+        $params      = new HttpParams();
+        $loginParams = new LoginHttpParams('', '', '');
+        $storeParams = new ServiceUrlsHttpParams();
+
+        $storeUrls   = new StoreUrlData();
+
+        $resultOk       = new HttpResponse();
+        $resultOk->code = 200;
+        $resultOk->data = 'result';
+
+        $resultFail       = new HttpResponse();
+        $resultFail->code = 440;
+        $resultFail->data = 'result';
+
+        $loginResult       = new HttpResponse();
+        $loginResult->code = 200;
+
+        $urlResult       = new HttpResponse();
+        $urlResult->data = 'data';
+
+
+        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $httpFactory = $this->_setUpHttpFactory($httpFactory, 1);
+        $httpFactory = $this->_setUpHttpFactory($httpFactory, 2);
+        $httpFactory = $this->_setUpHttpFactory($httpFactory, 3);
+
+        $this->httpMock->expects($this->at(0))->method('request')->with(
+            $this->equalTo($params)
+        )->will($this->returnValue($resultFail));
+
+        $this->httpMock->expects($this->at(1))->method('request')->with(
+            $this->equalTo($loginParams)
+        )->will($this->returnValue($loginResult));
+
+        $this->httpMock->expects($this->at(2))->method('request')->with(
+            $this->equalTo($storeParams)
+        )->will($this->returnValue($urlResult));
+
+        $this->parserFactoryMock->expects($this->once())->method(
+            'createParser'
+        )->with($this->equalTo(ParserFactory::STORE_URLS))->will(
+            $this->returnValue($this->parserMock)
+        );
+
+        $this->parserMock->expects($this->once())->method('parse')->with(
+            $this->equalTo($urlResult->data)
+        )->will($this->returnValue($storeUrls));
+
+
+        $this->httpMock->expects($this->at(3))->method('request')->with(
+            $this->equalTo($params)
+        )->will($this->returnValue($resultOk));
+
+        $actual = $this->object->call($params);
+
+        $this->assertEquals($resultOk, $actual);
+
+    }//end testCallWithLoginRequired()
 
 
     /**

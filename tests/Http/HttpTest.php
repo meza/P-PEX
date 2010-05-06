@@ -17,6 +17,7 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__).'/../../src/Http/Http.php';
+require_once dirname(__FILE__).'/../../src/Http/HttpResponse.php';
 
 /**
  * Test class for Http.
@@ -222,7 +223,14 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     public function testRequest()
     {
-        $expected = 'successful curl test call';
+        $curlReturn = array(
+            'code' => 200,
+            'data' => 'successful curl test call',
+        );
+
+        $expected       = new HttpResponse();
+        $expected->code = $curlReturn['code'];
+        $expected->data = $curlReturn['data'];
 
         $this->httpParamsMock = $this->getMock(
             'HttpParams',
@@ -265,7 +273,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
         $this->curlMock->expects(
             $this->once()
-        )->method('execute')->will($this->returnValue($expected));
+        )->method('execute')->will($this->returnValue($curlReturn));
 
         $actual = $this->object->request($this->httpParamsMock);
 

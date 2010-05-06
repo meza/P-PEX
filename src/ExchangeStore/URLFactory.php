@@ -33,7 +33,6 @@
  */
 class URLFactory
 {
-
     /**
      * Login type
      */

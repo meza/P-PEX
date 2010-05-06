@@ -53,20 +53,6 @@ class Pex implements PPexInterface
 
 
     /**
-     * Returns a Http instance
-     *
-     * @param HttpFactory $factory The HttpFactory instance to use
-     *
-     * @return Http
-     */
-    public function getHttp(HttpFactory $factory)
-    {
-        return $factory->createHttp();
-
-    }//end getHttp()
-
-
-    /**
      * Constructs the object
      *
      * @param ConnectionData $data          The ConnectionData to use
@@ -91,6 +77,20 @@ class Pex implements PPexInterface
 
 
     /**
+     * Returns a Http instance
+     *
+     * @param HttpFactory $factory The HttpFactory instance to use
+     *
+     * @return Http
+     */
+    public function getHttp(HttpFactory $factory)
+    {
+        return $factory->createHttp();
+
+    }//end getHttp()
+
+
+    /**
      * Performs a http call with the given params
      *
      * @param HttpParams $params   The httpParams object to use
@@ -104,16 +104,18 @@ class Pex implements PPexInterface
     public function call(HttpParams $params, $tries=0, $maxTries=1)
     {
         $result = $this->getHttp($this->httpFactory)->request($params);
-
+        $tries++;
         if (false === ($params instanceof LoginHttpParams)) {
-            if ($result['code'] === 440) {
-                $result = $this->login();
-                if (true === $result) {
-                    if ($tries < $maxTries) {
-                        return $this->call($params, $tries++);
+            if ($result->code === 440) {
+                $loginResult = $this->login();
+                if (false === $loginResult) {
+                    if ($tries <= $maxTries) {
+                        return $this->call($params, $tries);
                     } else {
                         throw new CouldNotLoginException();
                     }
+                } else {
+                    return $this->call($params, $tries);
                 }
             }
         }
@@ -151,7 +153,7 @@ class Pex implements PPexInterface
             $this->data->host
         );
         $loginResult = $this->call($params);
-        if ($loginResult['code'] === 200) {
+        if ($loginResult->code === 200) {
             $this->getStoreUrls();
             return true;
         }
@@ -171,7 +173,7 @@ class Pex implements PPexInterface
         $params = new ServiceUrlsHttpParams();
         $result = $this->call($params);
         $parser = $this->parserFactory->createParser(ParserFactory::STORE_URLS);
-        $data   = $parser->parse($result['data']);
+        $data   = $parser->parse($result->data);
         $this->urlAccess->setCustomUrls($data);
         return $data;
 
