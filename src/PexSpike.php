@@ -66,9 +66,9 @@ $contact->emailAddress = 'meza@meza.hu';
 $contact->firstName    = 'Márton';
 $contact->lastName     = 'Mészáros';
 $contact->nickName     = 'meza';
-$contact->organization = 'uStream Inc';
+$contact->organization = 'an org';
 
 $params = new ContactCreateHttpParams($contact);
 $x      = $fs->call($params);
-var_dump($x);
+//var_dump($x);
 ?>
