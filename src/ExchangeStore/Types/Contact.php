@@ -66,11 +66,6 @@ class Contact
      */
     public $emailAddress;
 
-    /**
-     * @var string Organization
-     */
-    public $organization;
-
 
     /**
      * Creates a null object of a contact

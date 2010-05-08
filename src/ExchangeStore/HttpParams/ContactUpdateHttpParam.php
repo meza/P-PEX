@@ -34,6 +34,39 @@
 class ContactUpdateHttpParams extends ContactCreateHttpParams
 {
 
+    /**
+     * Creates a login param object
+     *
+     * @param string $contact The name of the contact
+     *
+     * @return ContactCreateHttpParams
+     */
+    public function __construct($url, Contact $contact)
+    {
+        $this->url  = $url;
+        $this->data = '<?xml version="1.0"?>
+<g:propertyupdate xmlns:g="DAV:" xmlns:c="urn:schemas:contacts:"
+xmlns:e="http://schemas.microsoft.com/exchange/"
+xmlns:mapi="http://schemas.microsoft.com/mapi/" xmlns:x="xml:"
+xmlns:cal="urn:schemas:calendar:" xmlns:mail="urn:shemas:httpmail:">
+<g:set>
+    <g:prop>
+        <g:contentclass>urn:content-classes:person</g:contentclass>
+        <e:outlookmessageclass>IPM.Contact</e:outlookmessageclass>
+        <c:givenName>'.$contact->firstName.'</c:givenName>
+        <c:middlename>'.$contact->middleName.'</c:middlename>
+        <c:sn>'.$contact->lastName.'</c:sn>
+        <c:nickname>'.$contact->nickName.'</c:nickname>
+        <mapi:email1addrtype>SMTP</mapi:email1addrtype>
+        <mapi:email1emailaddress>'.$contact->emailAddress.'</mapi:email1emailaddress>
+    </g:prop>
+</g:set>
+</g:propertyupdate>
+';
+
+    }//end __construct()
+
+
 }//end class
 
 ?>

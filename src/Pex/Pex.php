@@ -21,6 +21,7 @@
  **/
 
 require_once 'PPexInterface.php';
+require_once 'ContactHandler.php';
 
 /**
  * The Pex class is the main class
@@ -33,7 +34,7 @@ require_once 'PPexInterface.php';
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class Pex implements PPexInterface
+class Pex implements PPexInterface, ContactHandler
 {
 
     /**
@@ -178,6 +179,37 @@ class Pex implements PPexInterface
         return $data;
 
     }//end getStoreUrls()
+
+
+    private function _doCall(HttpParams $params, $parserType)
+    {
+        $result = $this->call($params);
+        $parser = $this->parserFactory->createParser($parserType);
+        return $this->parse($result, $parser);
+    }
+
+    public function createContact(Contact $contact)
+    {
+        $params = new ContactCreateHttpParams($contact);
+        $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
+        
+        return $result;
+    }
+
+    public function readContact($url)
+    {
+        $params = new ContactGetHttpParams($url);
+        $result = $this->_doCall($params, ParserFactory::CONTACT_GET);
+
+        return $result;
+    }
+
+    public function updateContact($url, Contact $contact)
+    {}
+
+    public function deleteContact($url)
+    {}
+
 
 
 }//end class

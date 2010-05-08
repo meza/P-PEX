@@ -40,6 +40,15 @@ class ParserFactory
      */
     const STORE_URLS = 1;
 
+    /**
+     * Constant of the Contact create parser
+     */
+    const CONTACT_CREATE = 2;
+
+    /**
+     * Constant of the Contact get parsers
+     */
+    const CONTACT_GET = 3;
 
     /**
      * Creates the required Parser implementation
@@ -55,6 +64,10 @@ class ParserFactory
         switch($type) {
         case self::STORE_URLS:
             return $this->_createStoreUrlParser();
+        case self::CONTACT_CREATE:
+            return $this->_createContactCreateParser();
+        case self::CONTACT_GET:
+            return $this->_createContactGetParser();
 
         default:
             throw new NoSuchParserException($type);
@@ -75,6 +88,24 @@ class ParserFactory
         return $parser;
 
     }//end _createStoreUrlParser()
+
+
+    private function _createContactCreateParser()
+    {
+        include_once dirname(__FILE__).'/ContactCreateParser.php';
+        $parser = new ContactCreateParser();
+        return $parser;
+
+    }//end _createContactCreateParser()
+
+
+    private function _createContactGetParser()
+    {
+        include_once dirname(__FILE__).'/ContactGetParser.php';
+        $parser = new ContactGetParser();
+        return $parser;
+
+    }//end _createContactGetParser()
 
 
 }//end class

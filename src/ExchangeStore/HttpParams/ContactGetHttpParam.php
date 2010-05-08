@@ -56,7 +56,7 @@ class ContactGetHttpParams extends HttpParams
     /**
      * @var string The custom http method to use
      */
-    public $customMethod = 'search';
+    public $customMethod = 'propfind';
 
 
     /**
@@ -66,36 +66,16 @@ class ContactGetHttpParams extends HttpParams
      *
      * @return ContactGetHttpParams
      */
-    public function __construct(Contact $contact, URLFactory $factory)
+    public function __construct($url)
     {
-        $name = $contact->getFileAsName();
-
-        $this->data = '<D:searchrequest xmlns:D = "DAV:" xmlns:d="urn:schemas:contacts:">
-   <D:sql>
-SELECT *  FROM SCOPE(\'deep traversal of "'.$factory->getUrlFor(URLFactory::CONTACT).'"\')
-WHERE "DAV:ishidden" = false AND "DAV:isfolder" = false
-AND "urn:schemas:contacts:fileas" = \''.$name.'\'
-   </D:sql>
-</D:searchrequest>
+        $this->url  = $url;
+        $this->data = '<?xml version="1.0"?>
+<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:contact:">
+        <D:allprop/>
+</D:propfind>
 ';
 
     }//end __construct()
-
-
-    /**
-     * Prepares the name for the url.
-     * Performs an urlencode
-     *
-     * @param string $name The contact's name
-     *
-     * @return string
-     */
-    private function _prepareName($name)
-    {
-        return urlencode($name);
-
-    }//end _prepareName()
-
 
 }//end class
 

@@ -71,9 +71,12 @@ $contact->lastName     = 'Mészáros';
 $contact->nickName     = 'meza';
 $contact->organization = 'an org';
 
-$params = new ContactUpdateHttpParams($contact);
-$x      = $fs->call($params);
-$xml = $x->data;
+$x = new ContactGetHttpParams('https://mail.rokonai.hu/exchange/rokonaiintranet/N%C3%A9vjegyalbum/M%C3%A9sz%C3%A1ros%2B%2BM%C3%A1rton2.eml');
+$xx = $fs->call($x);
+
+
+//$res = $fs->createContact($contact);
+//$xml = $res->data;
 header('Content-Type: text/xml');
-print $xml;
+print $xx->data;
 ?>

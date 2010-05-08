@@ -29,14 +29,23 @@ require_once dirname(__FILE__).'/../../src/Http/Http.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpResponse.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpFactory.php';
 require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
+
 require_once dirname(__FILE__).'/../../src/ExchangeStore/URLAccess.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/URLFactory.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/ExchangeResponse.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/Parser.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ParserFactory.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/StoreUrlData.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ContactCreateParser.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ContactGetParser.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/LoginHttpParams.php';
 require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ContactCreateHttpParam.php';
+require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ContactGetHttpParam.php';
+
+require_once dirname(__FILE__).'/../_HelperFiles/ContactFactory.php';
+require_once dirname(__FILE__).'/../_HelperFiles/ExchangeRawResponseFactory.php';
+
 
 /**
  * The test class of the Pex class
@@ -87,6 +96,15 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected $parserMock;
 
+    /**
+     * @var ContactFactory instance
+     */
+    protected $contactFactory;
+
+    /**
+     * @var ExchangeRawResponseFactory instance
+     */
+    protected $exchangeRawResponseFactory;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -96,8 +114,10 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->connectionData    = new ConnectionData();
-        $this->urlAccessMock     = $this->getMock(
+        $this->contactFactory             = new ContactFactory();
+        $this->exchangeRawResponseFactory = new ExchangeRawResponseFactory();
+        $this->connectionData             = new ConnectionData();
+        $this->urlAccessMock              = $this->getMock(
             'URLAccess',
             array(),
             array(),
@@ -354,6 +374,67 @@ class PexTest extends PHPUnit_Framework_TestCase
 
     }//end testGetStoreUrls()
 
+
+    private function _setUpContactCreateMocks($url=null)
+    {
+        $this->parserFactoryMock->expects($this->once())->method(
+            'createParser')->with($this->equalTo(
+            ParserFactory::CONTACT_CREATE
+        ))->will($this->returnValue(new ContactCreateParser()));
+
+        $httpResult = $this->exchangeRawResponseFactory->
+            getSuccessfulContactCreationResponse($url);
+        $contact    = $this->contactFactory->createAValidContact();
+        $param      = new ContactCreateHttpParams($contact);
+
+        $httpFactoryMock = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $this->httpMock->expects($this->once())->method('request')->with(
+            $this->equalTo($param)
+        )->will($this->returnValue($httpResult));
+
+        return $contact;
+    }
+
+    public function testCreateContact()
+    {
+        $url     = 'http://test.com/user1/Contacts/somebody.eml';
+        $contact = $this->_setUpContactCreateMocks($url);
+        $actual  = $this->object->createContact($contact);
+        
+        $this->assertEquals($url, $actual);
+    }
+
+
+    public function testGetContact()
+    {
+        $expectedContact = new Contact();
+        $expectedContact->emailAddress = 'test@domain.com';
+        $expectedContact->firstName = 'User';
+        $expectedContact->lastName = 'Test';
+        $expectedContact->nickName = 'tuser';
+
+        $url = 'https://server.com/exchange/user/Contacts/Test%20User.eml';
+
+
+        $httpResult = $this->exchangeRawResponseFactory->
+            getContactResponse($url);
+        $param      = new ContactGetHttpParams($url);
+
+        $httpFactoryMock = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $this->httpMock->expects($this->once())->method('request')->with(
+            $this->equalTo($param)
+        )->will($this->returnValue($httpResult));
+
+
+        $this->parserFactoryMock->expects($this->once())->method(
+            'createParser')->with($this->equalTo(
+            ParserFactory::CONTACT_GET
+        ))->will($this->returnValue(new ContactGetParser()));
+
+
+        $actual = $this->object->readContact($url);
+        $this->assertEquals($expectedContact, $actual);
+    }
 
 }//end class
 
