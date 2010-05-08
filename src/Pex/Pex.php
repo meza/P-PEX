@@ -173,7 +173,7 @@ class Pex implements PPexInterface
         $params = new ServiceUrlsHttpParams();
         $result = $this->call($params);
         $parser = $this->parserFactory->createParser(ParserFactory::STORE_URLS);
-        $data   = $parser->parse($result->data);
+        $data   = $this->parse($result->data, $parser);
         $this->urlAccess->setCustomUrls($data);
         return $data;
 
