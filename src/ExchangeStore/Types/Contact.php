@@ -71,6 +71,24 @@ class Contact
      */
     public $organization;
 
+
+    /**
+     * Returns the "file as" format
+     *
+     * @return string
+     */
+    public function getFileAsName()
+    {
+        $nameParts = array(
+                      $this->lastName,
+                      $this->middleName,
+                      $this->firstName,
+                     );
+        return implode(' ', $nameParts);
+
+    }//end getFileAsName()
+
+
 }//end class
 
 ?>

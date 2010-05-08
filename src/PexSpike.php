@@ -48,10 +48,11 @@ require_once 'Pex/PPexInterface.php';
 
 require_once 'Pex/Pex.php';
 require_once 'ExchangeStore/HttpParams/ContactCreateHttpParam.php';
+require_once 'ExchangeStore/HttpParams/ContactDeleteHttpParam.php';
 
 error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
 $df            = new ConnectionDataFactory(realpath('./config/'));
-$data          = $df->createConnectionData('rokonai');
+$data          = $df->createConnectionData('demo_server');
 $urlAccess     = new URLAccess();
 $urlFactory    = new URLFactory($data->host, $data->username, $urlAccess);
 $curlBuilder   = new CurlBuilder($urlFactory);
@@ -68,7 +69,7 @@ $contact->lastName     = 'Mészáros';
 $contact->nickName     = 'meza';
 $contact->organization = 'an org';
 
-$params = new ContactCreateHttpParams($contact);
+$params = new ContactDeleteHttpParams($contact);
 $x      = $fs->call($params);
-//var_dump($x);
+var_dump($x);
 ?>

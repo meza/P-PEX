@@ -138,7 +138,7 @@ class URLFactory
     {
 
         $contact = $this->_urlAccess->contacts;
-        $url     = $this->_hostname.'/exchange/';
+        $url     = $this->_hostname.'exchange/';
         $url    .= $this->_username.'/'.$contact.'/'.$contactStorageName.'.eml';
         return $url;
 
