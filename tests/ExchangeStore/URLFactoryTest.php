@@ -53,7 +53,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @var string The dummy hostname to use
      */
-    protected $testHost = 'https://www.example-server.com';
+    protected $testHost = 'https://www.example-server.com/';
 
     /**
      * @var URLAccess instance
@@ -188,7 +188,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->testURLAccess->contacts = 'contacts';
         $contactName = 'testName';
-        $expected = $this->testHost.'/exchange/'.$this->testUsername.'/'.
+        $expected = $this->testHost.'exchange/'.$this->testUsername.'/'.
                 $this->testURLAccess->contacts.'/'.$contactName.'.eml';
 
         $actual = $this->object->getUrlFor(URLFactory::CONTACT, $contactName);

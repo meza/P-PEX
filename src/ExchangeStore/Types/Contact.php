@@ -73,6 +73,18 @@ class Contact
 
 
     /**
+     * Creates a null object of a contact
+     * 
+     * @return Contact
+     */
+    public static function aContact()
+    {
+        return new Contact();
+
+    }//end aContact()
+
+
+    /**
      * Returns the "file as" format
      *
      * @return string

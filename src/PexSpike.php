@@ -48,11 +48,13 @@ require_once 'Pex/PPexInterface.php';
 
 require_once 'Pex/Pex.php';
 require_once 'ExchangeStore/HttpParams/ContactCreateHttpParam.php';
+require_once 'ExchangeStore/HttpParams/ContactUpdateHttpParam.php';
 require_once 'ExchangeStore/HttpParams/ContactDeleteHttpParam.php';
+require_once 'ExchangeStore/HttpParams/ContactGetHttpParam.php';
 
 error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
 $df            = new ConnectionDataFactory(realpath('./config/'));
-$data          = $df->createConnectionData('demo_server');
+$data          = $df->createConnectionData('rokonai');
 $urlAccess     = new URLAccess();
 $urlFactory    = new URLFactory($data->host, $data->username, $urlAccess);
 $curlBuilder   = new CurlBuilder($urlFactory);
@@ -62,14 +64,16 @@ $parserFactory = new ParserFactory();
 $fs = new Pex($data, $urlAccess, $httpFactory, $parserFactory);
 $fs->login();
 
-$contact = new Contact();
-$contact->emailAddress = 'meza@meza.hu';
-$contact->firstName    = 'Márton';
+$contact               = Contact::aContact();
+$contact->emailAddress = 'reg@meza.hu';
+$contact->firstName    = 'Márton2';
 $contact->lastName     = 'Mészáros';
 $contact->nickName     = 'meza';
 $contact->organization = 'an org';
 
-$params = new ContactDeleteHttpParams($contact);
+$params = new ContactUpdateHttpParams($contact);
 $x      = $fs->call($params);
-var_dump($x);
+$xml = $x->data;
+header('Content-Type: text/xml');
+print $xml;
 ?>

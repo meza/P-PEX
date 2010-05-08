@@ -134,12 +134,15 @@ class URLFactory
      *
      * @return string
      */
-    private function _getUrlForContact($contactStorageName)
+    private function _getUrlForContact($contactStorageName=null)
     {
 
         $contact = $this->_urlAccess->contacts;
         $url     = $this->_hostname.'exchange/';
-        $url    .= $this->_username.'/'.$contact.'/'.$contactStorageName.'.eml';
+        $url    .= $this->_username.'/'.$contact.'/';
+        if (null !==$contactStorageName) {
+            $url .=$contactStorageName.'.eml';
+        }
         return $url;
 
     }//end _getUrlForContact()
