@@ -75,8 +75,9 @@ class Curl
      */
     public function setCookieStore($filename)
     {
-        if (false === is_writable(dirname($filename))) {
-            throw new InvalidCookieStoreException();
+        $filename = realpath($filename);
+        if (false === is_writable($filename)) {
+            throw new InvalidCookieStoreException($filename);
         }
 
         curl_setopt($this->_ch, CURLOPT_COOKIEJAR, $filename);

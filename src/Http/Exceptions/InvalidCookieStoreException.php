@@ -39,6 +39,19 @@ class InvalidCookieStoreException extends Exception
      */
     protected $message = 'The given cookie store is not writable';
 
+
+    /**
+     * Creates the exception
+     *
+     * @param string $file The file that can't be used as a cookie
+     *
+     * @return InvalidCookieStoreException
+     */
+    public function __construct($file)
+    {
+        $this->message .= '('.$file.')';
+    }
+
 }//end class
 
 ?>
