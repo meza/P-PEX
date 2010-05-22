@@ -214,13 +214,21 @@ class Pex implements PPexInterface, ContactHandler
     }//end createContact()
 
 
+    /**
+     * Retrieves the contact information from the given url
+     *
+     * @param string $url The endpoint
+     *
+     * @return Contact
+     */
     public function readContact($url)
     {
         $params = new ContactGetHttpParams($url);
         $result = $this->_doCall($params, ParserFactory::CONTACT_GET);
-
         return $result;
-    }
+
+    }//end readContact()
+
 
     public function updateContact($url, Contact $contact)
     {}
