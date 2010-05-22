@@ -181,12 +181,22 @@ class Pex implements PPexInterface, ContactHandler
     }//end getStoreUrls()
 
 
+    /**
+     * Make the call to the server
+     *
+     * @param HttpParams $params     The http parameters
+     * @param string     $parserType The parser type to parse the response with
+     *
+     * @return HttpResponse
+     */
     private function _doCall(HttpParams $params, $parserType)
     {
         $result = $this->call($params);
         $parser = $this->parserFactory->createParser($parserType);
         return $this->parse($result, $parser);
-    }
+
+    }//end _doCall()
+
 
     public function createContact(Contact $contact)
     {
