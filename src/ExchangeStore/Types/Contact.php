@@ -66,6 +66,11 @@ class Contact
      */
     public $emailAddress;
 
+    /**
+     * @var string StorageUrlModifier
+     */
+    private $_urlModifier = '';
+
 
     /**
      * Creates a null object of a contact
@@ -74,7 +79,8 @@ class Contact
      */
     public static function aContact()
     {
-        return new Contact();
+        $contact = new Contact();
+        return $contact;
 
     }//end aContact()
 
@@ -91,9 +97,39 @@ class Contact
                       $this->middleName,
                       $this->firstName,
                      );
-        return implode(' ', $nameParts);
+        $fileas =  implode(' ', $nameParts);
+
+        $fileas.= $this->getUrlModifier();
+
+        return $fileas;
 
     }//end getFileAsName()
+
+
+    /**
+     * Returns the storage urlModifier if set
+     *
+     * @return string If the urlModifier is set, null otherwise
+     */
+    public function getUrlModifier()
+    {
+        return $this->_urlModifier;
+
+    }//end getUrl()
+
+
+    /**
+     * Sets the storage urlModifier
+     *
+     * @param string $urlModifier The storage urlModifier
+     *
+     * @return void
+     */
+    public function setUrlModifier($urlModifier)
+    {
+        $this->_urlModifier = $urlModifier;
+
+    }//end setUrl()
 
 
 }//end class
