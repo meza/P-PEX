@@ -198,13 +198,21 @@ class Pex implements PPexInterface, ContactHandler
     }//end _doCall()
 
 
+    /**
+     * Creates a new contact in the exchange store
+     *
+     * @param Contact $contact The contact to save
+     *
+     * @return string The url of the newly created contact
+     */
     public function createContact(Contact $contact)
     {
         $params = new ContactCreateHttpParams($contact);
         $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
-        
         return $result;
-    }
+
+    }//end createContact()
+
 
     public function readContact($url)
     {
