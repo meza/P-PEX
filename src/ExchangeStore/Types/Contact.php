@@ -99,8 +99,6 @@ class Contact
                      );
         $fileas =  implode(' ', $nameParts);
 
-        $fileas.= $this->getUrlModifier();
-
         return $fileas;
 
     }//end getFileAsName()

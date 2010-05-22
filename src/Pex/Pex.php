@@ -193,7 +193,7 @@ class Pex implements PPexInterface, ContactHandler
     {
         $result = $this->call($params);
         $parser = $this->parserFactory->createParser($parserType);
-        return $this->parse($result, $parser);
+        return $this->parse($result->data, $parser);
 
     }//end _doCall()
 
@@ -207,6 +207,13 @@ class Pex implements PPexInterface, ContactHandler
      */
     public function createContact(Contact $contact)
     {
+        $x = new ContactCheckHttpParams($contact);
+        $xx = $this->call($x);
+        if ($xx->code!=404) {
+            $contact->setUrlModifier(md5(date('c')));
+            return $this->createContact($contact);
+        }
+
         $params = new ContactCreateHttpParams($contact);
         $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
         return $result;
