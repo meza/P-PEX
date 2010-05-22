@@ -17,7 +17,6 @@
  * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
- * @version  $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
@@ -106,6 +105,7 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     protected $exchangeRawResponseFactory;
 
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -126,7 +126,7 @@ class PexTest extends PHPUnit_Framework_TestCase
             false,
             false
         );
-        $this->httpFactoryMock   = $this->getMock(
+        $this->httpFactoryMock = $this->getMock(
             'HttpFactory',
             array('createHttp'),
             array(),
@@ -186,7 +186,7 @@ class PexTest extends PHPUnit_Framework_TestCase
      */
     private function _setUpHttpFactory(HttpFactory $httpFactoryMock, $index=0)
     {
-        if ($index>=0) {
+        if ($index >= 0) {
             $httpFactoryMock->expects(
                 $this->at($index)
             )->method('createHttp')->will($this->returnValue($this->httpMock));
@@ -195,20 +195,21 @@ class PexTest extends PHPUnit_Framework_TestCase
                 $this->any()
             )->method('createHttp')->will($this->returnValue($this->httpMock));
         }
-       return $httpFactoryMock;
+
+        return $httpFactoryMock;
 
     }//end _setUpHttpFactory()
 
 
     /**
-     * @todo Implement testGetHttp().
+     * Need to test getHttp method
      *
      * @return void
      */
     public function testGetHttp()
     {
-       $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
-       $this->object->getHttp($httpFactory);
+        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $this->object->getHttp($httpFactory);
 
     }//end testGetHttp()
 
@@ -222,7 +223,7 @@ class PexTest extends PHPUnit_Framework_TestCase
     {
         $params = new HttpParams();
 
-        $result = new HttpResponse();
+        $result       = new HttpResponse();
         $result->code = 200;
         $result->data = 'result';
 
@@ -250,7 +251,7 @@ class PexTest extends PHPUnit_Framework_TestCase
     {
         $params = new HttpParams();
 
-        $result = new HttpResponse();
+        $result       = new HttpResponse();
         $result->code = 440;
 
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
