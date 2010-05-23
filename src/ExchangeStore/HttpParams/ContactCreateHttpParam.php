@@ -1,8 +1,8 @@
 <?php
 /**
- * ContactCreateHttpParams.php
+ * ContactCreateHttpParam.php
  *
- * Holds the ContactCreateHttpParams class
+ * Holds the ContactCreateHttpParam class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The ContactCreateHttpParams class is the value object for contact creation
+ * The ContactCreateHttpParam class is the value object for contact creation
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactCreateHttpParams extends HttpParams
+class ContactCreateHttpParam extends HttpParams
 {
 
     /**
@@ -64,7 +64,7 @@ class ContactCreateHttpParams extends HttpParams
      *
      * @param string $contact The name of the contact
      *
-     * @return ContactCreateHttpParams
+     * @return ContactCreateHttpParam
      */
     public function __construct(Contact $contact)
     {

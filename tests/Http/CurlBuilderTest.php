@@ -21,15 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidHttpMethodException.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCustomHttpMethodException.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/NoUrlSetException.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCookieStoreException.php';
-require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
-require_once dirname(__FILE__).'/../../src/Http/CurlBuilder.php';
-require_once dirname(__FILE__).'/../../src/Http/Curl.php';
-
 /**
  * The CurlBuilderTest class is the unittest class for the CurlBuilder class
  *

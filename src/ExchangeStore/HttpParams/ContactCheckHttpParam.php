@@ -1,6 +1,6 @@
 <?php
 /**
- * ContactCheckHttpParams.php
+ * ContactCheckHttpParam.php
  *
  * Holds the ContactCheckHttpParams class
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The ContactCheckHttpParams class finds the first available url for the contact
+ * The ContactCheckHttpParam class finds the first available url for the contact
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactCheckHttpParams extends HttpParams
+class ContactCheckHttpParam extends HttpParams
 {
 
     /**
@@ -64,7 +64,7 @@ class ContactCheckHttpParams extends HttpParams
      *
      * @param string $contact The name of the contact
      *
-     * @return ContactCheckHttpParams
+     * @return ContactCheckHttpParam
      */
     public function __construct(Contact $contact)
     {

@@ -21,13 +21,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../../src/ExchangeStore/ExchangeResponse.php';
-require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/Parser.php';
-require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/Exceptions/NoSuchParserException.php';
-require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/StoreUrlData.php';
-require_once dirname(__FILE__).'/../../../src/ExchangeStore/Parser/StoreUrlParser.php';
-
 /**
  * The StoreUrlParserTest class is the unittest class for the StoreUrlParser class
  *

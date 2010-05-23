@@ -56,36 +56,42 @@ function __bootstrap()
 	 *        - when PHPUnit includes the testcase classes
 	 */
 	define('E_LOADERLEVEL', $loadErrorLevel);
-
+    chdir(dirname(__file__). '/../../../');
+    
     $dirs = array(
-        './src',
-        './src/config',
-        './src/Pex',
-        './src/Pex/Exceptions',
-        './src/ExchangeStore',
-        './src/ExchangeStore/Parser',
-        './src/ExchangeStore/Parser/Exceptions',
-        './src/ExchangeStore/Types',
-        './src/ExchangeStore/HttpParams',
-        './src/Http',
-        './src/Http/Exceptions',
-        './tests',
-        './tests/_HelperFiles',
-        './tests/Pex',
-        './tests/ExchangeStore',
-        './tests/ExchangeStore/Parser',
-        './tests/Http',
-        './tests/Http/_files',
-        './tests/_PHPUnitCommon',
-        './tests/_PHPUnitCommon/conf',
-        './tests/_PHPUnitCommon/conf/hudson',
-        './tests/_PHPUnitCommon/phpunit_helpers',
+        'src',
+        'src/config',
+        'src/Pex',
+        'src/Pex/Exceptions',
+        'src/ExchangeStore',
+        'src/ExchangeStore/Parser',
+        'src/ExchangeStore/Parser/Exceptions',
+        'src/ExchangeStore/Types',
+        'src/ExchangeStore/HttpParams',
+        'src/Http',
+        'src/Http/Exceptions',
+        'tests',
+        'tests/_HelperFiles',
+        'tests/Pex',
+        'tests/ExchangeStore',
+        'tests/ExchangeStore/Parser',
+        'tests/Http',
+        'tests/Http/_files',
+        'tests/_PHPUnitCommon',
+        'tests/_PHPUnitCommon/conf',
+        'tests/_PHPUnitCommon/conf/hudson',
+        'tests/_PHPUnitCommon/phpunit_helpers',
+        '.',
     );
 
     $path = implode(PATH_SEPARATOR, $dirs);
     set_include_path($path.PATH_SEPARATOR.get_include_path());
 
-	chdir(dirname(__file__). '/../../../');
+    require_once 'PHPUnit/Framework.php';
+    require_once 'vfsStream/vfsStream.php';
+    require_once 'MockAmendingTestCaseBase.php';
+
+	
 	error_reporting(E_LOADERLEVEL);
 	spl_autoload_register(array(new Autoloader, 'loadClass'));
 }
