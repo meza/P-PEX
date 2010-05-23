@@ -51,6 +51,11 @@ class ParserFactory
     const CONTACT_GET = 3;
 
     /**
+     * Constant of the Calendar event list parser
+     */
+    const CALENDAR_EVENT_LIST = 4;
+
+    /**
      * Creates the required Parser implementation
      *
      * @param int $type The type to create
@@ -68,6 +73,8 @@ class ParserFactory
             return $this->_createContactCreateParser();
         case self::CONTACT_GET:
             return $this->_createContactGetParser();
+        case self::CALENDAR_EVENT_LIST:
+           return $this->_createCalendarEventListParser();
 
         default:
             throw new NoSuchParserException($type);
@@ -107,6 +114,13 @@ class ParserFactory
 
     }//end _createContactGetParser()
 
+
+    public function _createCalendarEventListParser()
+    {
+        include_once dirname(__FILE__).'/CalendarEventListParser.php';
+        $parser = new CalendarEventListParser();
+        return $parser;
+    }
 
 }//end class
 
