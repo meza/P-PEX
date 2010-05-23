@@ -209,7 +209,7 @@ class Pex implements PPexInterface, ContactHandler
     {
         $x = new ContactCheckHttpParams($contact);
         $xx = $this->call($x);
-        if ($xx->code!=404) {
+        if ($xx->code != 404) {
             $contact->setUrlModifier(md5(date('c')));
             return $this->createContact($contact);
         }

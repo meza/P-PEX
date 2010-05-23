@@ -17,12 +17,13 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__).'/../../src/Http/Curl.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCookieStoreException.php';
+require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCustomHttpMethodException.php';
 
 /**
  * Testing 3rd party is not my goal. I only want to see that I set everything
@@ -426,7 +427,14 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
         $this->object->setCustomMethod('SEARCH');
 
-        $this->object->setCookieStore('cookies.txt');
+        try {
+            $this->object->setCookieStore('/cookies.txt');
+            $this->fail('Cookiestore exception should have been triggered');
+        } catch (InvalidCookieStoreException $e) {
+            
+        }
+
+        $this->object->setCookieStore(dirname(__FILE__).'/cookies.txt');
 
     }//end testCoverUntestableMethods()
 

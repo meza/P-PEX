@@ -75,11 +75,10 @@ class Curl
      */
     public function setCookieStore($filename)
     {
-        $filename = realpath($filename);
-        if (false === is_writable($filename)) {
+        if (false === is_writable(dirname($filename))) {
             throw new InvalidCookieStoreException($filename);
         }
-
+        touch($filename);
         curl_setopt($this->_ch, CURLOPT_COOKIEJAR, $filename);
         curl_setopt($this->_ch, CURLOPT_COOKIEFILE, $filename);
 
@@ -151,7 +150,6 @@ class Curl
                 $this->setUrl($url.'?'.$this->formatData($this->_data));
             }
         }
-
         $retval = curl_exec($this->_ch);
         $errno  = curl_errno($this->_ch);
         if ((int) 0 < $errno) {

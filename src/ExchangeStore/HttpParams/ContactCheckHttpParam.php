@@ -70,7 +70,7 @@ class ContactCheckHttpParams extends HttpParams
     {
         $name = $contact->getFileAsName();
 
-        $this->urlParams = array($this->_prepareName($name));
+        $this->urlParams = array($this->_prepareName($name.$contact->getUrlModifier()));
         
         $this->data = '<?xml version="1.0"?>
 <D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:contact:">
