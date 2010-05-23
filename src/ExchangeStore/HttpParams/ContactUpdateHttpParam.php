@@ -1,6 +1,6 @@
 <?php
 /**
- * ContactUpdateHttpParams.php
+ * ContactUpdateHttpParam.php
  *
  * Holds the ContactUpdateHttpParams class
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The ContactUpdateHttpParams class is the value object for contact update
+ * The ContactUpdateHttpParam class is the value object for contact update
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactUpdateHttpParams extends ContactCreateHttpParams
+class ContactUpdateHttpParam extends ContactCreateHttpParam
 {
 
     /**
@@ -39,7 +39,7 @@ class ContactUpdateHttpParams extends ContactCreateHttpParams
      *
      * @param string $contact The name of the contact
      *
-     * @return ContactCreateHttpParams
+     * @return ContactCreateHttpParam
      */
     public function __construct($url, Contact $contact)
     {

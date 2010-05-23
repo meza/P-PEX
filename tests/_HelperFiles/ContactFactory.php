@@ -20,8 +20,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Types/Contact.php';
-
 /**
  * The ContactFactory class is responsible for creating contacts
  *

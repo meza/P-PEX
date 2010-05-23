@@ -20,33 +20,6 @@
  * @link     http://www.assembla.com/spaces/p-pex
  **/
 
-require_once 'PHPUnit/Framework.php';
-require_once dirname(__FILE__).'/../../src/Pex/Pex.php';
-require_once dirname(__FILE__).'/../../src/Pex/ConnectionData.php';
-require_once dirname(__FILE__).'/../../src/Pex/Exceptions/CouldNotLoginException.php';
-require_once dirname(__FILE__).'/../../src/Http/Http.php';
-require_once dirname(__FILE__).'/../../src/Http/HttpResponse.php';
-require_once dirname(__FILE__).'/../../src/Http/HttpFactory.php';
-require_once dirname(__FILE__).'/../../src/Http/HttpParams.php';
-
-require_once dirname(__FILE__).'/../../src/ExchangeStore/URLAccess.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/URLFactory.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/ExchangeResponse.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/Parser.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ParserFactory.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/StoreUrlData.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ContactCreateParser.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/Parser/ContactGetParser.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/LoginHttpParams.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ServiceUrlsHttpParams.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ContactCreateHttpParam.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ContactGetHttpParam.php';
-require_once dirname(__FILE__).'/../../src/ExchangeStore/HttpParams/ContactCheckHttpParam.php';
-
-require_once dirname(__FILE__).'/../_HelperFiles/ContactFactory.php';
-require_once dirname(__FILE__).'/../_HelperFiles/ExchangeRawResponseFactory.php';
-
-
 /**
  * The test class of the Pex class
  *
@@ -124,7 +97,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             array(),
             '',
             false,
-            false,
             false
         );
         $this->httpFactoryMock = $this->getMock(
@@ -132,7 +104,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             array('createHttp'),
             array(),
             '',
-            false,
             false,
             false
         );
@@ -143,7 +114,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             array(),
             '',
             false,
-            false,
             false
         );
 
@@ -153,7 +123,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             array(),
             '',
             false,
-            false,
             false
         );
 
@@ -162,7 +131,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             array('parse'),
             array(),
             '',
-            false,
             false,
             false
         );
@@ -387,7 +355,7 @@ class PexTest extends PHPUnit_Framework_TestCase
         $httpResult = $this->exchangeRawResponseFactory->
             getSuccessfulContactCreationResponse($url);
         $contact    = $this->contactFactory->createAValidContact();
-        $param      = new ContactCreateHttpParams($contact);
+        $param      = new ContactCreateHttpParam($contact);
 
         $httpFactoryMock = $this->_setUpHttpFactory($this->httpFactoryMock);
         $this->httpMock->expects($this->once())->method('request')->with(

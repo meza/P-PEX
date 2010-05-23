@@ -19,11 +19,6 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__).'/../../src/Http/Curl.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCookieStoreException.php';
-require_once dirname(__FILE__).'/../../src/Http/Exceptions/InvalidCustomHttpMethodException.php';
 
 /**
  * Testing 3rd party is not my goal. I only want to see that I set everything
