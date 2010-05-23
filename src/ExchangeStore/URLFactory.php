@@ -54,6 +54,11 @@ class URLFactory
     const CONTACT = 'contact';
 
     /**
+     * Calendar type
+     */
+    const CALENDAR = 'calendar';
+
+    /**
      * @var string The hostname to use in building the urls
      */
     private $_hostname;
@@ -108,6 +113,8 @@ class URLFactory
             return $this->_hostname.'/exchange/'.$this->_username.'/';
         case self::CONTACT:
             return $this->_getUrlForContact($param1);
+        case self::CALENDAR:
+            return $this->_getUrlForCalendar();
         default:
             return $type;
         }
@@ -146,6 +153,23 @@ class URLFactory
         return $url;
 
     }//end _getUrlForContact()
+
+
+    /**
+     * Creates the url for the calendar store
+     *
+     * @return string
+     */
+    private function _getUrlForCalendar()
+    {
+
+        $calendar = $this->_urlAccess->calendar;
+        $url     = $this->_hostname.'exchange/';
+        $url    .= $this->_username.'/'.$calendar.'/';
+
+        return $url;
+
+    }//end _getUrlForCalendar()
 
 
 }//end class
