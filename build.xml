@@ -18,7 +18,7 @@
         <exec dir="${basedir}"
         executable="phpunit"
         failonerror="true">
-            <arg line="--configuration ${basedir}/phpunit.xml ."/>
+            <arg line="--configuration ${basedir}/tests/_PHPUnitCommon/conf/hudson/phpunit.xml ."/>
         </exec>
     </target>
 
