@@ -64,7 +64,6 @@ class HttpTest extends PHPUnit_Framework_TestCase
             array(),
             '',
             false,
-            false,
             false
         );
         $this->object = new Http($this->curlBuilderMock);

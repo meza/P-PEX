@@ -34,7 +34,7 @@
  *
  * @SuppressWarnings(PHPMD)
  */
-class CurlBuilderTest extends PHPUnit_Framework_TestCase
+class CurlBuilderTest extends MockAmendingTestCaseBase
 {
 
     /**
@@ -66,7 +66,6 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
             array('getUrlFor'),
             array(),
             '',
-            false,
             false,
             false
         );
