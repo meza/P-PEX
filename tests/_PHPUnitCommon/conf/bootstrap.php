@@ -44,7 +44,7 @@ function __bootstrap()
 		print 'Defining E_LOADERLEVEL as ' .
 			'E_ALL &~ E_NOTICE &~ E_WARNING &~ E_DEPRECATED &~ E_STRICT ' . PHP_EOL;
 		print 'You can use a phpunit.xml configuration file to override this' . PHP_EOL;
-		$loadErrorLevel = E_ALL &~ E_NOTICE &~ E_WARNING &~ E_DEPRECATED &~ E_STRICT;
+		$loadErrorLevel = E_ALL &~ E_NOTICE &~ E_DEPRECATED &~ E_STRICT;
 	} else {
 		$loadErrorLevel = $GLOBALS['__loaderLevel'];
 	}
