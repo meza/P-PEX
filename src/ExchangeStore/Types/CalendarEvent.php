@@ -21,7 +21,7 @@
  */
 
 /**
- * The CalendarEvent class is responsible for ...
+ * The CalendarEvent is the value object of all calendar events
  *
  * PHP Version: 5
  *
