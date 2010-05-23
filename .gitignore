@@ -6,3 +6,4 @@ nbproject
 /doxytags.tag
 build
 src/config/rokonai.ini
+tests/Http/cookies.txt
