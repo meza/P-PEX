@@ -44,6 +44,7 @@ class CalendarEventListParser implements Parser
      */
     public function parse($xmlString)
     {
+        print "'".$xmlString."';";
         /*
             TODO This should be fixed. SimpleXML Error handling depends on the
             environment.
@@ -91,7 +92,7 @@ class CalendarEventListParser implements Parser
             }
         }
 
-        return $result;
+        return array_reverse($result);
 
     }//end parse()
 
