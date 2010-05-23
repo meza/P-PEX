@@ -70,9 +70,15 @@ class CalendarEventListHttpParam extends HttpParams
         $this->data = '
 <?xml version="1.0"?>
 <g:searchrequest xmlns:g="DAV:">
-<g:sql>SELECT "DAV:href", "urn:schemas:calendar:busystatus",
-"urn:schemas:calendar:busystatus", "urn:schemas:calendar:dtstart",
-"urn:schemas:calendar:dtend"
+<g:sql>SELECT "DAV:href",
+"urn:schemas:calendar:busystatus",
+"urn:schemas:httpmail:subject",
+"urn:schemas:httpmail:textdescription",
+"urn:schemas:calendar:dtstart",
+"urn:schemas:calendar:dtend",
+"urn:schemas:calendar:created",
+"urn:schemas:calendar:duration",
+"urn:schemas:calendar:location"
 FROM scope(\'shallow traversal of "'.$this->preparedUrl.'"\')
 </g:sql>
 </g:searchrequest>
