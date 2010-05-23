@@ -98,9 +98,6 @@ class CurlBuilder
         $headers[] = 'User-Agent: '.$httpParams->userAgent;
         $curl->setHeaders($headers);
 
-        if (null !== $httpParams->data) {
-            $curl->setData($httpParams->data);
-        }
 
         $httpMethod = $this->_parseHttpMethod($httpParams->httpMethod);
         if ('POST' === $httpMethod) {
@@ -125,6 +122,10 @@ class CurlBuilder
             $param_arr
         );
         $curl->setUrl($url);
+
+        if (null !== $httpParams->data) {
+            $curl->setData($httpParams->data);
+        }
 
         if (null !== $httpParams->customMethod) {
             $curl->setCustomMethod(strtoupper($httpParams->customMethod));

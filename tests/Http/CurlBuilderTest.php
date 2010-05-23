@@ -242,13 +242,6 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
         )->with($this->equalTo($headers));
         $i++;
 
-        if (null !== $params->data) {
-            $curlMock->expects($this->at($i))->method(
-                'setData'
-            )->with($this->equalTo($params->data));
-            $i++;
-        }
-
         if ('POST' === strtoupper($params->httpMethod)) {
             $curlMock->expects($this->at($i))->method(
                 'setPost'
@@ -277,6 +270,14 @@ class CurlBuilderTest extends PHPUnit_Framework_TestCase
             'setUrl'
         )->with($this->equalTo('givenurl'));
         $i++;
+
+        if (null !== $params->data) {
+            $curlMock->expects($this->at($i))->method(
+                'setData'
+            )->with($this->equalTo($params->data));
+            $i++;
+        }
+
         $y++;
 
         if (null !== $params->customMethod) {
