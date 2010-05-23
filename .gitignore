@@ -7,3 +7,4 @@ nbproject
 build
 src/config/rokonai.ini
 tests/Http/cookies.txt
+*.patch
