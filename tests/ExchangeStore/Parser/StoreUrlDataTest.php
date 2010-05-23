@@ -45,6 +45,9 @@ class StoreUrlDataTest extends PHPUnit_Framework_TestCase
      */
     public function testThatValuesAreDefined()
     {
+        if (false === class_exists('StoreUrlData')) {
+            $this->fail('The required class is not loaded: StoreUrlData');
+        }
         $this->assertClassHasAttribute('inbox', 'StoreUrlData');
         $this->assertClassHasAttribute('calendar', 'StoreUrlData');
         $this->assertClassHasAttribute('contacts', 'StoreUrlData');
