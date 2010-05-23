@@ -181,28 +181,61 @@ class Pex implements PPexInterface, ContactHandler
     }//end getStoreUrls()
 
 
+    /**
+     * Make the call to the server
+     *
+     * @param HttpParams $params     The http parameters
+     * @param string     $parserType The parser type to parse the response with
+     *
+     * @return HttpResponse
+     */
     private function _doCall(HttpParams $params, $parserType)
     {
         $result = $this->call($params);
         $parser = $this->parserFactory->createParser($parserType);
-        return $this->parse($result, $parser);
-    }
+        return $this->parse($result->data, $parser);
 
+    }//end _doCall()
+
+
+    /**
+     * Creates a new contact in the exchange store
+     *
+     * @param Contact $contact The contact to save
+     *
+     * @return string The url of the newly created contact
+     */
     public function createContact(Contact $contact)
     {
+        $x = new ContactCheckHttpParams($contact);
+        $xx = $this->call($x);
+        if ($xx->code != 404) {
+            $contact->setUrlModifier(md5(date('c')));
+            return $this->createContact($contact);
+        }
+
         $params = new ContactCreateHttpParams($contact);
         $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
-        
         return $result;
-    }
 
+    }//end createContact()
+
+
+    /**
+     * Retrieves the contact information from the given url
+     *
+     * @param string $url The endpoint
+     *
+     * @return Contact
+     */
     public function readContact($url)
     {
         $params = new ContactGetHttpParams($url);
         $result = $this->_doCall($params, ParserFactory::CONTACT_GET);
-
         return $result;
-    }
+
+    }//end readContact()
+
 
     public function updateContact($url, Contact $contact)
     {}

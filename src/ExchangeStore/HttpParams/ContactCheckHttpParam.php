@@ -1,8 +1,8 @@
 <?php
 /**
- * ContactCreateHttpParams.php
+ * ContactCheckHttpParams.php
  *
- * Holds the ContactCreateHttpParams class
+ * Holds the ContactCheckHttpParams class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The ContactCreateHttpParams class is the value object for contact creation
+ * The ContactCheckHttpParams class finds the first available url for the contact
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactCreateHttpParams extends HttpParams
+class ContactCheckHttpParams extends HttpParams
 {
 
     /**
@@ -56,41 +56,26 @@ class ContactCreateHttpParams extends HttpParams
     /**
      * @var string The custom http method to use
      */
-    public $customMethod = 'PROPPATCH';
+    public $customMethod = 'propfind';
 
 
     /**
-     * Creates a login param object
+     * Creates a contact finder param object
      *
      * @param string $contact The name of the contact
      *
-     * @return ContactCreateHttpParams
+     * @return ContactCheckHttpParams
      */
     public function __construct(Contact $contact)
     {
         $name = $contact->getFileAsName();
 
         $this->urlParams = array($this->_prepareName($name.$contact->getUrlModifier()));
-
+        
         $this->data = '<?xml version="1.0"?>
-<g:propertyupdate xmlns:g="DAV:" xmlns:c="urn:schemas:contacts:"
-xmlns:e="http://schemas.microsoft.com/exchange/"
-xmlns:mapi="http://schemas.microsoft.com/mapi/" xmlns:x="xml:"
-xmlns:cal="urn:schemas:calendar:" xmlns:mail="urn:shemas:httpmail:">
-<g:set>
-    <g:prop>
-        <g:contentclass>urn:content-classes:person</g:contentclass>
-        <e:outlookmessageclass>IPM.Contact</e:outlookmessageclass>
-        <c:givenName>'.$contact->firstName.'</c:givenName>
-        <c:middlename>'.$contact->middleName.'</c:middlename>
-        <c:sn>'.$contact->lastName.'</c:sn>
-        <c:fileas>'.$name.'</c:fileas>
-        <c:nickname>'.$contact->nickName.'</c:nickname>
-        <mapi:email1addrtype>SMTP</mapi:email1addrtype>
-        <mapi:email1emailaddress>'.$contact->emailAddress.'</mapi:email1emailaddress>
-    </g:prop>
-</g:set>
-</g:propertyupdate>
+<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:contact:">
+        <D:allprop/>
+</D:propfind>
 ';
 
     }//end __construct()

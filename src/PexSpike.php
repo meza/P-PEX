@@ -51,6 +51,7 @@ require_once 'ExchangeStore/HttpParams/ContactCreateHttpParam.php';
 require_once 'ExchangeStore/HttpParams/ContactUpdateHttpParam.php';
 require_once 'ExchangeStore/HttpParams/ContactDeleteHttpParam.php';
 require_once 'ExchangeStore/HttpParams/ContactGetHttpParam.php';
+require_once 'ExchangeStore/HttpParams/ContactCheckHttpParam.php';
 
 error_reporting(E_ALL | E_STRICT | E_DEPRECATED);
 $df            = new ConnectionDataFactory(realpath('./config/'));
@@ -71,11 +72,12 @@ $contact->lastName     = 'Mészáros';
 $contact->nickName     = 'meza';
 $contact->organization = 'an org';
 
-$x = new ContactGetHttpParams('https://mail.rokonai.hu/exchange/rokonaiintranet/N%C3%A9vjegyalbum/M%C3%A9sz%C3%A1ros%2B%2BM%C3%A1rton2.eml');
-$xx = $fs->call($x);
+//$x = new ContactGetHttpParams('https://mail.rokonai.hu/exchange/rokonaiintranet/N%C3%A9vjegyalbum/M%C3%A9sz%C3%A1ros%2B%2BM%C3%A1rton2.eml');
+//$xx = $fs->call($x);
 
 
-//$res = $fs->createContact($contact);
+$res = $fs->createContact($contact);
+var_dump($res);die;
 //$xml = $res->data;
 header('Content-Type: text/xml');
 print $xx->data;

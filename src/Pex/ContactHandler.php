@@ -39,13 +39,47 @@
 interface ContactHandler
 {
 
+
+    /**
+     * Creates a new contact in the exchange store
+     *
+     * @param Contact $contact The contact to save
+     *
+     * @return string The url of the newly created contact
+     */
     public function createContact(Contact $contact);
 
+
+    /**
+     * Retrieves the contact information from the given url
+     *
+     * @param string $url The endpoint
+     *
+     * @return Contact
+     */
     public function readContact($url);
 
+
+    /**
+     * Update the given url to the given contact info
+     *
+     * @param string  $url     The url to update
+     * @param Contact $contact The new information
+     *
+     * @return bool true on success, false otherwise
+     */
     public function updateContact($url, Contact $contact);
 
+
+    /**
+     * Delete the contact on the given endpoint
+     *
+     * @param string $url The url to delete
+     *
+     * @return bool
+     */
     public function deleteContact($url);
+
 
 }//end interface
 
