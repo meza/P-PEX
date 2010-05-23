@@ -85,6 +85,24 @@ class HttpParams
      */
     public $urlParams = array();
 
+    /**
+     * @var The url that the request will go to
+     */
+    protected $preparedUrl;
+
+
+    /**
+     * Set the prepared url
+     *
+     * @param string $url The url
+     *
+     * @return void
+     */
+    public function setPreparedUrl($url)
+    {
+        $this->preparedUrl = $url;
+    }
+
 }//end class
 
 ?>

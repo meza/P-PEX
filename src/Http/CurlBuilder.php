@@ -123,6 +123,8 @@ class CurlBuilder
         );
         $curl->setUrl($url);
 
+        $httpParams->setPreparedUrl($url);
+
         if (null !== $httpParams->data) {
             $curl->setData($httpParams->data);
         }
