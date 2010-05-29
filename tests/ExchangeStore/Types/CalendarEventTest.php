@@ -108,7 +108,7 @@ class CalendarEventTest extends MockAmendingTestCaseBase
         $dates = array(
                   array(
                    '2010-01-01 21:00',
-                    date('c', strtotime('2010-01-01 21:00')),
+                   date('c', strtotime('2010-01-01 21:00')),
                   ),
                   array(
                    '2010-01-01T21:00:00Z',
@@ -349,6 +349,9 @@ class CalendarEventTest extends MockAmendingTestCaseBase
     /**
      * We need to check if the correct date is returned
      *
+     * @param string $baseExpectedDate The output date
+     * @param string $stored           The stored date
+     *
      * @dataProvider dateProvider()
      *
      * @return void
@@ -365,12 +368,12 @@ class CalendarEventTest extends MockAmendingTestCaseBase
     /**
      * We need to test that the getFileAsName works correctly
      *
-     *  @return void
+     * @return void
      */
     public function testGetFileAsName()
     {
         $item     = CalendarEvent::anEvent('subject')->from('2010-01-01 12:32');
-        $expected = 'subject 201001011231';
+        $expected = 'subject 201001011232';
         $actual   = $item->getFileAsName();
         $this->assertEquals($expected, $actual);
 
@@ -400,7 +403,8 @@ class CalendarEventTest extends MockAmendingTestCaseBase
             'The url modifier is not returned as expected. Was it set?'
         );
 
-    }
+    }//end testUrlModifier()
+
 
 }//end class
 
