@@ -114,7 +114,7 @@ class URLFactory
         case self::CONTACT:
             return $this->_getUrlForContact($param1);
         case self::CALENDAR:
-            return $this->_getUrlForCalendar();
+            return $this->_getUrlForCalendar($param1);
         default:
             return $type;
         }
@@ -143,13 +143,13 @@ class URLFactory
      */
     private function _getUrlForContact($contactStorageName=null)
     {
-
         $contact = $this->_urlAccess->contacts;
         $url     = $this->_hostname.'exchange/';
         $url    .= $this->_username.'/'.$contact.'/';
-        if (null !==$contactStorageName) {
-            $url .=$contactStorageName.'.eml';
+        if (null !== $contactStorageName) {
+            $url .= $contactStorageName.'.eml';
         }
+
         return $url;
 
     }//end _getUrlForContact()
@@ -158,14 +158,18 @@ class URLFactory
     /**
      * Creates the url for the calendar store
      *
+     * @param string $eventStorageName The event's path
+     *
      * @return string
      */
-    private function _getUrlForCalendar()
+    private function _getUrlForCalendar($eventStorageName=null)
     {
-
         $calendar = $this->_urlAccess->calendar;
-        $url     = $this->_hostname.'exchange/';
-        $url    .= $this->_username.'/'.$calendar.'/';
+        $url      = $this->_hostname.'exchange/';
+        $url     .= $this->_username.'/'.$calendar.'/';
+        if (null !== $eventStorageName) {
+            $url .= $eventStorageName.'.eml';
+        }
 
         return $url;
 
