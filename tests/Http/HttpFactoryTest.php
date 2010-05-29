@@ -17,7 +17,6 @@
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
  *
- * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
 
@@ -91,13 +90,12 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @return void()
      */
-    public function testCreateHttp()
+    public function testCreateDefaultHttp()
     {
         $actual = $this->object->createHttp();
-
         $this->assertTrue($actual instanceof Http);
 
-    }//end testCreateHttp()
+    }//end testCreateDefaultHttp()
 
 
     /**
@@ -108,7 +106,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSettingsInit()
+    public function testDefaultSettingsInit()
     {
         $http = $this->object->createHttp();
 
@@ -140,8 +138,80 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
             'followLocation was not called with true'
         );
 
-    }//end testSettingsInit()
+    }//end testDefaultSettingsInit()
 
+
+    /**
+     * We want our method, to return a Http object
+     *
+     * @test
+     *
+     * @return void()
+     */
+    public function testCreateVerboseHttp()
+    {
+        $this->object = new HttpFactory(
+            $this->curlBuilderMock,
+            HttpFactory::VERBOSE
+        );
+        $actual       = $this->object->createHttp();
+        $this->assertTrue($actual instanceof Http);
+
+    }//end testCreateVerboseHttp()
+
+
+    /**
+     * We'd like to ensure, that the correct initializer methods are called,
+     * regardless to the order. The values are the keypoint.
+     *
+     * @test
+     *
+     * @return void
+     */
+    public function testVerboseSettingsInit()
+    {
+        $this->object = new HttpFactory(
+            $this->curlBuilderMock,
+            HttpFactory::VERBOSE
+        );
+        $http = $this->object->createHttp();
+
+        $this->assertAttributeEquals(
+            'cookies.txt',
+            '_cookieStore',
+            $http,
+            'setCookieStore was not called with cookies.txt argument'
+        );
+
+        $this->assertAttributeEquals(
+            false,
+            '_sslVerifyHost',
+            $http,
+            'verifySSL was not called with false'
+        );
+
+        $this->assertAttributeEquals(
+            false,
+            '_sslVerifyPeer',
+            $http,
+            'verifySSL was not called with false'
+        );
+
+        $this->assertAttributeEquals(
+            true,
+            '_followLocation',
+            $http,
+            'followLocation was not called with true'
+        );
+
+        $this->assertAttributeEquals(
+            true,
+            '_verbose',
+            $http,
+            'verbose was not set to true'
+        );
+
+    }//end testVerboseSettingsInit()
 
 }//end class
 

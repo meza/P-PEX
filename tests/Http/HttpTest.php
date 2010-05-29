@@ -10,7 +10,6 @@
  * @package  HTTP
  * @author   meza <meza@meza.hu>
  * @license  GPLv3 <http://www.gnu.org/licenses/>
- * @version  GIT: $Id$
  * @link     http://www.meza.hu
  */
 
@@ -209,6 +208,34 @@ class HttpTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Test verbose
+     *
+     * @return void
+     */
+    public function testVerbose()
+    {
+        $this->assertAttributeEquals(
+            false,
+            '_verbose',
+            $this->object
+        );
+        $this->object->verbose();
+        $this->assertAttributeEquals(
+            false,
+            '_verbose',
+            $this->object
+        );
+        $this->object->verbose(true);
+        $this->assertAttributeEquals(
+            true,
+            '_verbose',
+            $this->object
+        );
+
+    }//end testVerbose()
+
+
+    /**
      * Test request behaviour
      *
      * @test
@@ -218,9 +245,9 @@ class HttpTest extends PHPUnit_Framework_TestCase
     public function testRequest()
     {
         $curlReturn = array(
-            'code' => 200,
-            'data' => 'successful curl test call',
-        );
+                       'code' => 200,
+                       'data' => 'successful curl test call',
+                      );
 
         $expected       = new HttpResponse();
         $expected->code = $curlReturn['code'];

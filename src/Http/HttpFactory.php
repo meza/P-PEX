@@ -35,22 +35,32 @@
 class HttpFactory
 {
 
+    const NORMAL  = 0;
+    const VERBOSE = 0;
+
     /**
      * @var CurlBuilder The CurlBuilder instance to use
      */
     private $_curlBuilder;
+
+    /**
+     * @var const The type of Http to produce
+     */
+    private $_type;
 
 
     /**
      * Constructs the HttpBuilder object, while requiring the dependencies
      *
      * @param CurlBuilder $curlBuilder A CurlBuilder instance to use
+     * @param const $type The type of Http to produce
      *
      * @return HttpFactory
      */
-    public function  __construct(CurlBuilder $curlBuilder)
+    public function  __construct(CurlBuilder $curlBuilder, $type=self::NORMAL)
     {
         $this->_curlBuilder = $curlBuilder;
+        $this->_type        = $type;
 
     }//end __construct()
 
@@ -62,6 +72,25 @@ class HttpFactory
      */
     public function createHttp()
     {
+        switch ($this->_type) {
+        case self::VERBOSE:
+            return $this->_createVerbosingHttp();
+            break;
+
+        case self::NORMAL:
+        default :$this->_createDefaultHttp();
+        }
+
+    }//end createHttp()
+
+
+    /**
+     * Creates a pre-configured Http object
+     *
+     * @return Http
+     */
+    private function _createDefaultHttp()
+    {
         $http = new Http($this->_curlBuilder);
 
         $http->followLocation(true);
@@ -70,7 +99,22 @@ class HttpFactory
 
         return $http;
 
-    }//end createHttp()
+    }//end _createDefaultHttp()
+
+
+    /**
+     * There are times when debugging is needed
+     *
+     * @return Http
+     */
+    private function _createVerbosingHttp()
+    {
+        $http = $this->_createDefaultHttp();
+        $http->verbose(true);
+
+        return $http;
+
+    }//end _createVerbosingHttp()
 
 
 }//end class
