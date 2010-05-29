@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="P-PEX" default="build">
+
+    
+
 	<target name="clean">
         <delete dir="${basedir}/build"/>
     </target>
 
     <target name="prepare" depends="clean">
+        
         <mkdir dir="${basedir}/build/logs"/>
 		<mkdir dir="${basedir}/build/doc"/>
         <mkdir dir="${basedir}/build/unittest"/>
         <mkdir dir="${basedir}/build/unittest/coverage"/>
 		<mkdir dir="${basedir}/build/unittest/coverage/source"/>
+
+    </target>
+
+    <target name="stashSpikes">
+        <mkdir dir="${basedir}/stash"/>
+        <move description="Remove spikes"
+            todir="${basedir}/stash" overwrite="false">
+            <fileset dir="${basedir}/src" includes="**/*Spike.php"/>
+        </move>
+    </target>
+
+    <target name="restoreSpikes">
+        <move preservelastmodified="true" todir="${basedir}/src" overwrite="falsef">
+            <fileset dir="${basedir}/stash" includes="**/*"/>
+        </move>
+        <delete dir="${basedir}/stash"/>
     </target>
 
     <target name="ide" depends="phpcpd-ide, phpmd-ide, phpcs, phpunit-ide"/>
 
     <target name="phpunit" depends="prepare">
+        <antcall target="stashSpikes"/>
         <exec dir="${basedir}"
         executable="phpunit"
         failonerror="true">
             <arg line="--configuration ${basedir}/tests/_PHPUnitCommon/conf/hudson/phpunit.xml ."/>
         </exec>
+        <antcall target="restoreSpikes"/>
     </target>
 
     <target name="phpunit-ide">
