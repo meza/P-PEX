@@ -67,8 +67,7 @@ class CalendarEventListHttpParam extends HttpParams
      */
     public function __construct()
     {
-        $this->data = '
-<?xml version="1.0"?>
+        $this->data = '<?xml version="1.0"?>
 <g:searchrequest xmlns:g="DAV:">
 <g:sql>SELECT "DAV:href",
 "urn:schemas:calendar:busystatus",

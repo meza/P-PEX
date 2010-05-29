@@ -22,6 +22,7 @@
 
 require_once 'PPexInterface.php';
 require_once 'ContactHandler.php';
+require_once 'CalendarHandler.php';
 
 /**
  * The Pex class is the main class
@@ -34,7 +35,7 @@ require_once 'ContactHandler.php';
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class Pex implements PPexInterface, ContactHandler
+class Pex implements PPexInterface, ContactHandler, CalendarHandler
 {
 
     /**
@@ -260,6 +261,48 @@ class Pex implements PPexInterface, ContactHandler
         }
     }
 
+
+    /**
+     * Creates an event in the store
+     *
+     * @param CalendarEvent $event The event to be stored
+     *
+     * @return bool
+     */
+    public function createEvent(CalendarEvent $event)
+    {
+        $params = new CalendarEventCreateHttpParam($event, $this->data->username);
+        $result = $this->call($params);
+        if (($result->code>=200) && ($result->code<300)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Removes an entry from a given url
+     *
+     * @param string $url endpoint
+     *
+     * @return bool True on success, false otherwise
+     */
+    public function deleteEvent($url)
+    {}
+
+
+    /**
+     * Lists al events in the exchange store
+     *
+     * @return CalendarEvent[]
+     */
+    public function listEvents()
+    {
+        $params = new CalendarEventListHttpParam();
+        $result = $this->_doCall($params, ParserFactory::CALENDAR_EVENT_LIST);
+        return $result;
+
+    }
 
 }//end class
 
