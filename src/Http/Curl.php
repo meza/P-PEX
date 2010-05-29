@@ -161,6 +161,7 @@ class Curl
         }
 
         $info = $this->getInfo();
+        curl_close($this->_ch);
         return array(
                 'code' => $info['http_code'],
                 'data' => $retval,
