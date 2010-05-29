@@ -155,6 +155,7 @@ class Pex implements PPexInterface, ContactHandler
         );
         $loginResult = $this->call($params);
         if ($loginResult->code === 200) {
+            sleep(1);
             $this->getStoreUrls();
             return true;
         }
