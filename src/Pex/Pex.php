@@ -104,6 +104,10 @@ class Pex implements PPexInterface, ContactHandler
      */
     public function call(HttpParams $params, $tries=0, $maxTries=1)
     {
+        if (true === is_string($params->data))
+        if (false === $this->isValidXml($params->data)) {
+            throw new Exception('String could not be parsed as XML: '.get_class($params).'::data');
+        }
         $result = $this->getHttp($this->httpFactory)->request($params);
         $tries++;
         if (false === ($params instanceof LoginHttpParams)) {
@@ -244,6 +248,17 @@ class Pex implements PPexInterface, ContactHandler
     public function deleteContact($url)
     {}
 
+
+    public function isValidXml($xmlString)
+    {
+        try {
+            libxml_use_internal_errors(true);
+            $xml = new SimpleXMLElement($xmlString);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
 
 }//end class
