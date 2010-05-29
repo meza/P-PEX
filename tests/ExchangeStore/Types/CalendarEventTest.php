@@ -362,6 +362,46 @@ class CalendarEventTest extends MockAmendingTestCaseBase
     }//end testGetEndDate()
 
 
+    /**
+     * We need to test that the getFileAsName works correctly
+     *
+     *  @return void
+     */
+    public function testGetFileAsName()
+    {
+        $item     = CalendarEvent::anEvent('subject')->from('2010-01-01 12:32');
+        $expected = 'subject 201001011231';
+        $actual   = $item->getFileAsName();
+        $this->assertEquals($expected, $actual);
+
+    }//end testGetFileAsName()
+
+
+    /**
+     * We need to test that the url modifier gets set and retrieved
+     *
+     * @return void
+     */
+    public function testUrlModifier()
+    {
+        $modifier = md5(date('U'));
+
+        $this->assertEquals(
+            '',
+            $this->object->getUrlModifier(),
+            'The url modifier is not empty, though is should be'
+        );
+
+        $this->object->setUrlModifier($modifier);
+
+        $this->assertEquals(
+            $modifier,
+            $this->object->getUrlModifier(),
+            'The url modifier is not returned as expected. Was it set?'
+        );
+
+    }
+
 }//end class
 
 ?>
