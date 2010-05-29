@@ -60,6 +60,11 @@ class Http
      */
     private $_followLocation = true;
 
+    /**
+     * @var bool true to be verbose
+     */
+    private $_verbose = false;
+
 
     /**
      * Csontructs the object
@@ -119,6 +124,20 @@ class Http
 
 
     /**
+     * Sets wether the request should be verbose
+     *
+     * @param bool $flag True to be, false to not
+     *
+     * @return void
+     */
+    public function verbose($flag=false)
+    {
+        $this->_verbose = $flag;
+
+    }//end verbose()
+
+
+    /**
      * Makes a http call
      *
      * @param HttpParams $httpParams The HttpParams object to use
@@ -134,7 +153,7 @@ class Http
              'followLocation' => $this->_followLocation,
              'SSLVerifyHost'  => $this->_sslVerifyHost,
              'SSLVerifyPeer'  => $this->_sslVerifyPeer,
-             'verbose'        => false,
+             'verbose'        => $this->_verbose,
              'returnTransfer' => true,
             )
         );
