@@ -66,8 +66,7 @@ class ServiceUrlsHttpParams extends HttpParams
      */
     public function __construct()
     {
-        $this->data = '
-<?xml version="1.0"?>
+        $this->data = '<?xml version="1.0"?>
 <D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:httpmail:">
         <D:prop><e:inbox/></D:prop>
         <D:prop><e:calendar/></D:prop>
