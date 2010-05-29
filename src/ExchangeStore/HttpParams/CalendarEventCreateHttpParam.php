@@ -45,8 +45,8 @@ class CalendarEventCreateHttpParam extends HttpParams
      */
     public $headers = array(
                        'Content-Type' => 'text/xml',
-                       'Depth'        => 0,
-                       'Translate'    => 'f',
+//                       'Depth'        => 0,
+//                       'Translate'    => 'f',
                       );
 
     /**
@@ -72,16 +72,12 @@ class CalendarEventCreateHttpParam extends HttpParams
     {
         $name = $event->getFileAsName().$event->getUrlModifier();
         $this->urlParams = array($this->_prepareName($name));
-        $this->data      = '
-<?xml version="1.0"?>
+        $this->data      = '<?xml version="1.0"?>
 <g:propertyupdate xmlns:g="DAV:"
     xmlns:e="http://schemas.microsoft.com/exchange/"
     xmlns:mapi="http://schemas.microsoft.com/mapi/"
-    xmlns:mapit="http://schemas.microsoft.com/mapi/proptag/"
-    xmlns:x="xml:"
     xmlns:cal="urn:schemas:calendar:"
     xmlns:dt="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"
-    xmlns:header="urn:schemas:mailheader:"
     xmlns:mail="urn:schemas:httpmail:">
     <g:set>
         <g:prop>
@@ -94,16 +90,14 @@ class CalendarEventCreateHttpParam extends HttpParams
             <cal:alldayevent dt:dt="boolean">0</cal:alldayevent>
             <cal:responserequested dt:dt="boolean">1</cal:responserequested>
             <cal:reminderoffset dt:dt="int">900</cal:reminderoffset>
-            <header:to>'.$username.'</header:to>
             <mail:subject>'.$event->subject.'</mail:subject>
-            <mail:htmldescription>'.$event->description.'<mail:/htmldescription>
+            <mail:htmldescription>'.$event->description.'</mail:htmldescription>
             <cal:location>'.$event->location.'</cal:location>
             <cal:dtstart dt:dt="dateTime.tz">'.$event->getStartDate('c').'</cal:dtstart>
             <cal:dtend dt:dt="dateTime.tz">'.$event->getEndDate('c').'</cal:dtend>
         </g:prop>
     </g:set>
-</g:propertyupdate>
-';
+</g:propertyupdate>';
 
     }//end __construct()
 
