@@ -150,6 +150,9 @@ class Curl
                 $this->setUrl($url.'?'.$this->formatData($this->_data));
             }
         }
+
+        curl_setopt($this->_ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($this->_ch, CURLOPT_CONNECTTIMEOUT, 60);
         $retval = curl_exec($this->_ch);
         $errno  = curl_errno($this->_ch);
         if ((int) 0 < $errno) {
