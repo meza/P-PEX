@@ -32,7 +32,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class CalendarEventCreateHttpParam
+class CalendarEventCreateHttpParam extends HttpParams
 {
 
     /**
@@ -70,7 +70,8 @@ class CalendarEventCreateHttpParam
      */
     public function __construct(CalendarEvent $event, $username)
     {
-        $this->urlParams = $event->getUrlPart();
+        $name = $event->getFileAsName().$event->getUrlModifier();
+        $this->urlParams = array($this->_prepareName($name));
         $this->data      = '
 <?xml version="1.0"?>
 <g:propertyupdate xmlns:g="DAV:"
@@ -117,6 +118,20 @@ class CalendarEventCreateHttpParam
 ';
 
     }//end __construct()
+
+
+    /**
+     * Converts the name
+     *
+     * @param string $name The name
+     *
+     * @return string
+     */
+    private function _prepareName($name)
+    {
+        return urlencode($name);
+
+    }//end _prepareName()
 
 
 }//end class
