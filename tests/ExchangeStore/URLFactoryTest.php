@@ -47,7 +47,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * @var string The dummy hostname to use
      */
-    protected $testHost = 'https://www.example-server.com/';
+    protected $testHost = 'https://www.example-server.com';
 
     /**
      * @var URLAccess instance
@@ -165,7 +165,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
       */
     public function testUserRootUrlScheme()
     {
-         $expected = $this->testHost.'/exchange/'.$this->testUsername.'/';
+         $expected = $this->testHost.'/Exchange/'.$this->testUsername;
          $actual   = $this->object->getUrlFor(URLFactory::USERROOT);
          $this->assertEquals($expected, $actual);
 
@@ -183,7 +183,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->testURLAccess->contacts = 'calendar';
 
-        $expected = $this->testHost.'exchange/'.$this->testUsername.'/'.
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->contacts.'/';
         $actual   = $this->object->getUrlFor(URLFactory::CONTACT);
 
@@ -203,7 +203,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->testURLAccess->contacts = 'contacts';
         $contactName = 'testName';
-        $expected = $this->testHost.'exchange/'.$this->testUsername.'/'.
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
                 $this->testURLAccess->contacts.'/'.$contactName.'.eml';
 
         $actual = $this->object->getUrlFor(URLFactory::CONTACT, $contactName);
@@ -224,7 +224,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     {
         $this->testURLAccess->calendar = 'calendar';
 
-        $expected = $this->testHost.'exchange/'.$this->testUsername.'/'.
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->calendar.'/';
         $actual   = $this->object->getUrlFor(URLFactory::CALENDAR);
 
@@ -245,7 +245,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
         $this->testURLAccess->calendar = 'calendar';
 
         $calendarEvent = 'testName';
-        $expected      = $this->testHost.'exchange/'.$this->testUsername.'/'.
+        $expected      = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
                 $this->testURLAccess->calendar.'/'.$calendarEvent.'.eml';
 
         $actual = $this->object->getUrlFor(URLFactory::CALENDAR, $calendarEvent);

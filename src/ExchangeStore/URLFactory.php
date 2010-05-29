@@ -110,7 +110,7 @@ class URLFactory
         case self::REFERRER:
             return $this->_hostname.'/exchweb/bin/auth/owalogon.asp';
         case self::USERROOT:
-            return $this->_hostname.'/exchange/'.$this->_username.'/';
+            return $this->_hostname.'/Exchange/'.$this->_username;
         case self::CONTACT:
             return $this->_getUrlForContact($param1);
         case self::CALENDAR:
@@ -144,7 +144,7 @@ class URLFactory
     private function _getUrlForContact($contactStorageName=null)
     {
         $contact = $this->_urlAccess->contacts;
-        $url     = $this->_hostname.'exchange/';
+        $url     = $this->_hostname.'/Exchange/';
         $url    .= $this->_username.'/'.$contact.'/';
         if (null !== $contactStorageName) {
             $url .= $contactStorageName.'.eml';
@@ -165,7 +165,7 @@ class URLFactory
     private function _getUrlForCalendar($eventStorageName=null)
     {
         $calendar = $this->_urlAccess->calendar;
-        $url      = $this->_hostname.'exchange/';
+        $url      = $this->_hostname.'/Exchange/';
         $url     .= $this->_username.'/'.$calendar.'/';
         if (null !== $eventStorageName) {
             $url .= $eventStorageName.'.eml';
