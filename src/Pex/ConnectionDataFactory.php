@@ -91,7 +91,7 @@ class ConnectionDataFactory
 
         $data               = $config[$section];
         $connData           = new ConnectionData();
-        $connData->host     = $data['server'];
+        $connData->host     = $this->_stripTrailingSlash($data['server']);
         $connData->username = $data['username'];
         $connData->password = $data['password'];
 
@@ -112,6 +112,24 @@ class ConnectionDataFactory
         return $this->_configRoot.DIRECTORY_SEPARATOR.$configName.'.ini';
 
     }//end _getConfigFileName()
+
+
+    /**
+     * remove trailing slash
+     *
+     * @param string $url The url
+     *
+     * @return string
+     */
+    private function _stripTrailingSlash($url)
+    {
+        if (substr($url, -1) === '/') {
+            return substr($url, 0, -1);
+        }
+
+        return $url;
+
+    }//end _stripTrailingSlash()
 
 
 }//end class

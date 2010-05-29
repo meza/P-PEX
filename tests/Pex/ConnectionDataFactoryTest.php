@@ -54,7 +54,7 @@ class ConnectionDataFactoryTest extends PHPUnit_Framework_TestCase
     {
         $data = <<<EOT
 [demo_server]
-server   = http://your.demo.server
+server   = http://your.demo.server/
 username = your_user
 password = your_pass
 
@@ -113,6 +113,27 @@ EOT;
         $this->assertEquals($expected, $actual);
 
     }//end testCreateConnectionDataWithConfigOnly()
+
+
+    /**
+     * We need to test that the section is loaded
+     *
+     * @return void
+     */
+    public function testCreateConnectionDataWithSection()
+    {
+        $expected           = new ConnectionData();
+        $expected->host     = 'http://your.demo.server.backup';
+        $expected->username = 'your_user2';
+        $expected->password = 'your_pass2';
+        $actual             = $this->object->createConnectionData(
+            'demo_server',
+            'demo_backup_server'
+        );
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testCreateConnectionDataWithSection()
 
 
 }//end class
