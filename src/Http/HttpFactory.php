@@ -36,7 +36,7 @@ class HttpFactory
 {
 
     const NORMAL  = 0;
-    const VERBOSE = 0;
+    const VERBOSE = 1;
 
     /**
      * @var CurlBuilder The CurlBuilder instance to use
@@ -53,7 +53,7 @@ class HttpFactory
      * Constructs the HttpBuilder object, while requiring the dependencies
      *
      * @param CurlBuilder $curlBuilder A CurlBuilder instance to use
-     * @param const $type The type of Http to produce
+     * @param const       $type        The type of Http to produce
      *
      * @return HttpFactory
      */
@@ -75,10 +75,11 @@ class HttpFactory
         switch ($this->_type) {
         case self::VERBOSE:
             return $this->_createVerbosingHttp();
-            break;
 
         case self::NORMAL:
-        default :$this->_createDefaultHttp();
+            // Fall-through to default!
+        default:
+            return $this->_createDefaultHttp();
         }
 
     }//end createHttp()

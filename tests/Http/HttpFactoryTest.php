@@ -62,7 +62,10 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
             false,
             false
         );
-        $this->object = new HttpFactory($this->curlBuilderMock);
+        $this->object = new HttpFactory(
+            $this->curlBuilderMock,
+            HttpFactory::NORMAL
+        );
 
     }//end setUp()
 
@@ -136,6 +139,13 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
             '_followLocation',
             $http,
             'followLocation was not called with true'
+        );
+
+        $this->assertAttributeEquals(
+            false,
+            '_verbose',
+            $http,
+            'verbose was not set to false'
         );
 
     }//end testDefaultSettingsInit()

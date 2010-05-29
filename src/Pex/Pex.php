@@ -93,6 +93,26 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
 
 
     /**
+     * Tests a given string that it is a valid xml or not
+     *
+     * @param string $xmlString The xml to test
+     *
+     * @return bool
+     */
+    public function isValidXml($xmlString)
+    {
+        try {
+            libxml_use_internal_errors(true);
+            $xml = new SimpleXMLElement($xmlString);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+
+    }//end isValidXml()
+
+
+    /**
      * Performs a http call with the given params
      *
      * @param HttpParams $params   The httpParams object to use
@@ -102,13 +122,18 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
      * @return string result
      *
      * @throws CouldNotLoginException
+     * @throws Exception
      */
     public function call(HttpParams $params, $tries=0, $maxTries=1)
     {
-        if (true === is_string($params->data))
-        if (false === $this->isValidXml($params->data)) {
-            throw new Exception('String could not be parsed as XML: '.get_class($params).'::data');
+        if (true === is_string($params->data)) {
+            if (false === $this->isValidXml($params->data)) {
+                throw new Exception(
+                    'String could not be parsed as XML: '.get_class($params).'::data'
+                );
+            }
         }
+
         $result = $this->getHttp($this->httpFactory)->request($params);
         $tries++;
         if (false === ($params instanceof LoginHttpParams)) {
@@ -213,9 +238,10 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
      */
     public function createContact(Contact $contact)
     {
-        $x = new ContactCheckHttpParam($contact);
-        $xx = $this->call($x);
-        if ($xx->code != 404) {
+        $param    = new ContactCheckHttpParam($contact);
+        $response = $this->call($param);
+
+        if ($response->code !== 404) {
             $contact->setUrlModifier(md5(date('c')));
             return $this->createContact($contact);
         }
@@ -250,16 +276,6 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
     {}
 
 
-    public function isValidXml($xmlString)
-    {
-        try {
-            libxml_use_internal_errors(true);
-            $xml = new SimpleXMLElement($xmlString);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
 
 
     /**
@@ -273,11 +289,13 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
     {
         $params = new CalendarEventCreateHttpParam($event, $this->data->username);
         $result = $this->call($params);
-        if (($result->code>=200) && ($result->code<300)) {
+        if (($result->code >= 200) && ($result->code < 300)) {
             return true;
         }
+
         return false;
-    }
+
+    }//end createEvent()
 
 
     /**
@@ -302,7 +320,8 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
         $result = $this->_doCall($params, ParserFactory::CALENDAR_EVENT_LIST);
         return $result;
 
-    }
+    }//end listEvents()
+
 
 }//end class
 

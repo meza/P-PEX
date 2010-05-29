@@ -61,18 +61,22 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
     public function parserProvider()
     {
         return array(
-                'StoreUrlParser' => array(
-                                     ParserFactory::STORE_URLS,
-                                     'StoreUrlParser',
-                                    ),
-                'CreateContactParser' => array(
-                                     ParserFactory::CONTACT_CREATE,
-                                     'ContactCreateParser',
-                                    ),
-                'CreateGetParser' => array(
-                                     ParserFactory::CONTACT_GET,
-                                     'ContactGetParser',
-                                    ),
+                array(
+                 ParserFactory::STORE_URLS,
+                 'StoreUrlParser',
+                ),
+                array(
+                 ParserFactory::CONTACT_CREATE,
+                 'ContactCreateParser',
+                ),
+                array(
+                 ParserFactory::CONTACT_GET,
+                 'ContactGetParser',
+                ),
+                array(
+                 ParserFactory::CALENDAR_EVENT_LIST,
+                 'CalendarEventListParser',
+                ),
                );
 
     }//end parserProvider()

@@ -225,8 +225,9 @@ class PexTest extends PHPUnit_Framework_TestCase
 
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
 
-        $this->httpMock->expects($this->any())->method('request')
-        ->will($this->returnValue($result));
+        $this->httpMock->expects($this->any())->method('request')->will(
+            $this->returnValue($result)
+        );
 
         $this->object->call($params);
 
@@ -243,7 +244,6 @@ class PexTest extends PHPUnit_Framework_TestCase
         $params      = new HttpParams();
         $loginParams = new LoginHttpParams('', '', '');
         $storeParams = new ServiceUrlsHttpParams();
-
         $storeUrls   = new StoreUrlData();
 
         $resultOk       = new HttpResponse();
@@ -259,7 +259,6 @@ class PexTest extends PHPUnit_Framework_TestCase
 
         $urlResult       = new HttpResponse();
         $urlResult->data = 'data';
-
 
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 1);
@@ -288,7 +287,6 @@ class PexTest extends PHPUnit_Framework_TestCase
             $this->equalTo($urlResult->data)
         )->will($this->returnValue($storeUrls));
 
-
         $this->httpMock->expects($this->at(3))->method('request')->with(
             $this->equalTo($params)
         )->will($this->returnValue($resultOk));
@@ -301,112 +299,21 @@ class PexTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * @todo Implement testParse().
+     * Test that it complains about faulty xml
+     *
+     * @expectedException Exception
      *
      * @return void
      */
-    public function testParse()
+    public function testCallWithInvalidXml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $param       = new HttpParams();
+        $param->data = 'not a very well formed xml';
 
-    }//end testParse()
+        $this->object->call($param);
 
+    }//end testCallWithInvalidXml()
 
-    /**
-     * @todo Implement testLogin().
-     *
-     * @return void
-     */
-    public function testLogin()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-
-    }//end testLogin()
-
-
-    /**
-     * @todo Implement testGetStoreUrls().
-     *
-     * @return void
-     */
-    public function testGetStoreUrls()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-
-    }//end testGetStoreUrls()
-
-
-    private function _setUpContactCreateMocks($url=null)
-    {
-        $this->parserFactoryMock->expects($this->once())->method(
-            'createParser')->with($this->equalTo(
-            ParserFactory::CONTACT_CREATE
-        ))->will($this->returnValue(new ContactCreateParser()));
-
-        $httpResult = $this->exchangeRawResponseFactory->
-            getSuccessfulContactCreationResponse($url);
-        $contact    = $this->contactFactory->createAValidContact();
-        $param      = new ContactCreateHttpParam($contact);
-
-        $httpFactoryMock = $this->_setUpHttpFactory($this->httpFactoryMock);
-        $this->httpMock->expects($this->once())->method('request')->with(
-            $this->equalTo($param)
-        )->will($this->returnValue($httpResult));
-
-        return $contact;
-    }
-
-    public function testCreateContact()
-    {
-        $this->markTestIncomplete('Needs better test framework');
-        $url     = 'http://test.com/user1/Contacts/somebody.eml';
-        $contact = $this->_setUpContactCreateMocks($url);
-        $actual  = $this->object->createContact($contact);
-        
-        $this->assertEquals($url, $actual);
-    }
-
-
-    public function testGetContact()
-    {
-        $this->markTestIncomplete('Needs better test framework');
-        $expectedContact = new Contact();
-        $expectedContact->emailAddress = 'test@domain.com';
-        $expectedContact->firstName = 'User';
-        $expectedContact->lastName = 'Test';
-        $expectedContact->nickName = 'tuser';
-
-        $url = 'https://server.com/exchange/user/Contacts/Test%20User.eml';
-
-
-        $httpResult = $this->exchangeRawResponseFactory->
-            getContactResponse($url);
-        $param      = new ContactGetHttpParams($url);
-
-        $httpFactoryMock = $this->_setUpHttpFactory($this->httpFactoryMock);
-        $this->httpMock->expects($this->once())->method('request')->with(
-            $this->equalTo($param)
-        )->will($this->returnValue($httpResult));
-
-
-        $this->parserFactoryMock->expects($this->once())->method(
-            'createParser')->with($this->equalTo(
-            ParserFactory::CONTACT_GET
-        ))->will($this->returnValue(new ContactGetParser()));
-
-
-        $actual = $this->object->readContact($url);
-        $this->assertEquals($expectedContact, $actual);
-    }
 
 }//end class
 
