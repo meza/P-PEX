@@ -35,6 +35,7 @@
 class CalendarEventListParser implements Parser
 {
 
+
     /**
      * Parses the xml
      *
@@ -61,41 +62,59 @@ class CalendarEventListParser implements Parser
         }
 
         $result = array();
-        foreach ($events as $eventIndex => $eventValue)
-        {
-            if($eventValue->getName()==='prop') {
+        foreach ($events as $eventIndex => $eventValue) {
+            if ($eventValue->getName() === 'prop') {
                 $properties = $eventValue->xpath('*');
-                $event = new CalendarEvent();
+                $event      = new CalendarEvent();
+
                 foreach ($properties as $prop) {
-                    switch ($prop->getName())
-                    {
-                        case 'href':
-                            $event->setUrl((string)$prop);
-                            break;
-                        case 'dtstart':
-                            $event->from((string)$prop);
-                            break;
-                        case 'dtend':
-                            $event->to((string)$prop);
-                            break;
-                        case 'location':
-                            $event->at((string)$prop);
-                            break;
-                        case 'subject':
-                            $event->withSubject((string)$prop);
-                            break;
-                        case 'textdescription':
-                            $event->withDescription((string)$prop);
-                            break;
-                    }
+                    $this->_setUpEvent($event, $prop);
                 }
+
                 $result[] = $event;
             }
-        }
+        }//end foreach
 
         return array_reverse($result);
 
     }//end parse()
+
+
+    /**
+     * Populates a reference to an event, with data regarding the property
+     *
+     * @param CalendarEvent    $event      The event to populate
+     * @param SimpleXMLElement $xmlElement The property to consider
+     *
+     * @return void
+     */
+    private function _setUpEvent(
+        CalendarEvent $event,
+        SimpleXMLElement $xmlElement
+    ) {
+        switch ($xmlElement->getName())
+        {
+        case 'href':
+            $event->setUrl((string) $xmlElement);
+            break;
+        case 'dtstart':
+            $event->from((string) $xmlElement);
+            break;
+        case 'dtend':
+            $event->to((string) $xmlElement);
+            break;
+        case 'location':
+            $event->at((string) $xmlElement);
+            break;
+        case 'subject':
+            $event->withSubject((string) $xmlElement);
+            break;
+        case 'textdescription':
+            $event->withDescription((string) $xmlElement);
+            break;
+        }
+
+    }//end _setUpEvent()
 
 
 }//end class
