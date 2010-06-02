@@ -301,12 +301,20 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
     /**
      * Removes an entry from a given url
      *
-     * @param string $url endpoint
+     * @param CalendarEvent $event to delete
      *
      * @return bool True on success, false otherwise
      */
-    public function deleteEvent($url)
-    {}
+    public function deleteEvent(CalendarEvent $event)
+    {
+        $params = new CalendarEventDeleteHttpParams($event);
+        $result = $this->call($params);
+
+        if ($result->code>=200 && $result->code<300) {
+            return true;
+        }
+        return false;
+    }
 
 
     /**
