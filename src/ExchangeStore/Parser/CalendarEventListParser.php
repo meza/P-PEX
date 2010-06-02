@@ -56,9 +56,11 @@ class CalendarEventListParser implements Parser
         $xml->registerXPathNamespace('e', 'urn:schemas:httpmail:');
 
         $events = $xml->xpath('//dav:propstat/*');
+        if (false === $events) {
+            return array();
+        }
 
         $result = array();
-
         foreach ($events as $eventIndex => $eventValue)
         {
             if($eventValue->getName()==='prop') {
