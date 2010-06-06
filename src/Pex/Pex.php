@@ -23,6 +23,7 @@
 require_once 'PPexInterface.php';
 require_once 'ContactHandler.php';
 require_once 'CalendarHandler.php';
+require_once 'TaskHandler.php';
 
 /**
  * The Pex class is the main class
@@ -35,7 +36,7 @@ require_once 'CalendarHandler.php';
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class Pex implements PPexInterface, ContactHandler, CalendarHandler
+class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
 {
 
     /**
@@ -331,6 +332,51 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler
         return $result;
 
     }//end listEvents()
+
+
+    /**
+     * Creates an event in the store
+     *
+     * @param Task $task The event to be stored
+     *
+     * @return string url of the newly created event
+     */
+    public function createTask(Task $task)
+    {
+        $params = new TaskCreateHttpParam($task, $this->data->username);
+        $result = $this->call($params);
+        if (($result->code >= 200) && ($result->code < 300)) {
+            var_dump($params->data);
+            return true;
+        }
+        var_dump($params->data ,$result);
+        return false;
+
+    }//end createTask()
+
+
+    /**
+     * Removes an entry from a given url
+     *
+     * @param Task $task to delete
+     *
+     * @return bool True on success, false otherwise
+     */
+    public function deleteTask(Task $task)
+    {
+
+    }//end deleteTask()
+
+
+    /**
+     * Lists al events in the exchange store
+     *
+     * @return Task[]
+     */
+    public function listTasks()
+    {
+
+    }//end listTasks()
 
 
 }//end class

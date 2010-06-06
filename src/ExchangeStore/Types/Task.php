@@ -39,6 +39,10 @@ class Task
      */
     const DEFAULT_DATE_FORMAT = 'Y-m-d H:i';
 
+    const PRIORITY_LOW    = 0;
+    const PRIORITY_NORMAL = 1;
+    const PRIORITY_HIGH   = 2;
+
     /**
      * @var string The ISO 8601 date format of the start date
      */
@@ -75,6 +79,8 @@ class Task
     private $_urlModifier = '';
 
 
+    public $priority = Task::PRIORITY_NORMAL;
+
     /**
      * Null object constructor
      *
@@ -82,14 +88,50 @@ class Task
      *
      * @return Task
      */
-    public static function anEvent($subject)
+    public static function aTask($subject)
     {
         $object = new Task();
         $object->withSubject($subject);
 
         return $object;
 
-    }//end anEvent()
+    }//end aTask()
+
+
+    /**
+     * Null object constructor
+     *
+     * @param string $subject a task always needs a subject
+     *
+     * @return Task
+     */
+    public static function anUrgentTask($subject)
+    {
+        $object = new Task();
+        $object->priority = Task::PRIORITY_HIGH;
+        $object->withSubject($subject);
+
+        return $object;
+
+    }//end anUrgetnTask()
+
+
+    /**
+     * Null object constructor
+     *
+     * @param string $subject a task always needs a subject
+     *
+     * @return Task
+     */
+    public static function anUnimportantTask($subject)
+    {
+        $object = new Task();
+        $object->priority = Task::PRIORITY_LOW;
+        $object->withSubject($subject);
+
+        return $object;
+
+    }//end anUnimportantTask()
 
 
     /**
@@ -105,6 +147,21 @@ class Task
         return $this;
 
     }//end from()
+
+
+    /**
+     * Set the due date of a task
+     *
+     * @param string $date The due date of the task
+     *
+     * @return Task
+     */
+    public function due($date)
+    {
+        $this->end = date('c', strtotime($date));
+        return $this;
+
+    }//end due()
 
 
     /**
@@ -217,6 +274,9 @@ class Task
      */
     public function getStartDate($format=self::DEFAULT_DATE_FORMAT)
     {
+        if (true === is_null($this->start)) {
+            return '';
+        }
         return $this->_getDate($this->start, $format);
 
     }//end getStartDate()
@@ -231,9 +291,29 @@ class Task
      */
     public function getEndDate($format=self::DEFAULT_DATE_FORMAT)
     {
+        if (true === is_null($this->end)) {
+            return '';
+        }
         return $this->_getDate($this->end, $format);
 
     }//end getEndDate()
+
+
+    /**
+     * Returns the due date of the task, regarding the formatting
+     *
+     * @param string $format The format the date should be returned
+     *
+     * @return string
+     */
+    public function getDueDate($format=self::DEFAULT_DATE_FORMAT)
+    {
+        if (true === is_null($this->end)) {
+            return '';
+        }
+        return $this->_getDate($this->end, $format);
+
+    }//end getDueDate()
 
 
     /**
