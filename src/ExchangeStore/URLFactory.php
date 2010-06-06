@@ -59,6 +59,11 @@ class URLFactory
     const CALENDAR = 'calendar';
 
     /**
+     * Calendar type
+     */
+    const TASK = 'task';
+
+    /**
      * @var string The hostname to use in building the urls
      */
     private $_hostname;
@@ -115,6 +120,8 @@ class URLFactory
             return $this->_getUrlForContact($param1);
         case self::CALENDAR:
             return $this->_getUrlForCalendar($param1);
+        case self::TASK:
+            return $this->_getUrlForTask($param1);
         default:
             return $type;
         }
@@ -165,6 +172,27 @@ class URLFactory
     private function _getUrlForCalendar($eventStorageName=null)
     {
         $calendar = $this->_urlAccess->calendar;
+        $url      = $this->_hostname.'/Exchange/';
+        $url     .= $this->_username.'/'.$calendar.'/';
+        if (null !== $eventStorageName) {
+            $url .= $eventStorageName.'.eml';
+        }
+
+        return $url;
+
+    }//end _getUrlForCalendar()
+
+
+    /**
+     * Creates the url for the calendar store
+     *
+     * @param string $eventStorageName The event's path
+     *
+     * @return string
+     */
+    private function _getUrlForTask($eventStorageName=null)
+    {
+        $calendar = $this->_urlAccess->tasks;
         $url      = $this->_hostname.'/Exchange/';
         $url     .= $this->_username.'/'.$calendar.'/';
         if (null !== $eventStorageName) {
