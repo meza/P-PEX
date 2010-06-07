@@ -376,7 +376,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     public function listTasks()
     {
         $params = new TaskListHttpParam();
-        $result = $this->call($params);
+        $result = $this->_doCall($params, ParserFactory::TASK_LIST);
         return $result;
 
     }//end listTasks()

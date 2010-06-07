@@ -22,7 +22,7 @@
 
 /**
  * The TaskListHttpParam class is the http preset for
- * calendar event listing
+ * task listing
  *
  * PHP Version: 5
  *
@@ -72,6 +72,7 @@ class TaskListHttpParam extends HttpParams
 xmlns:a="DAV:"
 xmlns:mapi="http://schemas.microsoft.com/mapi/">
 <a:sql>SELECT
+"DAV:href",
 "urn:schemas:mailheader:to",
 "http://schemas.microsoft.com/exchange/x-priority-long",
 "http://schemas.microsoft.com/mapi/commonstart",

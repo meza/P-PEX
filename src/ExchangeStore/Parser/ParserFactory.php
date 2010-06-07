@@ -56,6 +56,12 @@ class ParserFactory
     const CALENDAR_EVENT_LIST = 4;
 
     /**
+     * Constant of the Task event list parser
+     */
+    const TASK_LIST = 5;
+
+
+    /**
      * Creates the required Parser implementation
      *
      * @param int $type The type to create
@@ -75,6 +81,8 @@ class ParserFactory
             return $this->_createContactGetParser();
         case self::CALENDAR_EVENT_LIST:
            return $this->_createCalendarEventListParser();
+        case self::TASK_LIST:
+           return $this->_createTaskListParser();
 
         default:
             throw new NoSuchParserException($type);
@@ -97,6 +105,11 @@ class ParserFactory
     }//end _createStoreUrlParser()
 
 
+    /**
+     * Creates a parser
+     *
+     * @return ContactCreateParser
+     */
     private function _createContactCreateParser()
     {
         include_once dirname(__FILE__).'/ContactCreateParser.php';
@@ -106,6 +119,11 @@ class ParserFactory
     }//end _createContactCreateParser()
 
 
+    /**
+     * Creates a parser
+     *
+     * @return ContactGetParser
+     */
     private function _createContactGetParser()
     {
         include_once dirname(__FILE__).'/ContactGetParser.php';
@@ -115,12 +133,33 @@ class ParserFactory
     }//end _createContactGetParser()
 
 
+    /**
+     * Creates a parser
+     *
+     * @return CalendarEventListParser
+     */
     public function _createCalendarEventListParser()
     {
         include_once dirname(__FILE__).'/CalendarEventListParser.php';
         $parser = new CalendarEventListParser();
         return $parser;
-    }
+
+    }//end _createCalendarEventListParser()
+
+
+    /**
+     * Creates a parser
+     *
+     * @return TaskListParser
+     */
+    public function _createTaskListParser()
+    {
+        include_once dirname(__FILE__).'/TaskListParser.php';
+        $parser = new TaskListParser();
+        return $parser;
+
+    }//end _createTaskListParser()
+
 
 }//end class
 
