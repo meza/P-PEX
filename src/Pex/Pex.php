@@ -364,6 +364,13 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function deleteTask(Task $task)
     {
+        $params = new TaskDeleteHttpParams($task);
+        $result = $this->call($params);
+        if (($result->code >= 200) && ($result->code < 300)) {
+            return true;
+        }
+
+        return false;
 
     }//end deleteTask()
 
