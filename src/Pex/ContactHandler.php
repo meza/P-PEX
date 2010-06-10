@@ -51,13 +51,11 @@ interface ContactHandler
 
 
     /**
-     * Retrieves the contact information from the given url
-     *
-     * @param string $url The endpoint
+     * List the contacts
      *
      * @return Contact
      */
-    public function readContact($url);
+    public function listContacts();
 
 
     /**

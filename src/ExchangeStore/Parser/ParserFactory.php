@@ -48,7 +48,7 @@ class ParserFactory
     /**
      * Constant of the Contact get parsers
      */
-    const CONTACT_GET = 3;
+    const CONTACT_LIST = 3;
 
     /**
      * Constant of the Calendar event list parser
@@ -77,8 +77,8 @@ class ParserFactory
             return $this->_createStoreUrlParser();
         case self::CONTACT_CREATE:
             return $this->_createContactCreateParser();
-        case self::CONTACT_GET:
-            return $this->_createContactGetParser();
+        case self::CONTACT_LIST:
+            return $this->_createContactListParser();
         case self::CALENDAR_EVENT_LIST:
            return $this->_createCalendarEventListParser();
         case self::TASK_LIST:
@@ -122,12 +122,12 @@ class ParserFactory
     /**
      * Creates a parser
      *
-     * @return ContactGetParser
+     * @return ContactListParser
      */
-    private function _createContactGetParser()
+    private function _createContactListParser()
     {
-        include_once dirname(__FILE__).'/ContactGetParser.php';
-        $parser = new ContactGetParser();
+        include_once dirname(__FILE__).'/ContactListParser.php';
+        $parser = new ContactListParser();
         return $parser;
 
     }//end _createContactGetParser()

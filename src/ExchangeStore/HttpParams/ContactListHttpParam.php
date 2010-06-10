@@ -1,8 +1,8 @@
 <?php
 /**
- * ContactGetHttpParams.php
+ * ContactListHttpParam.php
  *
- * Holds the ContactGetHttpParams class
+ * Holds the ContactListHttpParam class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The ContactGetHttpParams class is the value object for contact data retrieval
+ * The ContactListHttpParam class is the value object for contact data retrieval
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactGetHttpParams extends HttpParams
+class ContactListHttpParam extends HttpParams
 {
 
     /**
@@ -44,7 +44,7 @@ class ContactGetHttpParams extends HttpParams
      */
     public $headers = array(
                        'Content-Type' => 'text/xml',
-                       'Depth'        => 0,
+                       'Depth'        => 1,
                        'Translate'    => 'f',
                       );
 
@@ -56,24 +56,36 @@ class ContactGetHttpParams extends HttpParams
     /**
      * @var string The custom http method to use
      */
-    public $customMethod = 'propfind';
+    public $customMethod = 'search';
 
 
     /**
      * Creates a login param object
      *
-     * @param string $contact The name of the contact
-     *
-     * @return ContactGetHttpParams
+     * @return ContactListHttpParam
      */
-    public function __construct($url)
+    public function __construct()
     {
-        $this->url  = $url;
         $this->data = '<?xml version="1.0"?>
-<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:contact:">
-        <D:allprop/>
-</D:propfind>
-';
+<a:searchrequest
+xmlns:a="DAV:"
+xmlns:c="urn:schemas:contacts:"
+xmlns:e="http://schemas.microsoft.com/exchange/"
+xmlns:mapi="http://schemas.microsoft.com/mapi/"
+xmlns:x="xml:"
+xmlns:cal="urn:schemas:calendar:"
+xmlns:mail="urn:shemas:httpmail:">
+<a:sql>SELECT
+"DAV:href",
+"urn:schemas:contacts:givenName",
+"urn:schemas:contacts:middlename",
+"urn:schemas:contacts:sn",
+"urn:schemas:contacts:fileas",
+"urn:schemas:contacts:nickname",
+"http://schemas.microsoft.com/mapi/email1emailaddress"
+FROM "'.$this->preparedUrl.'"
+</a:sql>
+</a:searchrequest>';
 
     }//end __construct()
 

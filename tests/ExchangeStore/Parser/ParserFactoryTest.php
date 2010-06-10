@@ -70,8 +70,8 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                  'ContactCreateParser',
                 ),
                 array(
-                 ParserFactory::CONTACT_GET,
-                 'ContactGetParser',
+                 ParserFactory::CONTACT_LIST,
+                 'ContactListParser',
                 ),
                 array(
                  ParserFactory::CALENDAR_EVENT_LIST,

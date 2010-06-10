@@ -1,8 +1,8 @@
 <?php
 /**
- * ContactGetParser.php
+ * ContactListParser.php
  *
- * Holds the ContactGetParser class
+ * Holds the ContactListParser class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,8 @@
  */
 
 /**
- * The ContactGetParser class is responsible for parsing the received contact
+ * The ContactListParser class is responsible for parsing the received contact
+ * list
  *
  * PHP Version: 5
  *
@@ -31,55 +32,84 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactGetParser implements Parser
+class ContactListParser implements Parser
 {
 
     /**
      * Parses the xml
+     *
      * @param string $xmlString The xml string to parse
-     * @return <type>
+     *
+     * @return Task[]
      */
     public function parse($xmlString)
     {
-        /*
-            TODO This should be fixed. SimpleXML Error handling depends on the
-            environment.
-        */
-
         libxml_use_internal_errors(true);
         $xml = new SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
-        $xml->registerXPathNamespace('d', 'urn:schemas:contacts:');
-        $root = $xml->xpath('//d:*');
+        $xml->registerXPathNamespace('c', 'urn:schemas:contacts:');
+        $xml->registerXPathNamespace('e', 'urn:schemas:httpmail:');
+        $xml->registerXPathNamespace('mapi', 'http://schemas.microsoft.com/mapi/');
 
-        $contact = new Contact();
-
-        foreach ($root as $value)
-        {
-            switch($value->getName()) {
-                case 'sn':
-                    $contact->lastName = (string)$value;
-                    break;
-                case 'givenName':
-                    $contact->firstName = (string)$value;
-                    break;
-                case 'middlename':
-                    $contact->middleName = (string)$value;
-                    break;
-                case 'nickname':
-                    $contact->nickName = (string)$value;
-                    break;
-                case 'email1':
-                    $contact->emailAddress = filter_var((string)$value, FILTER_SANITIZE_EMAIL);
-                    break;
-                default:
-//                    var_dump($value->getName());
-            }
+        $contacts = $xml->xpath('//dav:propstat/*[text()=\'HTTP/1.1 200 OK\']/../dav:prop');
+        if (false === $contacts) {
+            return array();
         }
 
-        return $contact;
+        $result = array();
+        foreach ($contacts as $contactIndex => $contactValue) {
+            $properties = $contactValue->xpath('*');
+            $contact       = new Contact();
+
+            foreach ($properties as $prop) {
+                $this->_setUpTask($contact, $prop);
+            }
+
+            $result[] = $contact;
+        }//end foreach
+
+        return array_reverse($result);
 
     }//end parse()
+
+
+    /**
+     * Populates a reference to an contact, with data regarding the property
+     *
+     * @param Contact          $contact       The task to populate
+     * @param SimpleXMLElement $xmlElement The property to consider
+     *
+     * @return void
+     */
+    private function _setUpTask(
+        Contact $contact,
+        SimpleXMLElement $xmlElement
+    ) {
+        switch (strtolower($xmlElement->getName()))
+        {
+        case 'href':
+            $contact->setUrl((string) $xmlElement);
+            break;
+        case 'givenname':
+            $contact->firstName = (string) $xmlElement;
+            break;
+        case 'sn':
+            $contact->lastName = (string) $xmlElement;
+            break;
+        case 'middlename':
+            $contact->middleName = (string) $xmlElement;
+            break;
+        case 'fileas':
+            break;
+        case 'nickname':
+            $contact->nickName = (string) $xmlElement;
+            break;
+        case 'email1emailaddress':
+            $contact->emailAddress = (string) $xmlElement;
+            break;
+        }//end switch
+
+    }//end _setUpTask()
 
 
 }//end class

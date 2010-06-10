@@ -71,6 +71,11 @@ class Contact
      */
     private $_urlModifier = '';
 
+    /**
+     * @var string url
+     */
+    public $url;
+
 
     /**
      * Creates a null object of a contact
@@ -129,6 +134,11 @@ class Contact
 
     }//end setUrl()
 
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
 }//end class
 

@@ -254,24 +254,22 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     }//end createContact()
 
 
-    /**
-     * Retrieves the contact information from the given url
-     *
-     * @param string $url The endpoint
-     *
-     * @return Contact
-     */
-    public function readContact($url)
+    public function listContacts()
     {
-        $params = new ContactGetHttpParams($url);
-        $result = $this->_doCall($params, ParserFactory::CONTACT_GET);
+        $params = new ContactListHttpParam();
+        $result = $this->_doCall($params, ParserFactory::CONTACT_LIST);
         return $result;
-
-    }//end readContact()
+    }
 
 
     public function updateContact($url, Contact $contact)
-    {}
+    {
+        $params      = new ContactCreateHttpParams($contact);
+        $params->url = $url;
+
+        $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
+        return $result;
+    }
 
     public function deleteContact($url)
     {}
