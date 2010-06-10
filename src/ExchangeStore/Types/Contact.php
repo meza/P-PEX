@@ -140,6 +140,11 @@ class Contact
         $this->url = $url;
     }
 
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
 }//end class
 
 ?>

@@ -72,11 +72,11 @@ interface ContactHandler
     /**
      * Delete the contact on the given endpoint
      *
-     * @param string $url The url to delete
+     * @param Contact $contact the Contact to delete
      *
      * @return bool
      */
-    public function deleteContact($url);
+    public function deleteContact(Contact $contact);
 
 
 }//end interface

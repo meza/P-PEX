@@ -68,27 +68,9 @@ class ContactDeleteHttpParams extends HttpParams
      */
     public function __construct(Contact $contact)
     {
-        $name = $contact->getFileAsName();
-
-        $this->urlParams = array($this->_prepareName($name));
+        $this->url = $contact->getUrl();
 
     }//end __construct()
-
-
-    /**
-     * Prepares the name for the url.
-     * Performs an urlencode
-     *
-     * @param string $name The contact's name
-     *
-     * @return string
-     */
-    private function _prepareName($name)
-    {
-        return urlencode($name);
-
-    }//end _prepareName()
-
 
 }//end class
 
