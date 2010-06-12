@@ -75,12 +75,9 @@ class HttpFactory
         switch ($this->_type) {
         case self::VERBOSE:
             return $this->_createVerbosingHttp();
-
-        case self::NORMAL:
-            // Fall-through to default!
-        default:
-            return $this->_createDefaultHttp();
         }
+
+        return $this->_createDefaultHttp();
 
     }//end createHttp()
 
