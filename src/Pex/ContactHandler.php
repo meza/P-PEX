@@ -61,12 +61,11 @@ interface ContactHandler
     /**
      * Update the given url to the given contact info
      *
-     * @param string  $url     The url to update
      * @param Contact $contact The new information
      *
      * @return bool true on success, false otherwise
      */
-    public function updateContact($url, Contact $contact);
+    public function updateContact(Contact $contact);
 
 
     /**

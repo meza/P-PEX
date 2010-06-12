@@ -254,36 +254,57 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     }//end createContact()
 
 
+    /**
+     * List the contacts
+     *
+     * @return Contact[]
+     */
     public function listContacts()
     {
         $params = new ContactListHttpParam();
         $result = $this->_doCall($params, ParserFactory::CONTACT_LIST);
         return $result;
-    }
+
+    }//end listContacts()
 
 
-    public function updateContact($url, Contact $contact)
+    /**
+     * Update a contact
+     *
+     * @param Contact $contact The contact to update
+     *
+     * @return HttpResponse
+     */
+    public function updateContact(Contact $contact)
     {
         $params      = new ContactCreateHttpParams($contact);
-        $params->url = $url;
+        $params->url = $contact->getUrl();
 
         $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
         return $result;
-    }
 
+    }//end updateContact()
+
+
+    /**
+     * Deletes a contact
+     *
+     * @param Contact $contact The contact to delete
+     *
+     * @return bool
+     */
     public function deleteContact(Contact $contact)
     {
         $params = new ContactDeleteHttpParams($contact);
         $result = $this->call($params);
 
         if (($result->code >= 200) && ($result->code < 300)) {
-        return true;
+            return true;
         }
 
         return false;
-    }
 
-
+    }//end deleteContact()
 
 
     /**
@@ -353,10 +374,9 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
         $params = new TaskCreateHttpParam($task, $this->data->username);
         $result = $this->call($params);
         if (($result->code >= 200) && ($result->code < 300)) {
-            var_dump($params->data);
             return true;
         }
-        var_dump($params->data ,$result);
+
         return false;
 
     }//end createTask()
