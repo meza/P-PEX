@@ -81,7 +81,65 @@ class PexTestBase extends MockAmendingTestCaseBase
     {
         return $this->aResponse(440);
 
-    }//end anAnauthenticatedResponse()
+    }//end anUnauthenticatedResponse()
+
+
+    /**
+     * Gets an empty HttpParams
+     *
+     * @param string $data The HttpParams's data
+     *
+     * @return HttpParams
+     */
+    protected function anHttpParam($data=null)
+    {
+        $param = new HttpParams();
+
+        if (null !== $data)
+        {
+            $param->data = $data;
+        }
+
+        return $param;
+
+    }//end anHttpParam()
+
+
+    /**
+     * Expect a http request
+     *
+     * @param MockObjectWrapper $http     The mock Http object
+     * @param HttpParams        $params   The request HttpParams
+     * @param int               $index    The index of the call (-1 for any)
+     * @param HttpResponse      $response The wanted response
+     *
+     * @return Http
+     */
+    protected function expectRequest(
+        MockObjectWrapper $http,
+        HttpParams $params,
+        $index=-1,
+        HttpResponse $response=null
+    ) {
+        if ($index === -1) {
+            $mock = $http->expects($this->any());
+        } else {
+            $mock = $http->expects($this->at($index));
+        }
+
+        $mock = $mock->method('request')->with(
+            $this->equalTo($params)
+        );
+
+        if (null === $response) {
+            $mock = $mock->will($this->returnValue($this->aResponse()));
+        } else {
+            $mock = $mock->will($this->returnValue($response));
+        }
+
+        return $http->mock;
+
+    }//end expectRequest()
 
 
 }//end class

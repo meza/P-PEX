@@ -153,18 +153,18 @@ class PexTest extends PexTestBase
      */
     public function testCall()
     {
-        $params = new HttpParams();
-        $result = $this->anOKResponse();
-
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
 
-        $this->httpMock->expects($this->once())->method('request')->with(
-            $this->equalTo($params)
-        )->will($this->returnValue($result));
+        $this->expectRequest(
+            $this->httpMock,
+            $this->anHttpParam(),
+            0,
+            $this->anOKResponse()
+        );
 
-        $actual = $this->object->call($params);
+        $actual = $this->object->call($this->anHttpParam());
 
-        $this->assertEquals($result, $actual);
+        $this->assertEquals($this->anOKResponse(), $actual);
 
     }//end testCall()
 
@@ -178,15 +178,42 @@ class PexTest extends PexTestBase
      */
     public function testCallWithCantLogin()
     {
-        $params      = new HttpParams();
-        $result      = $this->anUnauthenticatedResponse();
+        $loginParams = new LoginHttpParams('', '', '');
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
 
-        $this->httpMock->expects($this->any())->method('request')->will(
-            $this->returnValue($result)
+        // Send a request, that will need auth.
+        $this->expectRequest(
+            $this->httpMock,
+            $this->anHttpParam(),
+            0,
+            $this->anUnauthenticatedResponse()
         );
 
-        $this->object->call($params);
+        // Try to login with invalid credentials.
+        $this->expectRequest(
+            $this->httpMock,
+            $loginParams,
+            1,
+            $this->anUnauthenticatedResponse()
+        );
+
+        // Try to send the original request again, but with no luck.
+        $this->expectRequest(
+            $this->httpMock,
+            $this->anHttpParam(),
+            2,
+            $this->anUnauthenticatedResponse()
+        );
+
+        // Try a login again.
+        $this->expectRequest(
+            $this->httpMock,
+            $loginParams,
+            3,
+            $this->anUnauthenticatedResponse()
+        );
+
+        $this->object->call($this->anHttpParam());
 
     }//end testCallWithCantLogin()
 
@@ -198,30 +225,30 @@ class PexTest extends PexTestBase
      */
     public function testCallWithLoginRequired()
     {
-        $params      = new HttpParams();
         $loginParams = new LoginHttpParams('', '', '');
         $storeParams = new ServiceUrlsHttpParams();
         $storeUrls   = new StoreUrlData();
-        $resultOk    = $this->anOKResponse();
-        $resultFail  = $this->anUnauthenticatedResponse();
-        $loginResult = $this->anOKResponse();
         $urlResult   = $this->aResponse();
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 1);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 2);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 3);
+        $http        = $this->httpMock;
 
-        $this->httpMock->expects($this->at(0))->method('request')->with(
-            $this->equalTo($params)
-        )->will($this->returnValue($resultFail));
-
-        $this->httpMock->expects($this->at(1))->method('request')->with(
-            $this->equalTo($loginParams)
-        )->will($this->returnValue($loginResult));
-
-        $this->httpMock->expects($this->at(2))->method('request')->with(
-            $this->equalTo($storeParams)
-        )->will($this->returnValue($urlResult));
+        $this->expectRequest(
+            $http,
+            $this->anHttpParam(),
+            0,
+            $this->anUnauthenticatedResponse()
+        );
+        $this->expectRequest($http, $loginParams, 1, $this->anOKResponse());
+        $this->expectRequest($http, $storeParams, 2, $urlResult);
+        $this->expectRequest(
+            $http,
+            $this->anHttpParam(),
+            3,
+            $this->anOKResponse()
+        );
 
         $this->parserFactoryMock->expects($this->once())->method(
             'createParser'
@@ -233,13 +260,9 @@ class PexTest extends PexTestBase
             $this->equalTo($urlResult->data)
         )->will($this->returnValue($storeUrls));
 
-        $this->httpMock->expects($this->at(3))->method('request')->with(
-            $this->equalTo($params)
-        )->will($this->returnValue($resultOk));
+        $actual = $this->object->call($this->anHttpParam());
 
-        $actual = $this->object->call($params);
-
-        $this->assertEquals($resultOk, $actual);
+        $this->assertEquals($this->anOKResponse(), $actual);
 
     }//end testCallWithLoginRequired()
 
@@ -253,10 +276,7 @@ class PexTest extends PexTestBase
      */
     public function testCallWithInvalidXml()
     {
-        $param       = new HttpParams();
-        $param->data = 'not a very well formed xml';
-
-        $this->object->call($param);
+        $this->object->call($this->anHttpParam('not a very well formed xml'));
 
     }//end testCallWithInvalidXml()
 
