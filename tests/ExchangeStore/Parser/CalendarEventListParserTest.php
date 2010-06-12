@@ -125,6 +125,25 @@ test description2</e:textdescription>
     }//end testParse()
 
 
+    /**
+     * Test that we get an empty array, when no events are in the list
+     *
+     * @return void
+     */
+    public function testParseWithNoData()
+    {
+        $xmlString = '<?xml version="1.0"?>
+<a:multistatus xmlns:b="urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/"
+xmlns:e="urn:schemas:httpmail:" xmlns:c="xml:" xmlns:d="urn:schemas:calendar:"
+xmlns:a="DAV:"></a:multistatus>';
+        $expected  = array();
+        $actual    = $this->object->parse($xmlString);
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testParseWithNoData()
+
+
 }//end class
 
 ?>
