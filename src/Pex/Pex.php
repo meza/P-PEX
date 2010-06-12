@@ -243,7 +243,8 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
         $response = $this->call($param);
 
         if ($response->code !== 404) {
-            $contact->setUrlModifier(md5(date('c')));
+            $contact->setUrlModifier(md5(date('Y-m-d H:i')));
+            usleep(100);
             return $this->createContact($contact);
         }
 
@@ -277,7 +278,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function updateContact(Contact $contact)
     {
-        $params      = new ContactCreateHttpParams($contact);
+        $params      = new ContactCreateHttpParam($contact);
         $params->url = $contact->getUrl();
 
         $result = $this->_doCall($params, ParserFactory::CONTACT_CREATE);
@@ -295,7 +296,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function deleteContact(Contact $contact)
     {
-        $params = new ContactDeleteHttpParams($contact);
+        $params = new ContactDeleteHttpParam($contact);
         $result = $this->call($params);
 
         if (($result->code >= 200) && ($result->code < 300)) {

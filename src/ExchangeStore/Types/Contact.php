@@ -44,27 +44,27 @@ class Contact
     /**
      * @var string first name
      */
-    public $firstName;
+    public $firstName = '';
 
     /**
      * @var string middle name
      */
-    public $middleName;
+    public $middleName = '';
 
     /**
      * @var string last bame
      */
-    public $lastName;
+    public $lastName = '';
 
     /**
      * @var string Nickname
      */
-    public $nickName;
+    public $nickName = '';
 
     /**
      * @var string Email address
      */
-    public $emailAddress;
+    public $emailAddress = '';
 
     /**
      * @var string StorageUrlModifier

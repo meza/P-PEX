@@ -93,10 +93,10 @@ class PexTest extends PexTestBase
         $this->connectionData             = new ConnectionData();
 
         $this->urlAccessMock     = $this->mock('URLAccess');
-        $this->httpFactoryMock   = $this->mock('HttpFactory',array('createHttp'));
+        $this->httpFactoryMock   = $this->mock('HttpFactory', array('createHttp'));
         $this->parserFactoryMock = $this->mock('ParserFactory');
         $this->httpMock          = $this->mock('Http');
-        $this->parserMock        = $this->mock('Parser',array('parse'));
+        $this->parserMock        = $this->mock('Parser', array('parse'));
 
         $this->object = new Pex(
             $this->connectionData,
@@ -111,26 +111,25 @@ class PexTest extends PexTestBase
     /**
      * Sets up the http factory
      *
-     * @param MockObject $httpFactoryMock to set
-     * @param int        $index           to use
+     * @param int $index to use
      *
      * @return httpFactory
      */
-    private function _setUpHttpFactory(MockObjectWrapper $httpFactoryMock, $index=0)
+    protected function setUpHttpFactory($index=0)
     {
         if ($index >= 0) {
-            $httpFactoryMock->expects(
+            $this->httpFactoryMock->expects(
                 $this->at($index)
             )->method('createHttp')->will($this->returnValue($this->httpMock->mock));
         } else {
-            $httpFactoryMock->expects(
+            $this->httpFactoryMock->expects(
                 $this->any()
             )->method('createHttp')->will($this->returnValue($this->httpMock->mock));
         }
 
-        return $httpFactoryMock;
+        return $this->httpFactoryMock;
 
-    }//end _setUpHttpFactory()
+    }//end setUpHttpFactory()
 
 
     /**
@@ -140,7 +139,7 @@ class PexTest extends PexTestBase
      */
     public function testGetHttp()
     {
-        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $httpFactory = $this->setUpHttpFactory();
         $this->object->getHttp($httpFactory->mock);
 
     }//end testGetHttp()
@@ -153,7 +152,7 @@ class PexTest extends PexTestBase
      */
     public function testCall()
     {
-        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
+        $httpFactory = $this->setUpHttpFactory();
 
         $this->expectRequest(
             $this->httpMock,
@@ -178,8 +177,7 @@ class PexTest extends PexTestBase
      */
     public function testCallWithCantLogin()
     {
-        $loginParams = new LoginHttpParams('', '', '');
-        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
+        $this->setUpHttpFactory(-1);
 
         // Send a request, that will need auth.
         $this->expectRequest(
@@ -192,7 +190,7 @@ class PexTest extends PexTestBase
         // Try to login with invalid credentials.
         $this->expectRequest(
             $this->httpMock,
-            $loginParams,
+            $this->aLoginHttpParam(),
             1,
             $this->anUnauthenticatedResponse()
         );
@@ -208,7 +206,7 @@ class PexTest extends PexTestBase
         // Try a login again.
         $this->expectRequest(
             $this->httpMock,
-            $loginParams,
+            $this->aLoginHttpParam(),
             3,
             $this->anUnauthenticatedResponse()
         );
@@ -225,15 +223,14 @@ class PexTest extends PexTestBase
      */
     public function testCallWithLoginRequired()
     {
-        $loginParams = new LoginHttpParams('', '', '');
         $storeParams = new ServiceUrlsHttpParams();
         $storeUrls   = new StoreUrlData();
         $urlResult   = $this->aResponse();
-        $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
-        $httpFactory = $this->_setUpHttpFactory($httpFactory, 1);
-        $httpFactory = $this->_setUpHttpFactory($httpFactory, 2);
-        $httpFactory = $this->_setUpHttpFactory($httpFactory, 3);
-        $http        = $this->httpMock;
+        $this->setUpHttpFactory(0);
+        $this->setUpHttpFactory(1);
+        $this->setUpHttpFactory(2);
+        $this->setUpHttpFactory(3);
+        $http = $this->httpMock;
 
         $this->expectRequest(
             $http,
@@ -241,7 +238,12 @@ class PexTest extends PexTestBase
             0,
             $this->anUnauthenticatedResponse()
         );
-        $this->expectRequest($http, $loginParams, 1, $this->anOKResponse());
+        $this->expectRequest(
+            $http,
+            $this->aLoginHttpParam(),
+            1,
+            $this->anOKResponse()
+        );
         $this->expectRequest($http, $storeParams, 2, $urlResult);
         $this->expectRequest(
             $http,

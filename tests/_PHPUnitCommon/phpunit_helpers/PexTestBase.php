@@ -7,7 +7,7 @@
  * PHP Version: 5
  *
  * @category File
- * @package
+ * @package  Testhelper
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
@@ -25,7 +25,7 @@
  * PHP Version: 5
  *
  * @category Class
- * @package
+ * @package  Testhelper
  * @author   meza <meza@meza.hu>
  * @license  GPL3.0
  *                    GNU GENERAL PUBLIC LICENSE
@@ -74,14 +74,27 @@ class PexTestBase extends MockAmendingTestCaseBase
 
 
     /**
-     * Gices
-     * @return <type>
+     * Gets a 440 HttpResponse
+     *
+     * @return HttpResponse
      */
     protected function anUnauthenticatedResponse()
     {
         return $this->aResponse(440);
 
     }//end anUnauthenticatedResponse()
+
+
+    /**
+     * Gets a 400 not found response
+     * 
+     * @return HttpResponse
+     */
+    protected function aNotFoundResponse()
+    {
+        return $this->aResponse(404);
+
+    }//end aNotFoundResponse()
 
 
     /**
@@ -95,14 +108,31 @@ class PexTestBase extends MockAmendingTestCaseBase
     {
         $param = new HttpParams();
 
-        if (null !== $data)
-        {
+        if (null !== $data) {
             $param->data = $data;
         }
 
         return $param;
 
     }//end anHttpParam()
+
+
+    /**
+     * Returns a login param
+     * 
+     * @param string $username The username to use
+     * @param string $password The password to use
+     * @param string $server   The server to login to
+     * 
+     * @return LoginHttpParams
+     */
+    protected function aLoginHttpParam($username='', $password='', $server='')
+    {
+        $param = new LoginHttpParams($username, $password, $server);
+
+        return $param;
+
+    }//end aLoginHttpParam()
 
 
     /**
@@ -121,6 +151,12 @@ class PexTestBase extends MockAmendingTestCaseBase
         $index=-1,
         HttpResponse $response=null
     ) {
+        $this->assertType(
+            'Http',
+            $http->mock,
+            'Mock object should be a Http mock'
+        );
+
         if ($index === -1) {
             $mock = $http->expects($this->any());
         } else {
