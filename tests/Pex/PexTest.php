@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class PexTest extends PHPUnit_Framework_TestCase
+class PexTest extends PexTestBase
 {
 
     /**
@@ -91,55 +91,18 @@ class PexTest extends PHPUnit_Framework_TestCase
         $this->contactFactory             = new ContactFactory();
         $this->exchangeRawResponseFactory = new ExchangeRawResponseFactory();
         $this->connectionData             = new ConnectionData();
-        $this->urlAccessMock              = $this->getMock(
-            'URLAccess',
-            array(),
-            array(),
-            '',
-            false,
-            false
-        );
-        $this->httpFactoryMock = $this->getMock(
-            'HttpFactory',
-            array('createHttp'),
-            array(),
-            '',
-            false,
-            false
-        );
 
-        $this->parserFactoryMock = $this->getMock(
-            'ParserFactory',
-            array(),
-            array(),
-            '',
-            false,
-            false
-        );
-
-        $this->httpMock = $this->getMock(
-            'Http',
-            array(),
-            array(),
-            '',
-            false,
-            false
-        );
-
-        $this->parserMock = $this->getMock(
-            'Parser',
-            array('parse'),
-            array(),
-            '',
-            false,
-            false
-        );
+        $this->urlAccessMock     = $this->mock('URLAccess');
+        $this->httpFactoryMock   = $this->mock('HttpFactory',array('createHttp'));
+        $this->parserFactoryMock = $this->mock('ParserFactory');
+        $this->httpMock          = $this->mock('Http');
+        $this->parserMock        = $this->mock('Parser',array('parse'));
 
         $this->object = new Pex(
             $this->connectionData,
-            $this->urlAccessMock,
-            $this->httpFactoryMock,
-            $this->parserFactoryMock
+            $this->urlAccessMock->mock,
+            $this->httpFactoryMock->mock,
+            $this->parserFactoryMock->mock
         );
 
     }//end setUp()
@@ -153,16 +116,16 @@ class PexTest extends PHPUnit_Framework_TestCase
      *
      * @return httpFactory
      */
-    private function _setUpHttpFactory(HttpFactory $httpFactoryMock, $index=0)
+    private function _setUpHttpFactory(MockObjectWrapper $httpFactoryMock, $index=0)
     {
         if ($index >= 0) {
             $httpFactoryMock->expects(
                 $this->at($index)
-            )->method('createHttp')->will($this->returnValue($this->httpMock));
+            )->method('createHttp')->will($this->returnValue($this->httpMock->mock));
         } else {
             $httpFactoryMock->expects(
                 $this->any()
-            )->method('createHttp')->will($this->returnValue($this->httpMock));
+            )->method('createHttp')->will($this->returnValue($this->httpMock->mock));
         }
 
         return $httpFactoryMock;
@@ -178,7 +141,7 @@ class PexTest extends PHPUnit_Framework_TestCase
     public function testGetHttp()
     {
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
-        $this->object->getHttp($httpFactory);
+        $this->object->getHttp($httpFactory->mock);
 
     }//end testGetHttp()
 
@@ -280,7 +243,7 @@ class PexTest extends PHPUnit_Framework_TestCase
         $this->parserFactoryMock->expects($this->once())->method(
             'createParser'
         )->with($this->equalTo(ParserFactory::STORE_URLS))->will(
-            $this->returnValue($this->parserMock)
+            $this->returnValue($this->parserMock->mock)
         );
 
         $this->parserMock->expects($this->once())->method('parse')->with(
