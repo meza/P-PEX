@@ -255,6 +255,48 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     }//end testCalendarUrlSchemeWithEvent()
 
 
+    /**
+     * Test the task url scheme retrieval
+     *
+     * @test
+     *
+     * @return void
+     */
+    public function testTaskUrlScheme()
+    {
+        $this->testURLAccess->tasks = 'tasks';
+
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
+            $this->testURLAccess->tasks.'/';
+        $actual   = $this->object->getUrlFor(URLFactory::TASK);
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testTaskUrlScheme()
+
+
+    /**
+     * Test the task url scheme retrieval
+     *
+     * @test
+     *
+     * @return void
+     */
+    public function testTaskUrlSchemeWithTask()
+    {
+        $this->testURLAccess->tasks = 'tasks';
+
+        $taskName = 'test task';
+
+        $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
+            $this->testURLAccess->tasks.'/'.$taskName.'.eml';
+        $actual   = $this->object->getUrlFor(URLFactory::TASK, $taskName);
+
+        $this->assertEquals($expected, $actual);
+
+    }//end testTaskUrlSchemeWithTask()
+
+
 }//end class
 
 ?>

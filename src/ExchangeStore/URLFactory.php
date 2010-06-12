@@ -186,22 +186,22 @@ class URLFactory
     /**
      * Creates the url for the calendar store
      *
-     * @param string $eventStorageName The event's path
+     * @param string $taskStorageName The event's path
      *
      * @return string
      */
-    private function _getUrlForTask($eventStorageName=null)
+    private function _getUrlForTask($taskStorageName=null)
     {
         $calendar = $this->_urlAccess->tasks;
         $url      = $this->_hostname.'/Exchange/';
         $url     .= $this->_username.'/'.$calendar.'/';
-        if (null !== $eventStorageName) {
-            $url .= $eventStorageName.'.eml';
+        if (null !== $taskStorageName) {
+            $url .= $taskStorageName.'.eml';
         }
 
         return $url;
 
-    }//end _getUrlForCalendar()
+    }//end _getUrlForTask()
 
 
 }//end class
