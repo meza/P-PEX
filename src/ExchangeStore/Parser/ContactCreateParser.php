@@ -34,24 +34,22 @@
 class ContactCreateParser implements Parser
 {
 
+
     /**
      * Parses the xml
+     *
      * @param string $xmlString The xml string to parse
-     * @return <type>
+     *
+     * @return string The url the contact was created at
      */
     public function parse($xmlString)
     {
-        /*
-            TODO This should be fixed. SimpleXML Error handling depends on the
-            environment.
-        */
-
         libxml_use_internal_errors(true);
         $xml = new SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $root = $xml->xpath('//dav:href');
-        
-        return (string)$root[0];
+
+        return (string) $root[0];
 
     }//end parse()
 
