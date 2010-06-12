@@ -154,10 +154,7 @@ class PexTest extends PexTestBase
     public function testCall()
     {
         $params = new HttpParams();
-
-        $result       = new HttpResponse();
-        $result->code = 200;
-        $result->data = 'result';
+        $result = $this->anOKResponse();
 
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
 
@@ -181,11 +178,8 @@ class PexTest extends PexTestBase
      */
     public function testCallWithCantLogin()
     {
-        $params = new HttpParams();
-
-        $result       = new HttpResponse();
-        $result->code = 440;
-
+        $params      = new HttpParams();
+        $result      = $this->anUnauthenticatedResponse();
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock, -1);
 
         $this->httpMock->expects($this->any())->method('request')->will(
@@ -208,21 +202,10 @@ class PexTest extends PexTestBase
         $loginParams = new LoginHttpParams('', '', '');
         $storeParams = new ServiceUrlsHttpParams();
         $storeUrls   = new StoreUrlData();
-
-        $resultOk       = new HttpResponse();
-        $resultOk->code = 200;
-        $resultOk->data = 'result';
-
-        $resultFail       = new HttpResponse();
-        $resultFail->code = 440;
-        $resultFail->data = 'result';
-
-        $loginResult       = new HttpResponse();
-        $loginResult->code = 200;
-
-        $urlResult       = new HttpResponse();
-        $urlResult->data = 'data';
-
+        $resultOk    = $this->anOKResponse();
+        $resultFail  = $this->anUnauthenticatedResponse();
+        $loginResult = $this->anOKResponse();
+        $urlResult   = $this->aResponse();
         $httpFactory = $this->_setUpHttpFactory($this->httpFactoryMock);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 1);
         $httpFactory = $this->_setUpHttpFactory($httpFactory, 2);

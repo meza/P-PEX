@@ -38,7 +38,51 @@
  */
 class PexTestBase extends MockAmendingTestCaseBase
 {
-    //put your code here
+
+
+    /**
+     * Return a response
+     *
+     * @param int    $code The http response code
+     * @param string $data The http data
+     *
+     * @return HttpResponse
+     */
+    protected function aResponse($code=200, $data='demo result')
+    {
+        $response       = new HttpResponse();
+        $response->code = $code;
+        $response->data = $data;
+
+        return $response;
+
+    }//end aResponse()
+
+
+    /**
+     * Get a response with 200 ok
+     *
+     * @param string $data Custom data to return
+     *
+     * @return HttpResponse
+     */
+    protected function anOKResponse($data='an OK response')
+    {
+        return $this->aResponse(200, $data);
+
+    }//end anOKResponse()
+
+
+    /**
+     * Gices
+     * @return <type>
+     */
+    protected function anUnauthenticatedResponse()
+    {
+        return $this->aResponse(440);
+
+    }//end anAnauthenticatedResponse()
+
 
 }//end class
 
