@@ -1,8 +1,8 @@
 <?php
 /**
- * CalendarEventDeleteHttpParams.php
+ * CalendarEventCheckHttpParam.php
  *
- * Holds the CalendarEventDeleteHttpParams class
+ * Holds the CalendarEventCheckHttpParams class
  *
  * PHP Version: 5
  *
@@ -21,8 +21,7 @@
  */
 
 /**
- * The ContactDeleteHttpParams class is the value object for calendar event
- * removal
+ * The CalendarEventCheckHttpParam class finds the first available url for the contact
  *
  * PHP Version: 5
  *
@@ -32,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class CalendarEventDeleteHttpParam extends HttpParams
+class CalendarEventCheckHttpParam extends HttpParams
 {
 
     /**
@@ -45,7 +44,7 @@ class CalendarEventDeleteHttpParam extends HttpParams
      */
     public $headers = array(
                        'Content-Type' => 'text/xml',
-                       'Depth'        => 'infinity',
+                       'Depth'        => 0,
                        'Translate'    => 'f',
                       );
 
@@ -57,21 +56,44 @@ class CalendarEventDeleteHttpParam extends HttpParams
     /**
      * @var string The custom http method to use
      */
-    public $customMethod = 'DELETE';
+    public $customMethod = 'propfind';
 
 
     /**
-     * Creates a login param object
+     * Creates a contact finder param object
      *
-     * @param CalendarEvent $calendar The object to delete
+     * @param CalendarEvent $event The event to check
      *
-     * @return CalendarEventDeleteHttpParams
+     * @return CalendarEventCheckHttpParam
      */
-    public function __construct(CalendarEvent $calendar)
+    public function __construct(CalendarEvent $event)
     {
-        $this->url = $calendar->getUrl();
+        $name = $event->getFileAsName().$event->getUrlModifier();
+
+        $this->urlParams = array($this->_prepareName($name));
+
+        $this->data = '<?xml version="1.0"?>
+<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:calendar:">
+        <D:allprop/>
+</D:propfind>
+';
 
     }//end __construct()
+
+
+    /**
+     * Prepares the name for the url.
+     * Performs an urlencode
+     *
+     * @param string $name The contact's name
+     *
+     * @return string
+     */
+    private function _prepareName($name)
+    {
+        return urlencode($name);
+
+    }//end _prepareName()
 
 
 }//end class

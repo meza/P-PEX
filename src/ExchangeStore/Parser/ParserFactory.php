@@ -56,9 +56,14 @@ class ParserFactory
     const CALENDAR_EVENT_LIST = 4;
 
     /**
+     * Constant of the Calendar event list parser
+     */
+    const CALENDAR_EVENT_CREATE = 5;
+
+    /**
      * Constant of the Task event list parser
      */
-    const TASK_LIST = 5;
+    const TASK_LIST = 6;
 
 
     /**
@@ -81,6 +86,8 @@ class ParserFactory
             return $this->_createContactListParser();
         case self::CALENDAR_EVENT_LIST:
            return $this->_createCalendarEventListParser();
+        case self::CALENDAR_EVENT_CREATE:
+           return $this->_createCalendarEventCreateParser();
         case self::TASK_LIST:
            return $this->_createTaskListParser();
 
@@ -145,6 +152,20 @@ class ParserFactory
         return $parser;
 
     }//end _createCalendarEventListParser()
+
+
+    /**
+     * Creates a parser
+     *
+     * @return CalendarEventCreateParser
+     */
+    public function _createCalendarEventCreateParser()
+    {
+        include_once dirname(__FILE__).'/CalendarEventCreateParser.php';
+        $parser = new CalendarEventCreateParser();
+        return $parser;
+
+    }//end _createCalendarEventCreateParser()
 
 
     /**

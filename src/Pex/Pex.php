@@ -317,15 +317,41 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function createEvent(CalendarEvent $event)
     {
-        $params = new CalendarEventCreateHttpParam($event, $this->data->username);
-        $result = $this->call($params);
-        if (($result->code >= 200) && ($result->code < 300)) {
-            return true;
+        $param    = new CalendarEventCheckHttpParam($event);
+        $response = $this->call($param);
+
+        if ($response->code !== 404) {
+            $event->setUrlModifier(md5(date('Y-m-d H:i')));
+            usleep(100);
+            return $this->createEvent($event);
         }
 
-        return false;
+        $params = new CalendarEventCreateHttpParam($event, $this->data->username);
+        $result = $this->_doCall($params, ParserFactory::CALENDAR_EVENT_CREATE);
+        return $result;
 
     }//end createEvent()
+
+
+    /**
+     * Update a event
+     *
+     * @param CalendarEvemt $event The event to update
+     *
+     * @return HttpResponse
+     */
+    public function updateEvent(CalendarEvent $event)
+    {
+        $params      = new CalendarEventCreateHttpParam(
+            $event,
+            $this->data->username
+        );
+        $params->url = $event->getUrl();
+
+        $result = $this->_doCall($params, ParserFactory::CALENDAR_EVENT_CREATE);
+        return $result;
+
+    }//end updateEvent()
 
 
     /**
@@ -337,7 +363,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function deleteEvent(CalendarEvent $event)
     {
-        $params = new CalendarEventDeleteHttpParams($event);
+        $params = new CalendarEventDeleteHttpParam($event);
         $result = $this->call($params);
 
         if (($result->code >= 200) && ($result->code < 300)) {

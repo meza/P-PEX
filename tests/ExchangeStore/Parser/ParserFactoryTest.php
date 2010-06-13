@@ -81,6 +81,10 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                  ParserFactory::CALENDAR_EVENT_LIST,
                  'CalendarEventListParser',
                 ),
+                array(
+                 ParserFactory::CALENDAR_EVENT_CREATE,
+                 'CalendarEventCreateParser',
+                ),
                );
 
     }//end parserProvider()

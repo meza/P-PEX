@@ -8,4 +8,4 @@ build
 src/config/rokonai.ini
 tests/Http/cookies.txt
 *.patch
-*Spike.php
+*Spike.php/tests/_PHPUnitCommon/conf/netbeans/phpunit_1.xml
