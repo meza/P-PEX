@@ -398,15 +398,41 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function createTask(Task $task)
     {
-        $params = new TaskCreateHttpParam($task, $this->data->username);
-        $result = $this->call($params);
-        if (($result->code >= 200) && ($result->code < 300)) {
-            return true;
+        $param    = new TaskCheckHttpParam($task);
+        $response = $this->call($param);
+
+        if ($response->code !== 404) {
+            $task->setUrlModifier(md5(date('Y-m-d H:i')));
+            usleep(100);
+            return $this->createTask($task);
         }
 
-        return false;
+        $params = new TaskCreateHttpParam($task, $this->data->username);
+        $result = $this->_doCall($params, ParserFactory::TASK_CREATE);
+        return $result;
 
     }//end createTask()
+
+
+    /**
+     * Update a task
+     *
+     * @param Task $task The task to update
+     *
+     * @return HttpResponse
+     */
+    public function updateTask(Task $task)
+    {
+        $params      = new TaskCreateHttpParam(
+            $task,
+            $this->data->username
+        );
+        $params->url = $task->getUrl();
+
+        $result = $this->_doCall($params, ParserFactory::TASK_CREATE);
+        return $result;
+
+    }//end updateTask()
 
 
     /**
@@ -418,7 +444,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function deleteTask(Task $task)
     {
-        $params = new TaskDeleteHttpParams($task);
+        $params = new TaskDeleteHttpParam($task);
         $result = $this->call($params);
         if (($result->code >= 200) && ($result->code < 300)) {
             return true;

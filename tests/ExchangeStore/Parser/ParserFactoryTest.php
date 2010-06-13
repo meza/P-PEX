@@ -78,6 +78,10 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                  'TaskListParser',
                 ),
                 array(
+                 ParserFactory::TASK_CREATE,
+                 'TaskCreateParser',
+                ),
+                array(
                  ParserFactory::CALENDAR_EVENT_LIST,
                  'CalendarEventListParser',
                 ),

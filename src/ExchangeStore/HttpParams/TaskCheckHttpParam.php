@@ -1,8 +1,8 @@
 <?php
 /**
- * TaskDeleteHttpParams.php
+ * TaskCheckHttpParam.php
  *
- * Holds the TaskDeleteHttpParams class
+ * Holds the TaskCheckHttpParams class
  *
  * PHP Version: 5
  *
@@ -21,8 +21,7 @@
  */
 
 /**
- * The TaskDeleteHttpParams class is the value object for task
- * removal
+ * The TaskCheckHttpParam class finds the first available url for the task
  *
  * PHP Version: 5
  *
@@ -32,20 +31,20 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class TaskDeleteHttpParam extends HttpParams
+class TaskCheckHttpParam extends HttpParams
 {
 
     /**
      * @var string The root url
      */
-    public $url = URLFactory::TASK;
+    public $url = URLFactory::CONTACT;
 
     /**
      * @var array The headers to use for the request
      */
     public $headers = array(
                        'Content-Type' => 'text/xml',
-                       'Depth'        => 'infinity',
+                       'Depth'        => 0,
                        'Translate'    => 'f',
                       );
 
@@ -57,21 +56,44 @@ class TaskDeleteHttpParam extends HttpParams
     /**
      * @var string The custom http method to use
      */
-    public $customMethod = 'DELETE';
+    public $customMethod = 'propfind';
 
 
     /**
-     * Creates a login param object
+     * Creates a task finder param object
      *
-     * @param Task $task The object to delete
+     * @param string $task The name of the task
      *
-     * @return TaskDeleteHttpParams
+     * @return TaskCheckHttpParam
      */
     public function __construct(Task $task)
     {
-        $this->url = $task->getUrl();
+        $name = $task->getFileAsName().$task->getUrlModifier();
+
+        $this->urlParams = array($this->_prepareName($name));
+        
+        $this->data = '<?xml version="1.0"?>
+<D:propfind xmlns:D="DAV:" xmlns:e="urn:schemas:calendar:">
+        <D:allprop/>
+</D:propfind>
+';
 
     }//end __construct()
+
+
+    /**
+     * Prepares the name for the url.
+     * Performs an urlencode
+     *
+     * @param string $name The task's name
+     *
+     * @return string
+     */
+    private function _prepareName($name)
+    {
+        return urlencode($name);
+
+    }//end _prepareName()
 
 
 }//end class

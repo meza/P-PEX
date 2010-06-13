@@ -65,6 +65,11 @@ class ParserFactory
      */
     const TASK_LIST = 6;
 
+    /**
+     * Constant of the Task event list parser
+     */
+    const TASK_CREATE = 7;
+
 
     /**
      * Creates the required Parser implementation
@@ -85,11 +90,13 @@ class ParserFactory
         case self::CONTACT_LIST:
             return $this->_createContactListParser();
         case self::CALENDAR_EVENT_LIST:
-           return $this->_createCalendarEventListParser();
+            return $this->_createCalendarEventListParser();
         case self::CALENDAR_EVENT_CREATE:
-           return $this->_createCalendarEventCreateParser();
+            return $this->_createCalendarEventCreateParser();
         case self::TASK_LIST:
-           return $this->_createTaskListParser();
+            return $this->_createTaskListParser();
+        case self::TASK_CREATE:
+            return $this->_createTaskCreateParser();
 
         default:
             throw new NoSuchParserException($type);
@@ -137,7 +144,7 @@ class ParserFactory
         $parser = new ContactListParser();
         return $parser;
 
-    }//end _createContactGetParser()
+    }//end _createContactListParser()
 
 
     /**
@@ -145,7 +152,7 @@ class ParserFactory
      *
      * @return CalendarEventListParser
      */
-    public function _createCalendarEventListParser()
+    private function _createCalendarEventListParser()
     {
         include_once dirname(__FILE__).'/CalendarEventListParser.php';
         $parser = new CalendarEventListParser();
@@ -159,7 +166,7 @@ class ParserFactory
      *
      * @return CalendarEventCreateParser
      */
-    public function _createCalendarEventCreateParser()
+    private function _createCalendarEventCreateParser()
     {
         include_once dirname(__FILE__).'/CalendarEventCreateParser.php';
         $parser = new CalendarEventCreateParser();
@@ -173,13 +180,27 @@ class ParserFactory
      *
      * @return TaskListParser
      */
-    public function _createTaskListParser()
+    private function _createTaskListParser()
     {
         include_once dirname(__FILE__).'/TaskListParser.php';
         $parser = new TaskListParser();
         return $parser;
 
     }//end _createTaskListParser()
+
+
+    /**
+     * Creates a parser
+     *
+     * @return TaskCreateParser
+     */
+    private function _createTaskCreateParser()
+    {
+        include_once dirname(__FILE__).'/TaskCreateParser.php';
+        $parser = new TaskCreateParser();
+        return $parser;
+
+    }//end _createTaskCreateParser()
 
 
 }//end class

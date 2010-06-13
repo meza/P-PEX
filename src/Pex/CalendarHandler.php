@@ -46,6 +46,16 @@ interface CalendarHandler
 
 
     /**
+     * Update a event
+     *
+     * @param CalendarEvemt $event The event to update
+     *
+     * @return HttpResponse
+     */
+    public function updateEvent(CalendarEvent $event);
+
+
+    /**
      * Removes an entry from a given url
      *
      * @param CalendarEvent $event to delete
