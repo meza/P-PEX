@@ -102,6 +102,9 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
      */
     public function isValidXml($xmlString)
     {
+        if (true === empty($xmlString)) {
+            return true;
+        }
         try {
             libxml_use_internal_errors(true);
             $xml = new SimpleXMLElement($xmlString);
@@ -129,6 +132,8 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     {
         if (true === is_string($params->data)) {
             if (false === $this->isValidXml($params->data)) {
+//                $e = libxml_get_errors();
+//                var_dump($params->data);
                 throw new Exception(
                     'String could not be parsed as XML: '.get_class($params).'::data'
                 );
