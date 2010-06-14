@@ -86,17 +86,17 @@ class ParserFactory
         case self::STORE_URLS:
             return $this->_createStoreUrlParser();
         case self::CONTACT_CREATE:
-            return $this->_createContactCreateParser();
+            return $this->_createCreateParser();
         case self::CONTACT_LIST:
             return $this->_createContactListParser();
         case self::CALENDAR_EVENT_LIST:
             return $this->_createCalendarEventListParser();
         case self::CALENDAR_EVENT_CREATE:
-            return $this->_createCalendarEventCreateParser();
+            return $this->_createCreateParser();
         case self::TASK_LIST:
             return $this->_createTaskListParser();
         case self::TASK_CREATE:
-            return $this->_createTaskCreateParser();
+            return $this->_createCreateParser();
 
         default:
             throw new NoSuchParserException($type);
@@ -122,15 +122,15 @@ class ParserFactory
     /**
      * Creates a parser
      *
-     * @return ContactCreateParser
+     * @return CreateParser
      */
-    private function _createContactCreateParser()
+    private function _createCreateParser()
     {
-        include_once dirname(__FILE__).'/ContactCreateParser.php';
-        $parser = new ContactCreateParser();
+        include_once dirname(__FILE__).'/CreateParser.php';
+        $parser = new CreateParser();
         return $parser;
 
-    }//end _createContactCreateParser()
+    }//end _createCreateParser()
 
 
     /**
@@ -164,20 +164,6 @@ class ParserFactory
     /**
      * Creates a parser
      *
-     * @return CalendarEventCreateParser
-     */
-    private function _createCalendarEventCreateParser()
-    {
-        include_once dirname(__FILE__).'/CalendarEventCreateParser.php';
-        $parser = new CalendarEventCreateParser();
-        return $parser;
-
-    }//end _createCalendarEventCreateParser()
-
-
-    /**
-     * Creates a parser
-     *
      * @return TaskListParser
      */
     private function _createTaskListParser()
@@ -187,20 +173,6 @@ class ParserFactory
         return $parser;
 
     }//end _createTaskListParser()
-
-
-    /**
-     * Creates a parser
-     *
-     * @return TaskCreateParser
-     */
-    private function _createTaskCreateParser()
-    {
-        include_once dirname(__FILE__).'/TaskCreateParser.php';
-        $parser = new TaskCreateParser();
-        return $parser;
-
-    }//end _createTaskCreateParser()
 
 
 }//end class

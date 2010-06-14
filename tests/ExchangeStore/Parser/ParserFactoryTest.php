@@ -67,7 +67,7 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                  ParserFactory::CONTACT_CREATE,
-                 'ContactCreateParser',
+                 'CreateParser',
                 ),
                 array(
                  ParserFactory::CONTACT_LIST,
@@ -79,7 +79,7 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                  ParserFactory::TASK_CREATE,
-                 'TaskCreateParser',
+                 'CreateParser',
                 ),
                 array(
                  ParserFactory::CALENDAR_EVENT_LIST,
@@ -87,7 +87,7 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
                 ),
                 array(
                  ParserFactory::CALENDAR_EVENT_CREATE,
-                 'CalendarEventCreateParser',
+                 'CreateParser',
                 ),
                );
 

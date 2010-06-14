@@ -1,8 +1,8 @@
 <?php
 /**
- * TaskCreateParser.php
+ * CreateParser.php
  *
- * Holds the TaskCreateParser class
+ * Holds the CreateParser class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The TaskCreateParser class is responsible for ...
+ * The CreateParser class is responsible for ...
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class TaskCreateParser implements Parser
+class CreateParser implements Parser
 {
 
 
@@ -40,7 +40,7 @@ class TaskCreateParser implements Parser
      *
      * @param string $xmlString The xml string to parse
      *
-     * @return string The url the contact was created at
+     * @return string The url the  was created at
      */
     public function parse($xmlString)
     {

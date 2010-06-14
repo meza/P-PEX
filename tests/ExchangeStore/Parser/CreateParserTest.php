@@ -1,8 +1,8 @@
 <?php
 /**
- * ContactCreateParserTest.php
+ * CreateParserTest.php
  *
- * Holds the ContactCreateParserTest class
+ * Holds the CreateParserTest class
  *
  * PHP Version: 5
  *
@@ -20,7 +20,7 @@
  */
 
 /**
- * The ContactCreateParserTest class is responsible for ...
+ * The CreateParserTest class is responsible for ...
  *
  * PHP Version: 5
  *
@@ -36,7 +36,7 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ContactCreateParserTest extends PexTestBase
+class CreateParserTest extends PexTestBase
 {
 
 
@@ -47,13 +47,13 @@ class ContactCreateParserTest extends PexTestBase
      */
     public function testParse()
     {
-        $url       = 'http://a.server.com/contactUrl.EML';
+        $url       = 'http://a.server.com/Url.EML';
         $xmlString = '<?xml version="1.0"?>
 <a:multistatus xmlns:a="DAV:"><a:response>
 <a:href>'.$url.'</a:href>
 </a:response></a:multistatus>';
 
-        $parser = new ContactCreateParser();
+        $parser = new CreateParser();
         $actual = $parser->parse($xmlString);
 
         $this->assertEquals($url, $actual);
