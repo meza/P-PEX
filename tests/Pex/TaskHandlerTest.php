@@ -39,6 +39,7 @@
 class TaskHandlerTest extends PexTest
 {
 
+    protected $username = 'demo username';
 
     /**
      * Sets up the tests
@@ -64,7 +65,7 @@ class TaskHandlerTest extends PexTest
     {
         $createParams = new TaskCreateHttpParam(
             $this->_aDummyTask(),
-            $this->connectionData->username
+            $this->username
         );
         $checkParams  = new TaskCheckHttpParam($this->_aDummyTask());
         $response     = 'a dummy response';
@@ -112,7 +113,7 @@ class TaskHandlerTest extends PexTest
         $task->setUrlModifier(md5(date('Y-m-d H:i')));
 
         $checkParamsB = new TaskCheckHttpParam($task);
-        $createParams = new TaskCreateHttpParam($task, $this->connectionData->username);
+        $createParams = new TaskCreateHttpParam($task, $this->username);
         $response     = 'a dummy response';
 
         $this->expectRequest($this->httpMock, $checkParamsA, 0);
@@ -162,7 +163,7 @@ class TaskHandlerTest extends PexTest
 
         $params      = new TaskCreateHttpParam(
             $this->_aDummyTask(),
-            $this->connectionData->username
+            $this->username
         );
         $params->url = $url;
 
@@ -271,6 +272,7 @@ class TaskHandlerTest extends PexTest
     private function _aDummyTask()
     {
         $task = Task::anUnimportantTask('A dummy subject')->due('2011-01-01');
+        $task->withDescription('someDescription');
 
         return $task;
 
