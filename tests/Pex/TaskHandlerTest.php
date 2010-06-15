@@ -272,7 +272,7 @@ class TaskHandlerTest extends PexTest
     private function _aDummyTask()
     {
         $task = Task::anUnimportantTask('A dummy subject')->due('2011-01-01');
-        $task->withDescription('someDescription');
+        $task->withDescription('someDescription')->at('some place');
 
         return $task;
 
