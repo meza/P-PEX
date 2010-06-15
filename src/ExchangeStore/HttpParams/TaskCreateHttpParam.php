@@ -94,7 +94,6 @@ class TaskCreateHttpParam extends HttpParams
             <cal:alldayevent dt:dt="boolean">1</cal:alldayevent>
             <cal:responserequested dt:dt="boolean">1</cal:responserequested>
             <cal:reminderoffset dt:dt="int">900</cal:reminderoffset>
-            <header:to>'.$username.'</header:to>
             <mail:subject>'.$task->subject.'</mail:subject>
             <mail:htmldescription>'.$task->description.'</mail:htmldescription>
             <cal:location>'.$task->location.'</cal:location>'.
