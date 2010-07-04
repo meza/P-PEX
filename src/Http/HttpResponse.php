@@ -44,6 +44,11 @@ final class HttpResponse
      */
     public $data;
 
+    /**
+     * @var array response headers
+     */
+    public $headers = array();
+
 
 }//end class
 

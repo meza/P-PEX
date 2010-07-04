@@ -50,6 +50,11 @@ class Curl
      */
     private $_data = null;
 
+    /**
+     * @var array headers
+     */
+    private $_headers = array();
+
 
     /**
      * Constructs the object
@@ -153,8 +158,10 @@ class Curl
 
         curl_setopt($this->_ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($this->_ch, CURLOPT_CONNECTTIMEOUT, 60);
-        $retval = curl_exec($this->_ch);
-        $errno  = curl_errno($this->_ch);
+        curl_setopt($this->_ch, CURLOPT_HEADERFUNCTION, array($this, 'parseHeader'));
+        $this->_headers = array();
+        $retval        = curl_exec($this->_ch);
+        $errno         = curl_errno($this->_ch);
         if ((int) 0 < $errno) {
             $errstr = curl_error($this->_ch);
             throw new Exception($errstr, $errno);
@@ -163,11 +170,31 @@ class Curl
         $info = $this->getInfo();
         curl_close($this->_ch);
         return array(
-                'code' => $info['http_code'],
-                'data' => $retval,
+                'code'    => $info['http_code'],
+                'data'    => $retval,
+                'headers' => $this->_headers,
                );
 
     }//end execute()
+
+
+    /**
+     * Parse curl headers
+     *
+     * @param resource $ch     The curl resource
+     * @param strgin   $header The header to parse
+     *
+     * @return int
+     */
+    public function parseHeader($ch, $header)
+	{
+		if (false !== strpos($header, ':')) {
+			list ($headerKey, $headerValue) = explode(':', $header, 2);
+			$this->_headers[$headerKey] = trim($headerValue);
+		}
+		return strlen($header);
+
+	}//end parseHeader()
 
 
     /**

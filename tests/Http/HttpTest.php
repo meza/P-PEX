@@ -245,13 +245,15 @@ class HttpTest extends PHPUnit_Framework_TestCase
     public function testRequest()
     {
         $curlReturn = array(
-                       'code' => 200,
-                       'data' => 'successful curl test call',
+                       'code'    => 200,
+                       'data'    => 'successful curl test call',
+                       'headers' => array(),
                       );
 
         $expected       = new HttpResponse();
         $expected->code = $curlReturn['code'];
         $expected->data = $curlReturn['data'];
+        $expected->headers = $curlReturn['headers'];
 
         $this->httpParamsMock = $this->getMock(
             'HttpParams',

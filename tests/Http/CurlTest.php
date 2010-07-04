@@ -327,8 +327,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
     public function testExecute()
     {
         $expected = array(
-                     'code' => 0,
-                     'data' => 'this should be the returned message',
+                     'code'    => 0,
+                     'data'    => 'this should be the returned message',
+                     'headers' => array(),
                     );
         $actual   = $this->_runExecute($this->object, $this->_testFile, false);
         $this->assertSame($expected, $actual);
@@ -346,8 +347,9 @@ class CurlTest extends PHPUnit_Framework_TestCase
     public function testExecute2()
     {
         $expected = array(
-                     'code' => 0,
-                     'data' => 'this should be the returned message',
+                     'code'    => 0,
+                     'data'    => 'this should be the returned message',
+                     'headers' => array(),
                     );
         $actual   = $this->_runExecute($this->object, $this->_testFile, true);
         $this->assertSame($expected, $actual);

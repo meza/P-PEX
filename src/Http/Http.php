@@ -157,10 +157,11 @@ class Http
              'returnTransfer' => true,
             )
         );
-        $response           = $curl->execute();
-        $httpResponse       = new HttpResponse();
-        $httpResponse->code = $response['code'];
-        $httpResponse->data = $response['data'];
+        $response              = $curl->execute();
+        $httpResponse          = new HttpResponse();
+        $httpResponse->code    = $response['code'];
+        $httpResponse->data    = $response['data'];
+        $httpResponse->headers = $response['headers'];
 
         return $httpResponse;
 
