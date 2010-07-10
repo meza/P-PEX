@@ -37,7 +37,7 @@ class ServiceUrlsHttpParams extends HttpParams
     /**
      * @var string The root url
      */
-    public $url = URLFactory::USERROOT;
+    public $url = ExchangeStoreURLFactory::USERROOT;
 
     /**
      * @var array The headers to use for the request

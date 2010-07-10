@@ -1,8 +1,8 @@
 <?php
 /**
- * URLFactory.php
+ * ExchangeStoreURLFactory.php
  *
- * Holds the URLFactory class
+ * Holds the ExchangeStoreURLFactory class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The URLFactory class is responsible for the generation of the exchange urls
+ * The ExchangeStoreURLFactory class is responsible for the generation of the exchange urls
  *
  * PHP Version: 5
  *
@@ -31,7 +31,7 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class URLFactory
+class ExchangeStoreURLFactory extends URLFactory
 {
     /**
      * Login type
@@ -80,13 +80,13 @@ class URLFactory
 
 
     /**
-     * Creates the URLFactory object, and requires data
+     * Creates the ExchangeStoreURLFactory object, and requires data
      *
      * @param string    $hostname  The  hostname of the exchange server
      * @param string    $username  The  username
      * @param URLAccess $urlAccess The urlAccess
      *
-     * @return URLFactory
+     * @return ExchangeStoreURLFactory
      */
     public function __construct($hostname, $username, $urlAccess)
     {

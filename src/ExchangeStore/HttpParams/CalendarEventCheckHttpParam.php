@@ -37,7 +37,7 @@ class CalendarEventCheckHttpParam extends HttpParams
     /**
      * @var string The root url
      */
-    public $url = URLFactory::CALENDAR;
+    public $url = ExchangeStoreURLFactory::CALENDAR;
 
     /**
      * @var array The headers to use for the request

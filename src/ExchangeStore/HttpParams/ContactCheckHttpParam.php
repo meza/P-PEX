@@ -37,7 +37,7 @@ class ContactCheckHttpParam extends HttpParams
     /**
      * @var string The root url
      */
-    public $url = URLFactory::CONTACT;
+    public $url = ExchangeStoreURLFactory::CONTACT;
 
     /**
      * @var array The headers to use for the request

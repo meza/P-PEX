@@ -1,8 +1,8 @@
 <?php
 /**
- * URLFactoryTest.php
+ * ExchangeStoreURLFactoryTest.php
  *
- * Holds the Test for the URLFactory class
+ * Holds the Test for the ExchangeStoreURLFactory class
  *
  * PHP Version: 5
  *
@@ -21,7 +21,7 @@
  */
 
 /**
- * The URLFactoryTest class is the unittest class for the URLFactory class
+ * The ExchangeStoreURLFactoryTest class is the unittest class for the ExchangeStoreURLFactory class
  *
  * PHP Version: 5
  *
@@ -31,11 +31,11 @@
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class URLFactoryTest extends PHPUnit_Framework_TestCase
+class ExchangeStoreURLFactoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var URLFactory The excerciesd object
+     * @var ExchangeStoreURLFactory The excerciesd object
      */
     protected $object;
 
@@ -64,7 +64,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->testURLAccess = new URLAccess();
-        $this->object        = new URLFactory(
+        $this->object        = new ExchangeStoreURLFactory(
             $this->testHost,
             $this->testUsername,
             $this->testURLAccess
@@ -84,7 +84,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testNewWithoutAnyArguments()
     {
-        $urlFactory = new URLFactory();
+        $ExchangeStoreURLFactory = new ExchangeStoreURLFactory();
 
     }//end testNewWithoutAnyArguments()
 
@@ -100,7 +100,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testNewWithoutTheLastArguments()
     {
-        $urlfactory = new URLFactory($this->testHost);
+        $ExchangeStoreURLFactory = new ExchangeStoreURLFactory($this->testHost);
 
     }//end testNewWithoutTheLastArguments()
 
@@ -133,7 +133,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     public function testLoginUrlScheme()
     {
          $expected = $this->testHost.'/exchweb/bin/auth/owaauth.dll';
-         $actual   = $this->object->getUrlFor(URLFactory::LOGIN);
+         $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::LOGIN);
 
          $this->assertEquals($expected, $actual);
 
@@ -150,7 +150,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     public function testReferrerUrlScheme()
     {
          $expected = $this->testHost.'/exchweb/bin/auth/owalogon.asp';
-         $actual   = $this->object->getUrlFor(URLFactory::REFERRER);
+         $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::REFERRER);
          $this->assertEquals($expected, $actual);
 
     }//end testReferrerUrlScheme()
@@ -166,7 +166,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
     public function testUserRootUrlScheme()
     {
          $expected = $this->testHost.'/Exchange/'.$this->testUsername;
-         $actual   = $this->object->getUrlFor(URLFactory::USERROOT);
+         $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::USERROOT);
          $this->assertEquals($expected, $actual);
 
     }//end testUserRootUrlScheme()
@@ -185,7 +185,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->contacts.'/';
-        $actual   = $this->object->getUrlFor(URLFactory::CONTACT);
+        $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::CONTACT);
 
         $this->assertEquals($expected, $actual);
 
@@ -206,7 +206,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
                 $this->testURLAccess->contacts.'/'.$contactName.'.eml';
 
-        $actual = $this->object->getUrlFor(URLFactory::CONTACT, $contactName);
+        $actual = $this->object->getUrlFor(ExchangeStoreURLFactory::CONTACT, $contactName);
 
         $this->assertEquals($expected, $actual);
 
@@ -226,7 +226,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->calendar.'/';
-        $actual   = $this->object->getUrlFor(URLFactory::CALENDAR);
+        $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::CALENDAR);
 
         $this->assertEquals($expected, $actual);
 
@@ -248,7 +248,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
         $expected      = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
                 $this->testURLAccess->calendar.'/'.$calendarEvent.'.eml';
 
-        $actual = $this->object->getUrlFor(URLFactory::CALENDAR, $calendarEvent);
+        $actual = $this->object->getUrlFor(ExchangeStoreURLFactory::CALENDAR, $calendarEvent);
 
         $this->assertEquals($expected, $actual);
 
@@ -268,7 +268,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->tasks.'/';
-        $actual   = $this->object->getUrlFor(URLFactory::TASK);
+        $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::TASK);
 
         $this->assertEquals($expected, $actual);
 
@@ -290,7 +290,7 @@ class URLFactoryTest extends PHPUnit_Framework_TestCase
 
         $expected = $this->testHost.'/Exchange/'.$this->testUsername.'/'.
             $this->testURLAccess->tasks.'/'.$taskName.'.eml';
-        $actual   = $this->object->getUrlFor(URLFactory::TASK, $taskName);
+        $actual   = $this->object->getUrlFor(ExchangeStoreURLFactory::TASK, $taskName);
 
         $this->assertEquals($expected, $actual);
 

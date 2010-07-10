@@ -37,7 +37,7 @@ class TaskCreateHttpParam extends HttpParams
     /**
      * @var string The root url
      */
-    public $url = URLFactory::TASK;
+    public $url = ExchangeStoreURLFactory::TASK;
 
     /**
      * @var array The headers to use for the request

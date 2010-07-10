@@ -37,7 +37,7 @@ class LoginHttpParams extends HttpParams
     /**
      * @var string The Login request needs the specific login url
      */
-    public $url = URLFactory::LOGIN;
+    public $url = ExchangeStoreURLFactory::LOGIN;
 
     /**
      * The default headers for the request
@@ -48,7 +48,7 @@ class LoginHttpParams extends HttpParams
     /**
      * @var string The referrer url type
      */
-    public $referrer = URLFactory::REFERRER;
+    public $referrer = ExchangeStoreURLFactory::REFERRER;
 
     /**
      * @var string The http method to use
