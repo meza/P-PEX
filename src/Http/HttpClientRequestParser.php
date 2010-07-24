@@ -44,54 +44,54 @@ class HttpClientRequestParser
     /**
      * Parses the request
      *
-     * @param array  $scope       The scope of a request
-     * @param string $inputStream The input stream url
-     *
      * @return HttpClientRequest
      */
-    public function parse($scope=null, $inputStream='php://input')
-    {
+    public function parse($scope=null) {
         if (null === $scope) {
             $scope = $GLOBALS;
         }
 
         $req          = new HttpClientRequest();
         $req->method  = $scope['_SERVER']['REQUEST_METHOD'];
+        $req->uri     = $scope['_SERVER']['REQUEST_URI'];
         $req->headers = new HttpHeaderComposite();
 
-        foreach ($this->getHeaders() as $name => $value) {
+        foreach($this->getHeaders() as $name=>$value) {
             $header = new HttpHeader($name, $value);
             $req->headers->addItem($header);
         }
-
-        $req->data = $this->getData($req->method, $scope, $inputStream);
+        $req->data = $this->getData($req->method, $scope);
         return $req;
 
     }//end parse()
 
 
-    private function getData($method, $scope, $inputStream)
+    private function getData($method, $scope)
     {
         switch(strtolower($method)) {
-        case 'delete':  return $this->getDeleteData($scope);
-        case 'get':     return $this->getGetData($scope);
-        case 'head':    return $this->getHeadData($scope);
-        case 'options': return $this->getPostData($inputStream);
-        case 'post':    return $this->getPostData($inputStream);
-        case 'put':     return $this->getPostData($inputStream);
+            case 'delete':  return $this->getDeleteData($scope);
+            case 'get':     return $this->getGetData($scope);
+            case 'head':    return $this->getHeadData($scope);
+            case 'options': return $this->getOptionsData($scope);
+            case 'post':    return $this->getPostData($scope);
+            case 'put':     return $this->getPutData($scope);
         }
 
-    }//end getData()
-
+    }
 
     private function getGetData(array $scope)
     {
         return $scope['_GET'];
     }
 
-    private function getPostData($inputStream)
+    private function getPostData(array $scope)
     {
-        $data = file_get_contents($inputStream);
+        return $scope['_POST'];
+    }
+
+    private function getPutData()
+    {
+        $data = file_get_contents('php://input');
         parse_str($data, $result);
         return $result;
 
@@ -111,16 +111,13 @@ class HttpClientRequestParser
 
     private function getOptionsData(array $scope)
     {
-        return $this->getPostData($scope);
+        return $this->getPutData($scope);
 
     }
 
     private function getHeaders()
     {
-        if (true === function_exists('getallheaders')) {
-            return getallheaders();
-        }
-        return array();
+        return getallheaders();
     }
 
 

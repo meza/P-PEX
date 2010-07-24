@@ -39,6 +39,7 @@
 class HttpClientRequest
 {
     public $method;
+    public $uri;
     public $protocol;
     public $protocolVersion;
     
