@@ -156,7 +156,6 @@ class ExchangeStoreURLFactory extends URLFactory
         if (null !== $contactStorageName) {
             $url .= $contactStorageName.'.eml';
         }
-
         return $url;
 
     }//end _getUrlForContact()

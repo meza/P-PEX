@@ -49,6 +49,11 @@ class HttpFactory
      */
     private $_type;
 
+    /**
+     * @var string SookieStore
+     */
+    private $_cs = 'cookies.txt';
+
 
     /**
      * Constructs the HttpBuilder object, while requiring the dependencies
@@ -94,7 +99,7 @@ class HttpFactory
 
         $http->followLocation(true);
         $http->verifySSL(false);
-        $http->setCookieStore('cookies.txt');
+        $http->setCookieStore($this->_cs);
 
         return $http;
 
@@ -114,6 +119,12 @@ class HttpFactory
         return $http;
 
     }//end _createVerbosingHttp()
+
+
+    public function setCookieStore($cs)
+    {
+        $this->_cs = $cs;
+    }
 
 
 }//end class

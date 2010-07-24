@@ -132,8 +132,6 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     {
         if (true === is_string($params->data)) {
             if (false === $this->isValidXml($params->data)) {
-//                $e = libxml_get_errors();
-                var_dump($params->data);
                 throw new Exception(
                     'String could not be parsed as XML: '.get_class($params).'::data'
                 );
@@ -229,6 +227,9 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     private function _doCall(HttpParams $params, $parserType)
     {
         $result = $this->call($params);
+        if (($result->code > 300)) {
+            return false;
+        }
         $parser = $this->parserFactory->createParser($parserType);
         return $this->parse($result->data, $parser);
 

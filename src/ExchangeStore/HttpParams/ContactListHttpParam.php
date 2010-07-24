@@ -67,24 +67,19 @@ class ContactListHttpParam extends HttpParams
     public function __construct()
     {
         $this->data = '<?xml version="1.0"?>
-<a:searchrequest
-xmlns:a="DAV:"
-xmlns:c="urn:schemas:contacts:"
+<a:searchrequest xmlns:a="DAV:" xmlns:c="urn:schemas:contacts:"
 xmlns:e="http://schemas.microsoft.com/exchange/"
 xmlns:mapi="http://schemas.microsoft.com/mapi/"
-xmlns:x="xml:"
-xmlns:cal="urn:schemas:calendar:"
+xmlns:x="xml:" xmlns:cal="urn:schemas:calendar:"
 xmlns:mail="urn:shemas:httpmail:">
-<a:sql>SELECT
-"DAV:href",
+<a:sql>SELECT "DAV:href",
 "urn:schemas:contacts:givenName",
 "urn:schemas:contacts:middlename",
 "urn:schemas:contacts:sn",
 "urn:schemas:contacts:fileas",
 "urn:schemas:contacts:nickname",
 "http://schemas.microsoft.com/mapi/email1emailaddress"
-FROM "'.$this->preparedUrl.'"
-</a:sql>
+FROM "'.$this->preparedUrl.'"</a:sql>
 </a:searchrequest>';
 
     }//end __construct()

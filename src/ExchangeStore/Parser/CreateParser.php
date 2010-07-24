@@ -49,7 +49,7 @@ class CreateParser implements Parser
         $xml->registerXPathNamespace('dav', 'DAV:');
         $root = $xml->xpath('//dav:href');
 
-        return (string) $root[0];
+        return basename((string) $root[0]);
 
     }//end parse()
 
