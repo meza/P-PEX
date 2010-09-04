@@ -33,7 +33,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class InvalidCustomHttpMethodException extends Exception
+class InvalidCustomHttpMethodException extends \Exception
 {
 
 

@@ -32,7 +32,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class InvalidCookieStoreException extends Exception
+class InvalidCookieStoreException extends \Exception
 {
 
     /**
