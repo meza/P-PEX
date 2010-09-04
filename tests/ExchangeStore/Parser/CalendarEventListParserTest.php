@@ -19,7 +19,7 @@
  * *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The CalendarEventListParserTest class is the unittest class for the
  * CalendarEventListParser class

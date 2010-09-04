@@ -20,7 +20,7 @@
  * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The StoreUrlParserTest class is the unittest class for the StoreUrlParser class
  *

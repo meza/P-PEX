@@ -18,7 +18,7 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The PexTestBase class is responsible for tests
  *
@@ -36,7 +36,7 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class PexTestBase extends MockAmendingTestCaseBase
+class PexTestBase extends \MockAmendingTestCaseBase
 {
 
 

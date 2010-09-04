@@ -18,7 +18,7 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The TaskHandlerTest class is responsible for ...
  *

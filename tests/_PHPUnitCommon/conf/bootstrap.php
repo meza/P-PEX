@@ -93,13 +93,21 @@ function __bootstrap()
 
 	
 	error_reporting(E_LOADERLEVEL);
-	spl_autoload_register(array(new Autoloader, 'loadClass'));
+    spl_autoload_register();
+    $f = spl_autoload_functions();
+	spl_autoload_register($f[0]);
+	spl_autoload_register(array(new \Autoloader, 'loadClass'));
 }
 
 class Autoloader
 {
     public function loadClass($className)
     {
+        echo __NAMESPACE__."\n";
+        echo $className."\n";
+        $pos = strrpos($className, '\\');
+        $className = substr($className, $pos+1);
+        echo $className."\n";
         require_once($className.'.php');
     }
 }

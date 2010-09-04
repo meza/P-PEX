@@ -20,7 +20,7 @@
  * @version  GIT: $Id$
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The ParserFactoryTest class is the unittest class for the ParserFactory class
  *

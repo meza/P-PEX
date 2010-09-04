@@ -19,7 +19,7 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * Test class for the HttpFactory class
  *

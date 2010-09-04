@@ -40,7 +40,7 @@ require_once dirname(__file__).'/ArrayKeyIs.php';
  * @link     http://www.assembla.com/spaces/p-pex
  * @see      getMock()
  */
-abstract class MockAmendingTestCaseBase extends PHPUnit_Framework_TestCase
+abstract class MockAmendingTestCaseBase extends \PHPUnit_Framework_TestCase
 {
 
     /**

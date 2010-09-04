@@ -19,7 +19,7 @@
  * *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The CalendarEventTest class is responsible for testing the calendar event
  * class

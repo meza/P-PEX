@@ -19,7 +19,7 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * Testing 3rd party is not my goal. I only want to see that I set everything
  * correctly
@@ -295,9 +295,8 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * Methods below this line are only for validating, that none of the
      * curl calls below throw an exception
      */
-
-
-    /**
+namespace Pex;
+/**
      * Prepares and calls an execute
      *
      * @param Curl   $object The object to use
