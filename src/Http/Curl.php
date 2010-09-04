@@ -166,7 +166,7 @@ class Curl
         $errno         = curl_errno($this->_ch);
         if ((int) 0 < $errno) {
             $errstr = curl_error($this->_ch);
-            throw new Exception($errstr, $errno);
+            throw new \Exception($errstr, $errno);
         }
 
         $info = $this->getInfo();

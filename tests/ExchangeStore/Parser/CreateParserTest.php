@@ -47,7 +47,7 @@ class CreateParserTest extends PexTestBase
      */
     public function testParse()
     {
-        $url       = 'http://a.server.com/Url.EML';
+        $url       = 'Url.EML';
         $xmlString = '<?xml version="1.0"?>
 <a:multistatus xmlns:a="DAV:"><a:response>
 <a:href>'.$url.'</a:href>

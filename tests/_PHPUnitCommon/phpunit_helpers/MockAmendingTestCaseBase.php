@@ -88,6 +88,7 @@ abstract class MockAmendingTestCaseBase extends \PHPUnit_Framework_TestCase
      */
     protected function mock($className, array $methodsToBeCalled=array())
     {
+        $className = 'Pex\\'.$className;
         $methodsOfObject = array();
         $rc              = new ReflectionClass($className);
         foreach ($rc->getMethods() as $method) {
@@ -154,7 +155,7 @@ abstract class MockAmendingTestCaseBase extends \PHPUnit_Framework_TestCase
      * on it except for those stated explicitly in the second argument
      *
      * @param PHPUnit_Framework_MockObject_MockObject $mock       the mock object
-     * @param array(string)                           $exceptions the exceptions
+     * @param array(string)                           $exceptions the Exceptions
      *
      * @return void
      */

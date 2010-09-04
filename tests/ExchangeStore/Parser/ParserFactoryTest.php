@@ -32,7 +32,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class ParserFactoryTest extends PHPUnit_Framework_TestCase
+class ParserFactoryTest extends PexTestBase
 {
 
     /**
@@ -63,31 +63,31 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
         return array(
                 array(
                  ParserFactory::STORE_URLS,
-                 'StoreUrlParser',
+                 __NAMESPACE__.'\StoreUrlParser',
                 ),
                 array(
                  ParserFactory::CONTACT_CREATE,
-                 'CreateParser',
+                 __NAMESPACE__.'\CreateParser',
                 ),
                 array(
                  ParserFactory::CONTACT_LIST,
-                 'ContactListParser',
+                 __NAMESPACE__.'\ContactListParser',
                 ),
                 array(
                  ParserFactory::TASK_LIST,
-                 'TaskListParser',
+                 __NAMESPACE__.'\TaskListParser',
                 ),
                 array(
                  ParserFactory::TASK_CREATE,
-                 'CreateParser',
+                 __NAMESPACE__.'\CreateParser',
                 ),
                 array(
                  ParserFactory::CALENDAR_EVENT_LIST,
-                 'CalendarEventListParser',
+                 __NAMESPACE__.'\CalendarEventListParser',
                 ),
                 array(
                  ParserFactory::CALENDAR_EVENT_CREATE,
-                 'CreateParser',
+                 __NAMESPACE__.'\CreateParser',
                 ),
                );
 
@@ -116,10 +116,10 @@ class ParserFactoryTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * We'd like to test that the factory throws the expected exception
+     * We'd like to test that the factory throws the expected Exception
      * when an unknown parser was requested from it.
      *
-     * @expectedException NoSuchParserException
+     * @expectedException Pex\NoSuchParserException
      * @test
      *
      * @return void;

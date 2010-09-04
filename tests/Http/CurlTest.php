@@ -36,7 +36,7 @@ namespace Pex;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CurlTest extends PHPUnit_Framework_TestCase
+class CurlTest extends PexTestBase
 {
 
     /**
@@ -87,7 +87,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
     /**
      * We want to ensure, that unwrutable path could not be set
      *
-     * @expectedException InvalidCookieStoreException
+     * @expectedException Pex\InvalidCookieStoreException
      * @test
      *
      * @return void
@@ -121,7 +121,7 @@ class CurlTest extends PHPUnit_Framework_TestCase
      * @param string $method The http method to set
      * 
      * @dataProvider setCustomMethodTestProvider()
-     * @expectedException InvalidCustomHttpMethodException
+     * @expectedException Pex\InvalidCustomHttpMethodException
      * @test
      * 
      * @return void
@@ -293,10 +293,10 @@ class CurlTest extends PHPUnit_Framework_TestCase
 
     /**
      * Methods below this line are only for validating, that none of the
-     * curl calls below throw an exception
+     * curl calls below throw an Exception
      */
-namespace Pex;
-/**
+
+    /**
      * Prepares and calls an execute
      *
      * @param Curl   $object The object to use
@@ -363,7 +363,7 @@ namespace Pex;
      *
      * @return void
      *
-     * @throws Exception if an unwanted exception is thrown
+     * @throws Exception if an unwanted Exception is thrown
      */
     public function testExecute3()
     {
@@ -373,8 +373,8 @@ namespace Pex;
         $this->object->setData($data);
         try {
             $this->_runExecute($this->object, $file, false);
-            $this->fail('No url not found exception was raised');
-        } catch (Exception $e) {
+            $this->fail('No url not found Exception was raised');
+        } catch (\Exception $e) {
             if ($e->getMessage() === 'Couldn\'t open file '.$path.'?'.$data) {
                 return;
             }
@@ -425,7 +425,7 @@ namespace Pex;
 
         try {
             $this->object->setCookieStore('/cookies.txt');
-            $this->fail('Cookiestore exception should have been triggered');
+            $this->fail('Cookiestore Exception should have been triggered');
         } catch (InvalidCookieStoreException $e) {
             
         }

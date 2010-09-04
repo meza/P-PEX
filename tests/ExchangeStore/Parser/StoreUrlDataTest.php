@@ -32,7 +32,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class StoreUrlDataTest extends PHPUnit_Framework_TestCase
+class StoreUrlDataTest extends PexTestBase
 {
 
 
@@ -45,14 +45,14 @@ class StoreUrlDataTest extends PHPUnit_Framework_TestCase
      */
     public function testThatValuesAreDefined()
     {
-        if (false === class_exists('StoreUrlData')) {
+        if (false === class_exists(__NAMESPACE__.'\StoreUrlData')) {
             $this->fail('The required class is not loaded: StoreUrlData');
         }
-        $this->assertClassHasAttribute('inbox', 'StoreUrlData');
-        $this->assertClassHasAttribute('calendar', 'StoreUrlData');
-        $this->assertClassHasAttribute('contacts', 'StoreUrlData');
-        $this->assertClassHasAttribute('tasks', 'StoreUrlData');
-        $this->assertClassHasAttribute('notes', 'StoreUrlData');
+        $this->assertClassHasAttribute('inbox', __NAMESPACE__.'\StoreUrlData');
+        $this->assertClassHasAttribute('calendar', __NAMESPACE__.'\StoreUrlData');
+        $this->assertClassHasAttribute('contacts', __NAMESPACE__.'\StoreUrlData');
+        $this->assertClassHasAttribute('tasks', __NAMESPACE__.'\StoreUrlData');
+        $this->assertClassHasAttribute('notes', __NAMESPACE__.'\StoreUrlData');
 
     }//end testThatValuesAreDefined()
 

@@ -32,7 +32,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class CalendarEventTest extends MockAmendingTestCaseBase
+class CalendarEventTest extends PexTestBase
 {
 
     /**
@@ -79,7 +79,7 @@ class CalendarEventTest extends MockAmendingTestCaseBase
         $event           = CalendarEvent::anEvent($expectedSubject);
 
         $this->assertAttributeEquals($expectedSubject, 'subject', $event);
-        $this->assertType('CalendarEvent', $event);
+        $this->assertType(__NAMESPACE__.'\CalendarEvent', $event);
 
     }//end testAnEvent()
 

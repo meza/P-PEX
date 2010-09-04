@@ -171,7 +171,7 @@ class PexTest extends PexTestBase
     /**
      * Test a standard call when it can't log in
      *
-     * @expectedException CouldNotLoginException
+     * @expectedException Pex\CouldNotLoginException
      *
      * @return void
      */

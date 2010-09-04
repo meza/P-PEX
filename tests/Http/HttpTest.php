@@ -25,7 +25,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.meza.hu
  */
-class HttpTest extends PHPUnit_Framework_TestCase
+class HttpTest extends PexTestBase
 {
 
     /**
@@ -57,15 +57,11 @@ class HttpTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlBuilderMock = $this->getMock(
+        $this->curlBuilderMock = $this->mock(
             'CurlBuilder',
-            array('createCurl'),
-            array(),
-            '',
-            false,
-            false
+            array('createCurl')
         );
-        $this->object = new Http($this->curlBuilderMock);
+        $this->object = new Http($this->curlBuilderMock->mock);
 
     }//end setUp()
 
@@ -255,21 +251,13 @@ class HttpTest extends PHPUnit_Framework_TestCase
         $expected->data = $curlReturn['data'];
         $expected->headers = $curlReturn['headers'];
 
-        $this->httpParamsMock = $this->getMock(
-            'HttpParams',
-            array(),
-            array(),
-            '',
-            false,
-            false,
-            false
-        );
+        $this->httpParamsMock = $this->mock('HttpParams');
         $this->curlMock       = $this->getMock('Curl', array('execute'));
 
         $this->curlBuilderMock->expects(
             $this->once()
         )->method('createCurl')->with(
-            $this->equalTo($this->httpParamsMock),
+            $this->equalTo($this->httpParamsMock->mock),
             $this->equalTo(
                 array(
                  'cookieStore'    => $this->readAttribute(
@@ -298,7 +286,7 @@ class HttpTest extends PHPUnit_Framework_TestCase
             $this->once()
         )->method('execute')->will($this->returnValue($curlReturn));
 
-        $actual = $this->object->request($this->httpParamsMock);
+        $actual = $this->object->request($this->httpParamsMock->mock);
 
         $this->assertEquals($expected, $actual);
 

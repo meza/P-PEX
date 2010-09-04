@@ -133,7 +133,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
     {
         if (true === is_string($params->data)) {
             if (false === $this->isValidXml($params->data)) {
-                throw new Exception(
+                throw new \Exception(
                     'String could not be parsed as XML: '.get_class($params).'::data'
                 );
             }

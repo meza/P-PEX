@@ -19,7 +19,7 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The ContactFactory class is responsible for creating contacts
  *

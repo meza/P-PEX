@@ -146,13 +146,13 @@ class PexTestBase extends \MockAmendingTestCaseBase
      * @return Http
      */
     protected function expectRequest(
-        MockObjectWrapper $http,
+        \MockObjectWrapper $http,
         HttpParams $params,
         $index=-1,
         HttpResponse $response=null
     ) {
         $this->assertType(
-            'Http',
+            __NAMESPACE__.'\Http',
             $http->mock,
             'Mock object should be a Http mock'
         );

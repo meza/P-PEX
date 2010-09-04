@@ -19,7 +19,7 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+namespace Pex;
 /**
  * The ExchangeRawResponseFactory class is responsible for returning xyml msgs
  *

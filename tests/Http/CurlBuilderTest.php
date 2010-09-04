@@ -34,7 +34,7 @@ namespace Pex;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CurlBuilderTest extends MockAmendingTestCaseBase
+class CurlBuilderTest extends PexTestBase
 {
 
     /**
@@ -61,15 +61,11 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
      */
     protected function setUp()
     {
-        $this->urlFactoryMock = $this->getMock(
+        $this->urlFactoryMock = $this->mock(
             'URLFactory',
-            array('getUrlFor'),
-            array(),
-            '',
-            false,
-            false
+            array('getUrlFor')            
         );
-        $this->object         = new CurlBuilder($this->urlFactoryMock);
+        $this->object         = new CurlBuilder($this->urlFactoryMock->mock);
 
     }//end setUp()
 
@@ -150,7 +146,7 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
         HttpParams $params,
         array $config=array()
     ) {
-        $curlMock = $this->getMock(
+        $curlMock = $this->mock(
             'Curl',
             array(
              'setReturnTransfer',
@@ -297,7 +293,7 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
             $i++;
         }
 
-        return $curlMock;
+        return $curlMock->mock;
 
     }//end _setCurlExpectations()
 
@@ -376,7 +372,7 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
     /**
      * Test the prepareCurl method with invalid method
      *
-     * @expectedException InvalidHttpMethodException
+     * @expectedException Pex\InvalidHttpMethodException
      * @test
      *
      * @return void
@@ -385,8 +381,8 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
     {
         $httpParams             = $this->_setUpHttpParamsFull();
         $httpParams->httpMethod = 'ivalidmethod';
-        $curlMock               = $this->getMock('Curl');
-        $this->object->prepareCurl($curlMock, $httpParams);
+        $curlMock               = $this->mock('Curl');
+        $this->object->prepareCurl($curlMock->mock, $httpParams);
 
     }//end testPrepareCurlWithInvalidMethod()
 
@@ -394,7 +390,7 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
     /**
      * Test the prepareCurl method with no url
      *
-     * @expectedException NoUrlSetException
+     * @expectedException Pex\NoUrlSetException
      * @test
      *
      * @return void
@@ -403,8 +399,8 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
     {
         $httpParams      = $this->_setUpHttpParamsFull();
         $httpParams->url = null;
-        $curlMock        = $this->getMock('Curl');
-        $this->object->prepareCurl($curlMock, $httpParams);
+        $curlMock        = $this->mock('Curl');
+        $this->object->prepareCurl($curlMock->mock, $httpParams);
 
     }//end testPrepareCurlWithoutUrl()
 
@@ -427,9 +423,9 @@ class CurlBuilderTest extends MockAmendingTestCaseBase
             $this->equalTo($param1)
         )->will($this->returnValue('url1'));
 
-        $curlMock = $this->getMock('Curl');
+        $curlMock = $this->mock('Curl');
 
-        $this->object->prepareCurl($curlMock, $httpParams);
+        $this->object->prepareCurl($curlMock->mock, $httpParams);
 
     }//end testPrepareCurlWithUrlParams()
 

@@ -31,7 +31,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class HttpParamsTest extends PHPUnit_Framework_TestCase
+class HttpParamsTest extends PexTestBase
 {
 
     /**
@@ -60,7 +60,7 @@ class HttpParamsTest extends PHPUnit_Framework_TestCase
      */
     public function testSetPreparedUrl()
     {
-        $this->assertNull($this->object->preparedurl);
+        $this->assertNull($this->readAttribute($this->object, 'preparedUrl'));
         $expected = "foo.bar";
         $this->object->setPreparedUrl($expected);
         $actual = $this->readAttribute($this->object, 'preparedUrl');

@@ -33,7 +33,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class HttpFactoryTest extends PHPUnit_Framework_TestCase
+class HttpFactoryTest extends PexTestBase
 {
 
     /**
@@ -54,16 +54,9 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->curlBuilderMock = $this->getMock(
-            'CurlBuilder',
-            array(),
-            array(),
-            '',
-            false,
-            false
-        );
+        $this->curlBuilderMock = $this->mock('CurlBuilder');
         $this->object = new HttpFactory(
-            $this->curlBuilderMock,
+            $this->curlBuilderMock->mock,
             HttpFactory::NORMAL
         );
 
@@ -161,7 +154,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
     public function testCreateVerboseHttp()
     {
         $this->object = new HttpFactory(
-            $this->curlBuilderMock,
+            $this->curlBuilderMock->mock,
             HttpFactory::VERBOSE
         );
         $actual       = $this->object->createHttp();
@@ -181,7 +174,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase
     public function testVerboseSettingsInit()
     {
         $this->object = new HttpFactory(
-            $this->curlBuilderMock,
+            $this->curlBuilderMock->mock,
             HttpFactory::VERBOSE
         );
         $http = $this->object->createHttp();

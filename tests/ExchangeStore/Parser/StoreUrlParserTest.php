@@ -32,7 +32,7 @@ namespace Pex;
  * @license  GPLv3 <http://www.gnu.org/licenses/>
  * @link     http://www.assembla.com/spaces/p-pex
  */
-class StoreUrlParserTest extends PHPUnit_Framework_TestCase
+class StoreUrlParserTest extends PexTestBase
 {
 
     private $_xmlString = '<?xml version="1.0"?>
