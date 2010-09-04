@@ -108,7 +108,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
         }
         try {
             libxml_use_internal_errors(true);
-            $xml = new SimpleXMLElement($xmlString);
+            $xml = new \SimpleXMLElement($xmlString);
             return true;
         } catch (Exception $e) {
             return false;

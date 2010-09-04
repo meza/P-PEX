@@ -52,7 +52,7 @@ class CalendarEventListParser implements Parser
         */
 
         libxml_use_internal_errors(true);
-        $xml = new SimpleXMLElement($xmlString);
+        $xml = new \SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $xml->registerXPathNamespace('d', 'urn:schemas:calendar:');
         $xml->registerXPathNamespace('e', 'urn:schemas:httpmail:');
@@ -85,13 +85,13 @@ class CalendarEventListParser implements Parser
      * Populates a reference to an event, with data regarding the property
      *
      * @param CalendarEvent    $event      The event to populate
-     * @param SimpleXMLElement $xmlElement The property to consider
+     * @param\SimpleXMLElement $xmlElement The property to consider
      *
      * @return void
      */
     private function _setUpEvent(
         CalendarEvent $event,
-        SimpleXMLElement $xmlElement
+       \SimpleXMLElement $xmlElement
     ) {
         switch ($xmlElement->getName())
         {

@@ -47,7 +47,7 @@ class TaskListParser implements Parser
     public function parse($xmlString)
     {
         libxml_use_internal_errors(true);
-        $xml = new SimpleXMLElement($xmlString);
+        $xml = new \SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $xml->registerXPathNamespace('d', 'urn:schemas:calendar:');
         $xml->registerXPathNamespace('e', 'urn:schemas:httpmail:');
@@ -79,13 +79,13 @@ class TaskListParser implements Parser
      * Populates a reference to an task, with data regarding the property
      *
      * @param Task             $task       The task to populate
-     * @param SimpleXMLElement $xmlElement The property to consider
+     * @param\SimpleXMLElement $xmlElement The property to consider
      *
      * @return void
      */
     private function _setUpTask(
         Task $task,
-        SimpleXMLElement $xmlElement
+        \SimpleXMLElement $xmlElement
     ) {
         switch ($xmlElement->getName())
         {

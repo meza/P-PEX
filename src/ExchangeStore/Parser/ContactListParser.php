@@ -46,7 +46,7 @@ class ContactListParser implements Parser
     public function parse($xmlString)
     {
         libxml_use_internal_errors(true);
-        $xml = new SimpleXMLElement($xmlString);
+        $xml = new \SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $xml->registerXPathNamespace('c', 'urn:schemas:contacts:');
         $xml->registerXPathNamespace('e', 'urn:schemas:httpmail:');
@@ -78,13 +78,13 @@ class ContactListParser implements Parser
      * Populates a reference to an contact, with data regarding the property
      *
      * @param Contact          $contact       The task to populate
-     * @param SimpleXMLElement $xmlElement The property to consider
+     * @param\SimpleXMLElement $xmlElement The property to consider
      *
      * @return void
      */
     private function _setUpTask(
         Contact $contact,
-        SimpleXMLElement $xmlElement
+       \SimpleXMLElement $xmlElement
     ) {
         switch (strtolower($xmlElement->getName()))
         {

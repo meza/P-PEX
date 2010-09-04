@@ -46,7 +46,7 @@ class CreateParser implements Parser
     public function parse($xmlString)
     {
         libxml_use_internal_errors(true);
-        $xml = new SimpleXMLElement($xmlString);
+        $xml = new \SimpleXMLElement($xmlString);
         $xml->registerXPathNamespace('dav', 'DAV:');
         $root = $xml->xpath('//dav:href');
 
