@@ -20,7 +20,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The HttpFactory class is responsible for creating Http objects
  *

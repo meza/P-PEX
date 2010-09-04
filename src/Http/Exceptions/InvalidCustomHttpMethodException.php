@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http\Exceptions;
+namespace Pex;
 /**
  * The InvalidCustomHttpMethodException happens when a custom method was set
  * with a standard http method

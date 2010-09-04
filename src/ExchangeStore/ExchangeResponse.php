@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore;
+namespace Pex;
 /**
  * The ExchangeResponse interface is used to identify all responses from the server
  *

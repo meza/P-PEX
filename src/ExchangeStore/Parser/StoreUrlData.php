@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Parser;
+namespace Pex;
 /**
  * The StoreUrlData is the valueobject holding the data
  * 

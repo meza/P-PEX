@@ -19,7 +19,8 @@
  * * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\ExchangeStore\HttpParams;
+namespace Pex;
 /**
  * The ContactCreateHttpParam class is the value object for contact creation
  *

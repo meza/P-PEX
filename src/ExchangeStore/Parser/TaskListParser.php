@@ -19,7 +19,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Parser;
+namespace Pex;
 /**
  * The TaskListParser class is responsible for parsing the
  * list of tasks

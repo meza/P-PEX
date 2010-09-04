@@ -16,10 +16,11 @@
  * Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
  * Everyone is permitted to copy and distribute verbatim copies
  * of this license document, but changing it is not allowed.
- * * 
+ *  
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Types;
+namespace Pex;
 /**
  * The CalendarEvent is the value object of all calendar events
  *

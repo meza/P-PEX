@@ -18,7 +18,8 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.meza.hu
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The HttpClientRequest class is the representation of an incoming request
  *

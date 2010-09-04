@@ -19,7 +19,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Parser;
+namespace Pex;
 /**
  * The Parser interface defines the common usage of the parser objects
  *

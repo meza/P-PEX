@@ -19,7 +19,8 @@
  * * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\ExchangeStore\HttpParams;
+namespace Pex;
 /**
  * The TaskCheckHttpParam class finds the first available url for the task
  *

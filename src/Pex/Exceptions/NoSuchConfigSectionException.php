@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Exceptions;
+namespace Pex;
 /**
  * The NoSuchConfigSectionException fires, when a config section is not found
  *

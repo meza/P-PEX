@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http\Exceptions;
+namespace Pex;
 /**
  * The InvalidHttpMethodException happens when an INvalid standard Http method
  * was encountered

@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http\Exceptions;
+namespace Pex;
 /**
  * The InvalidCookieStoreException fires, when an invalid cookie store was found
  *

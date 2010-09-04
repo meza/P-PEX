@@ -19,7 +19,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex;
+namespace Pex;
 /**
  * The main interface of the contact handling api
  *

@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\ExchangeStore\HttpParams;
+namespace Pex;
 /**
  * The ServiceUrlsHttpParams class is the http preset for the url retrieval
  *

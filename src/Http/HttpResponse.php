@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The HttpResponse is created after every request
  *

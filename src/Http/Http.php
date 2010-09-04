@@ -20,7 +20,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  **/
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The Http class is responsible for Curl based Http requests
  *

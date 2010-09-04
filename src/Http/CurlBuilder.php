@@ -19,7 +19,8 @@
  *  
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The CurlBuilder class is responsible for building specific curl instances
  *

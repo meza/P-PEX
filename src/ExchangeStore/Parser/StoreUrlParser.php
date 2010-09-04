@@ -19,7 +19,8 @@
  *
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Parser;
+namespace Pex;
 /**
  * The StoreUrlParser is a Parser implementation, and is responsible for parsing
  * the custom store urls given by the server

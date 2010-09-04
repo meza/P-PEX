@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http\Exceptions;
+namespace Pex;
 /**
  * The NoUrlSetException happens, when no url was set for the request
  *

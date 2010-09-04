@@ -18,7 +18,8 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.meza.hu
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The CompositeItem interface notes that the element could be added as a
  * composite item

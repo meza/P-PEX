@@ -19,7 +19,8 @@
  * of this license document, but changing it is not allowed.
  * @link     http://www.assembla.com/spaces/p-pex
  **/
-
+//namespace Pex;
+namespace Pex;
 require_once 'PPexInterface.php';
 require_once 'ContactHandler.php';
 require_once 'CalendarHandler.php';

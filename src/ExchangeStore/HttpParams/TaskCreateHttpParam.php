@@ -19,7 +19,8 @@
  * * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\ExchangeStore\HttpParams;
+namespace Pex;
 /**
  * The TaskCreateHttpParam class is the value object for Task creation
  *

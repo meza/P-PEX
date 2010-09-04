@@ -19,7 +19,8 @@
  * * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore\Types;
+namespace Pex;
 /**
  * The Task is the value object of all tasks
  *

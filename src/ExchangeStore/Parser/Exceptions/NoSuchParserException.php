@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\ExchangeStore\Parser\Exceptions;
+namespace Pex;
 /**
  * The NoSuchParserException fires, when an unexisting Parser was called
  *

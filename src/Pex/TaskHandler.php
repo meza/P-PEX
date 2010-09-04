@@ -19,7 +19,8 @@
  * * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex;
+namespace Pex;
 /**
  * The TaskHandler interface declares the api for task handling
  *

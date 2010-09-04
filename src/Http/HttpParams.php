@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+//namespace Pex\Http;
+namespace Pex;
 /**
  * The HttpParams class is a value object for creating http requests
  *

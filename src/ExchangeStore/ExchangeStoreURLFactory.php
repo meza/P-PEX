@@ -19,7 +19,8 @@
  * 
  * @link     http://www.assembla.com/spaces/p-pex
  */
-
+ //namespace Pex\ExchangeStore;
+namespace Pex;
 /**
  * The ExchangeStoreURLFactory class is responsible for the generation of the exchange urls
  *
