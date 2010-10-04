@@ -87,6 +87,7 @@ xmlns:cal="urn:schemas:calendar:" xmlns:mail="urn:shemas:httpmail:">
         <c:sn>'.$contact->lastName.'</c:sn>
         <c:fileas>'.$name.'</c:fileas>
         <c:nickname>'.$contact->nickName.'</c:nickname>
+        <c:o>'.$contact->companyName.'</c:o>
         <mapi:email1addrtype>SMTP</mapi:email1addrtype>
         <mapi:email1emailaddress>'.$contact->emailAddress.'</mapi:email1emailaddress>
     </g:prop>

@@ -43,6 +43,16 @@ class Contact
 {
 
     /**
+     * Legal type.
+     */
+    CONST TYPE_LEGAL = 0;
+
+    /**
+     * Natural type.
+     */
+    CONST TYPE_NATURAL = 1;
+
+    /**
      * @var string first name
      */
     public $firstName = '';
@@ -63,6 +73,11 @@ class Contact
     public $nickName = '';
 
     /**
+     * @var string Company name
+     */
+    public $companyName = '';
+
+    /**
      * @var string Email address
      */
     public $emailAddress = '';
@@ -76,6 +91,11 @@ class Contact
      * @var string url
      */
     public $url;
+
+    /**
+     * @var int type
+     */
+    private $_type = self::TYPE_NATURAL;
 
 
     /**
@@ -98,11 +118,15 @@ class Contact
      */
     public function getFileAsName()
     {
-        $nameParts = array(
-                      $this->lastName,
-                      $this->middleName,
-                      $this->firstName,
-                     );
+        if (self::TYPE_NATURAL === $this->_type) {
+            $nameParts = array(
+                          $this->lastName,
+                          $this->middleName,
+                          $this->firstName,
+                         );
+        } else {
+            $nameParts = array($this->companyName);
+        }
         $fileas =  implode(' ', $nameParts);
 
         return $fileas;
@@ -144,6 +168,20 @@ class Contact
     public function getUrl()
     {
         return $this->url;
+    }
+
+    public function setType($type)
+    {
+        switch($type) {
+            case self::TYPE_NATURAL:
+                $this->_type = $type;
+                break;
+            case self::TYPE_LEGAL;
+                $this->_type = $type;
+                break;
+            default:
+                throw new Exception('unsupported contact type');
+        }
     }
 
 }//end class

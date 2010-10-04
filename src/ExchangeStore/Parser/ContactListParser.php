@@ -65,8 +65,7 @@ class ContactListParser implements Parser
             foreach ($properties as $prop) {
                 $this->_setUpTask($contact, $prop);
             }
-
-            $result[] = $contact;
+            $result[md5(basename($contact->getUrl()))] = $contact;
         }//end foreach
 
         return array_reverse($result);
