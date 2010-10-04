@@ -48,7 +48,7 @@
         <exec dir="${basedir}"
         executable="phpunit"
         failonerror="true">
-            <arg line="--no-configuration --testdox ${basedir}"/>
+            <arg line="--configuration ${basedir}/tests/_PHPUnitCommon/conf/netbeans/phpunit.xml --testdox ${basedir}"/>
         </exec>
     </target>
 

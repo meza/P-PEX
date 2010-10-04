@@ -63,6 +63,7 @@ class ContactHandlerTest extends PexTest
         $createParams = new ContactCreateHttpParam($this->_aDummyContact());
         $checkParams  = new ContactCheckHttpParam($this->_aDummyContact());
         $response     = 'a dummy response';
+        $url          = 'http://somedomain.com/dummy.eml';
 
         $this->expectRequest(
             $this->httpMock,
@@ -86,9 +87,15 @@ class ContactHandlerTest extends PexTest
 
         $this->parserMock->expects($this->once())->method('parse')->with(
             $this->equalTo($response)
-        )->will($this->returnValue('dummy'));
+        )->will($this->returnValue(md5(basename($url))));
 
-        $this->object->createContact($this->_aDummyContact());
+        $actual = $this->object->createContact($this->_aDummyContact());
+        $expected = md5(basename($url));
+
+        $this->assertEquals(
+            $expected,
+            $actual
+        );
 
     }//end testCreateContact()
 
@@ -135,7 +142,14 @@ class ContactHandlerTest extends PexTest
             $this->equalTo($response)
         )->will($this->returnValue('dummy'));
 
-        $this->object->createContact($this->_aDummyContact());
+        $actual   = $this->object->createContact($this->_aDummyContact());
+        $expected = 'dummy';
+        $this->assertEquals(
+            $expected,
+            $actual
+        );
+
+
 
     }//end testCreateContactWhenAlreadyExists()
 

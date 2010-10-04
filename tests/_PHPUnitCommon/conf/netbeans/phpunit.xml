@@ -20,6 +20,21 @@
 		<ini name="display_errors"   value="32767"      />
  	</php>
 
+    <testsuites>
+		<testsuite name="all">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+
+    <php>
+		<ini name="display_errors"   value="22519"      />
+		<!-- E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT -->
+		<var name="__loaderLevel"    value="22519"  />
+		<!-- E_ALL | E_DEPRECATED | E_STRICT -->
+		<var name="__testLevel"      value="32767"  />
+		<var name="__testSuiteName"  value="hudson" />
+ 	</php>
+
 
 
 </phpunit>
