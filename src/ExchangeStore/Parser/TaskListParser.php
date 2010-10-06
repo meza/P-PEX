@@ -67,7 +67,7 @@ class TaskListParser implements Parser
                 $this->_setUpTask($task, $prop);
             }
 
-            $result[] = $task;
+            $result[md5(basename($task->getUrl()))] = $task;
         }//end foreach
 
         return array_reverse($result);
