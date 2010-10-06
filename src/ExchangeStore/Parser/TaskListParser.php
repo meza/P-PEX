@@ -110,6 +110,9 @@ class TaskListParser implements Parser
         case 'htmldescription':
             $task->withDescription((string) $xmlElement);
             break;
+        case 'x-priority-long':
+            $task->priority = (int) $xmlElement;
+            break;
         }//end switch
 
     }//end _setUpTask()
