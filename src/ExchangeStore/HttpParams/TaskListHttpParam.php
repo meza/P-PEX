@@ -78,7 +78,6 @@ xmlns:mapi="http://schemas.microsoft.com/mapi/">
 "http://schemas.microsoft.com/exchange/x-priority-long",
 "http://schemas.microsoft.com/mapi/commonstart",
 "http://schemas.microsoft.com/mapi/commonend",
-"http://schemas.microsoft.com/mapi/commondue",
 "urn:schemas:calendar:location",
 "urn:schemas:httpmail:textdescription",
 "urn:schemas:httpmail:htmldescription",

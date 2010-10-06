@@ -99,7 +99,7 @@ class TaskCreateHttpParam extends HttpParams
             <mail:htmldescription>'.$task->description.'</mail:htmldescription>
             <cal:location>'.$task->location.'</cal:location>'.
             $this->getDate($task->getStartDate('c'), 'mapi:commonstart').
-            $this->getDate($task->getEndDate('c'), 'mapi:commonend').
+            $this->getDate($task->getDueDate('c'), 'mapi:commonend').
         '</g:prop>
     </g:set>
 </g:propertyupdate>';

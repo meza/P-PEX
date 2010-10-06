@@ -108,9 +108,11 @@ class ContactHandlerTest extends PexTest
      */
     public function testCreateContactWhenAlreadyExists()
     {
-        $checkParamsA = new ContactCheckHttpParam($this->_aDummyContact());
+        $checkParamsA = new ContactCheckHttpParam(
+            $this->_aDummyContact()
+        );
         $contactB     = $this->_aDummyContact();
-        $contactB->setUrlModifier(md5(date('Y-m-d H:i')));
+        $contactB->setUrlModifier(md5(date('Y-m-d H:i:s')));
 
         $checkParamsB = new ContactCheckHttpParam($contactB);
         $createParams = new ContactCreateHttpParam($contactB);
@@ -148,8 +150,6 @@ class ContactHandlerTest extends PexTest
             $expected,
             $actual
         );
-
-
 
     }//end testCreateContactWhenAlreadyExists()
 
@@ -263,13 +263,15 @@ class ContactHandlerTest extends PexTest
     /**
      * Generates a dummy contact
      *
+     * @param string $name The name
+     *
      * @return Contact
      */
-    private function _aDummyContact()
+    private function _aDummyContact($name='name')
     {
         $contact = Contact::aContact();
         $contact->firstName = 'test';
-        $contact->lastName  = 'name';
+        $contact->lastName  = $name;
 
         return $contact;
 

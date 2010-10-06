@@ -96,9 +96,6 @@ class TaskListParser implements Parser
             $task->from((string) $xmlElement);
             break;
         case 'commonend':
-            $task->to((string) $xmlElement);
-            break;
-        case 'commondue':
             $task->due((string) $xmlElement);
             break;
         case 'location':

@@ -52,7 +52,7 @@ class Task
     /**
      * @var string The ISO 8601 date format of the end date
      */
-    public $end;
+    public $due;
 
     /**
      * @var string The subject of a task
@@ -72,7 +72,7 @@ class Task
     /**
      * @var string The url of the task
      */
-    private $_url;
+    public $url;
 
     /**
      * @var string StorageUrlModifier
@@ -140,10 +140,16 @@ class Task
      *
      * @param string $date The start date of the task
      *
+     * @todo date format WTF
+     *
      * @return Task
      */
     public function from($date)
     {
+        $msFormat = '/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\s[0-9]{2}:[0-9]{2}/';
+        if (0<preg_match($msFormat, $date)) {
+            $date = str_replace(' ','+', $date);
+        }
         $this->start = date('c', strtotime($date));
         return $this;
 
@@ -155,29 +161,20 @@ class Task
      *
      * @param string $date The due date of the task
      *
+     * @todo date format WTF
+     *
      * @return Task
      */
     public function due($date)
     {
-        $this->end = date('c', strtotime($date));
+        $msFormat = '/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\s[0-9]{2}:[0-9]{2}/';
+        if (0<preg_match($msFormat, $date)) {
+            $date = str_replace(' ','+', $date);
+        }
+        $this->due = date('c', strtotime($date));
         return $this;
 
     }//end due()
-
-
-    /**
-     * Set the end date of a task
-     *
-     * @param string $date The end date of the task
-     *
-     * @return Task
-     */
-    public function to($date)
-    {
-        $this->end = date('c', strtotime($date));
-        return $this;
-
-    }//end to()
 
 
     /**
@@ -234,7 +231,7 @@ class Task
      */
     public function setUrl($url)
     {
-        $this->_url = $url;
+        $this->url = $url;
 
     }//end setUrl()
 
@@ -246,7 +243,7 @@ class Task
      */
     public function getUrl()
     {
-        return $this->_url;
+        return $this->url;
 
     }//end getUrl()
 
@@ -284,23 +281,6 @@ class Task
 
 
     /**
-     * Returns the end date of the task, regarding the formatting
-     *
-     * @param string $format The format the date should be returned
-     *
-     * @return string
-     */
-    public function getEndDate($format=self::DEFAULT_DATE_FORMAT)
-    {
-        if (true === is_null($this->end)) {
-            return '';
-        }
-        return $this->_getDate($this->end, $format);
-
-    }//end getEndDate()
-
-
-    /**
      * Returns the due date of the task, regarding the formatting
      *
      * @param string $format The format the date should be returned
@@ -309,10 +289,10 @@ class Task
      */
     public function getDueDate($format=self::DEFAULT_DATE_FORMAT)
     {
-        if (true === is_null($this->end)) {
+        if (true === is_null($this->due)) {
             return '';
         }
-        return $this->_getDate($this->end, $format);
+        return $this->_getDate($this->due, $format);
 
     }//end getDueDate()
 

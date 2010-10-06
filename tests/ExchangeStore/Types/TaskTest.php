@@ -150,8 +150,7 @@ class TaskTest extends PexTestBase
     {
         return array(
                 array('start', 'from'),
-                array('end', 'due'),
-                array('end', 'to')
+                array('due', 'due'),
                );
     }
 
@@ -266,26 +265,6 @@ class TaskTest extends PexTestBase
         $this->assertEquals($expected, $actual);
 
     }//end testGetStartDate()
-
-
-    /**
-     * Test that the date format retrieval works
-     *
-     * @test
-     *
-     * @return void
-     */
-    public function testGetEndDate()
-    {
-        $this->assertEquals('', $this->object->getEndDate());
-        $date = '2010-01-01 12:34:56';
-        $this->object->to($date);
-        $expected = date('U', strtotime($date));
-        $actual   = $this->object->getEndDate('U');
-
-        $this->assertEquals($expected, $actual);
-
-    }//end testGetEndDate()
 
 
     /**
