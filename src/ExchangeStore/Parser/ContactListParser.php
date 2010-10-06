@@ -99,6 +99,9 @@ class ContactListParser implements Parser
         case 'middlename':
             $contact->middleName = (string) $xmlElement;
             break;
+        case 'o':
+            $contact->companyName = (string) $xmlElement;
+            break;
         case 'fileas':
             break;
         case 'nickname':

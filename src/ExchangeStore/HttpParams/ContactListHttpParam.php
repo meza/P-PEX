@@ -79,6 +79,7 @@ xmlns:mail="urn:shemas:httpmail:">
 "urn:schemas:contacts:sn",
 "urn:schemas:contacts:fileas",
 "urn:schemas:contacts:nickname",
+"urn:schemas:contacts:o",
 "http://schemas.microsoft.com/mapi/email1emailaddress"
 FROM "'.$this->preparedUrl.'"</a:sql>
 </a:searchrequest>';
