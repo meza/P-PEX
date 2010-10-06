@@ -72,7 +72,7 @@ class CalendarEventListParser implements Parser
                     $this->_setUpEvent($event, $prop);
                 }
 
-                $result[] = $event;
+                $result[md5(basename($event->getUrl()))] = $event;
             }
         }//end foreach
 
@@ -102,7 +102,7 @@ class CalendarEventListParser implements Parser
             $event->from((string) $xmlElement);
             break;
         case 'dtend':
-            $event->to((string) $xmlElement);
+                $event->to((string) $xmlElement);
             break;
         case 'location':
             $event->at((string) $xmlElement);
@@ -110,7 +110,7 @@ class CalendarEventListParser implements Parser
         case 'subject':
             $event->withSubject((string) $xmlElement);
             break;
-        case 'textdescription':
+        case 'htmldescription':
             $event->withDescription((string) $xmlElement);
             break;
         }

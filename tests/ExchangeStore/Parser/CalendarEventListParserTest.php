@@ -51,8 +51,8 @@ xmlns:a="DAV:"><a:response>
 <a:propstat><a:status>HTTP/1.1 200 OK</a:status><a:prop>
 <a:href>https://mail.rokonai.hu/exchange/rokonaiintranet/Napt%C3%A1r/{8D717CCC-C399-4161-91F6-23D159322873}.EML</a:href>
 <d:busystatus>BUSY</d:busystatus><e:subject>test event2</e:subject>
-<e:textdescription>
-test description2</e:textdescription>
+<e:htmldescription>
+test description2</e:htmldescription>
 <d:dtstart b:dt="dateTime.tz">2010-05-28T06:00:00.000Z</d:dtstart>
 <d:dtend b:dt="dateTime.tz">2010-05-28T06:30:00.000Z</d:dtend>
 <d:created b:dt="dateTime.tz">2010-05-23T16:06:54.000Z</d:created>
@@ -62,7 +62,7 @@ test description2</e:textdescription>
 <a:propstat><a:status>HTTP/1.1 200 OK</a:status><a:prop>
 <a:href>https://mail.rokonai.hu/exchange/rokonaiintranet/Napt%C3%A1r/{5CD50F59-8DF2-4DB5-AFEA-34DB11A4BAB9}.EML</a:href>
 <d:busystatus>BUSY</d:busystatus><e:subject>test event</e:subject>
-<e:textdescription>test description</e:textdescription>
+<e:htmldescription>test description</e:htmldescription>
 <d:dtstart b:dt="dateTime.tz">2010-05-26T06:00:00.000Z</d:dtstart>
 <d:dtend b:dt="dateTime.tz">2010-05-26T06:30:00.000Z</d:dtend>
 <d:created b:dt="dateTime.tz">2010-05-23T16:05:42.000Z</d:created>
@@ -115,8 +115,8 @@ test description2</e:textdescription>
         $ev2->setUrl('https://mail.rokonai.hu/exchange/rokonaiintranet/Napt%C3%A1r/{8D717CCC-C399-4161-91F6-23D159322873}.EML');
 
         $expected = array(
-                     $ev1,
-                     $ev2,
+                     md5(basename($ev1->getUrl())) => $ev1,
+                     md5(basename($ev2->getUrl())) => $ev2,
                     );
         $actual   = $this->object->parse($this->_xmlString);
 

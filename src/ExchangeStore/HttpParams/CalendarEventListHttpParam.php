@@ -74,6 +74,7 @@ class CalendarEventListHttpParam extends HttpParams
 "urn:schemas:calendar:busystatus",
 "urn:schemas:httpmail:subject",
 "urn:schemas:httpmail:textdescription",
+"urn:schemas:httpmail:htmldescription",
 "urn:schemas:calendar:dtstart",
 "urn:schemas:calendar:dtend",
 "urn:schemas:calendar:created",

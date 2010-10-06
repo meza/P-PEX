@@ -68,7 +68,7 @@ class CalendarEvent
     /**
      * @var string The url of the event
      */
-    private $_url;
+    public $url;
 
     /**
      * @var string StorageUrlModifier
@@ -102,6 +102,10 @@ class CalendarEvent
      */
     public function from($date)
     {
+        $msFormat = '/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\s[0-9]{2}:[0-9]{2}/';
+        if (0<preg_match($msFormat, $date)) {
+            $date = str_replace(' ','+', $date);
+        }
         $this->start = date('c', strtotime($date));
         return $this;
 
@@ -117,6 +121,10 @@ class CalendarEvent
      */
     public function to($date)
     {
+        $msFormat = '/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\s[0-9]{2}:[0-9]{2}/';
+        if (0<preg_match($msFormat, $date)) {
+            $date = str_replace(' ','+', $date);
+        }
         $this->end = date('c', strtotime($date));
         return $this;
 
@@ -177,7 +185,7 @@ class CalendarEvent
      */
     public function setUrl($url)
     {
-        $this->_url = $url;
+        $this->url = $url;
 
     }//end setUrl()
 
@@ -189,7 +197,7 @@ class CalendarEvent
      */
     public function getUrl()
     {
-        return $this->_url;
+        return $this->url;
 
     }//end getUrl()
 

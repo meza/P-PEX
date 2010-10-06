@@ -291,7 +291,7 @@ class CalendarEventTest extends PexTestBase
         $expectedUrl = 'http://some.url/';
         $this->object->setUrl($expectedUrl);
 
-        $this->assertAttributeEquals($expectedUrl, '_url', $this->object);
+        $this->assertAttributeEquals($expectedUrl, 'url', $this->object);
 
     }//end testSetUrl()
 
