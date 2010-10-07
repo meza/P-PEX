@@ -110,7 +110,7 @@ class CalendarHandlerTest extends PexTest
     {
         $checkParamsA = new CalendarEventCheckHttpParam($this->_aDummyEvent());
         $event        = $this->_aDummyEvent();
-        $event->setUrlModifier(md5(date('Y-m-d H:i')));
+        $event->setUrlModifier(md5(date('Y-m-d H:i:s')));
 
         $checkParamsB = new CalendarEventCheckHttpParam($event);
         $createParams = new CalendarEventCreateHttpParam($event, $this->connectionData->username);

@@ -328,7 +328,7 @@ class Pex implements PPexInterface, ContactHandler, CalendarHandler, TaskHandler
         $response = $this->call($param);
 
         if ($response->code !== 404) {
-            $event->setUrlModifier(md5(date('Y-m-d H:i')));
+            $event->setUrlModifier(md5(date('Y-m-d H:i:s')));
             usleep(100);
             return $this->createEvent($event);
         }
