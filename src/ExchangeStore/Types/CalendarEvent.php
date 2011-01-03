@@ -76,6 +76,19 @@ class CalendarEvent
     private $_urlModifier = '';
 
 
+    public function toArray()
+    {
+        return array(
+            'start'       => $this->start,
+            'end'         => $this->end,
+            'subject'     => $this->subject,
+            'location'    => $this->location,
+            'description' => $this->description,
+            'url'         => $this->url,
+        );
+    }
+
+
     /**
      * Null object constructor
      *
