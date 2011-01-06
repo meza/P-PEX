@@ -82,6 +82,21 @@ class Task
 
     public $priority = Task::PRIORITY_NORMAL;
 
+
+    public function toArray()
+    {
+        return array(
+            'start'       => $this->start,
+            'due'         => $this->due,
+            'subject'     => $this->subject,
+            'location'    => $this->location,
+            'description' => $this->description,
+            'url'         => $this->url,
+            'priority'    => $this->priority,
+        );
+    }
+
+
     /**
      * Null object constructor
      *
